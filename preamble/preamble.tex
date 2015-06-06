@@ -1,0 +1,91 @@
+\documentclass[a4paper, 12pt]{report}
+
+
+\usepackage[french]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern} % load a font with all the characters
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\usepackage{amssymb}
+\usepackage{setspace}
+\usepackage[scale = 0.85]{geometry}
+
+\usepackage{graphicx}     % for images and graphics
+
+
+\usepackage{subeqnarray}
+\usepackage{subfigure}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{caption}
+\usepackage{float}
+
+\usepackage{lettrine}
+\usepackage{fourier}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%  		Couleurs			%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\definecolor{test}{rgb}{0.64,0.16,0.16}
+\definecolor{vertsombre}{rgb}{0.00,0.57,0.1}
+\definecolor{freeblue}{rgb}{0.25,0.41,0.88}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.22,0.06,0.16}
+
+
+
+
+
+\DeclareCaptionFormat{listing}{#1#2#3}
+\captionsetup[lstlisting]{format=listing,singlelinecheck=false, margin=0pt, font={sf}}
+
+
+\lstdefinestyle{customc}{
+  backgroundcolor=\color{mymauve},
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  language=bash,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{white},
+  commentstyle=\itshape\color{white},
+  identifierstyle=\color{white},
+  stringstyle=\color{white},
+}
+
+\lstset{style=customc}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% 	pour des liens hypertextes  et du jpg  	      %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[pdftex,linkcolor=test,citecolor=vertsombre,colorlinks=true,pagebackref,bookmarks=true, plainpages=true,urlcolor=freeblue]{hyperref}
+
+
+
+% \geometry{
+% a4paper,
+% total={210mm,297mm},
+% left=20mm,
+% right=20mm,
+% top=20mm,
+% bottom=20mm,
+% }
+
+%An initial of the very first character of the content
+
+\newcommand*{\initial}[1]
+{
+  \lettrine[lines=3, lhang=0.26, nindent=0em, findent=-1em]
+  {
+    \color{gray}{\textsc{#1}}
+  }{}
+}
+
+\newcommand{\clearemptydoublepage}{\newpage{\thispagestyle{empty}\cleardoublepage}}
+\newcommand{\clearemptypage}{\newpage{\thispagestyle{empty}}}

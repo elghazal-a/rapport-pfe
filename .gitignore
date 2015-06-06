@@ -8,3 +8,12 @@
 *.pdf
 *.synctex.gz
 Output/*
+*/Output/*
+*/*.aux
+*/*.aux
+*/*.fdb_latexmk
+*/*.fls
+*/*.lof
+*/*.log
+*/*.out
+*/*.pdf
