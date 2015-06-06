@@ -1,0 +1,56 @@
+\documentclass{article}
+\usepackage{tikz}
+\usepackage{graphics}
+\usepackage{fouriernc}
+\usepackage[english,french]{babel}
+\usepackage[utf8]{inputenc}
+
+\usetikzlibrary{positioning,calc}
+
+
+\begin{document}
+ \thispagestyle{empty}
+
+\begin{tikzpicture}[remember picture,overlay]
+  \node (logoENSIAS) [anchor=north west] at ($(current page.north west)+(2,-0.5)$) {\includegraphics[scale=0.3]{ensias}};
+
+  \node (logoNative) [anchor=north east] at ($(current page.north east)+(-2,-1.5)$) {\includegraphics[scale=0.4]{sayoo}};
+
+  \node (title) [text width=18cm,align=center] at ($(current page.center)+(0,2.5)$) {
+    \LARGE
+    \setlength{\baselineskip}{32pt}
+    \textbf{Mémoire de Projet de Fin d’Études} \\ \vspace{.5cm}
+    \textit{Pour l'Obtention du Titre} \\ \vspace{.5cm}
+    \textbf{D'Ingénieur d'État en Informatique}\\ \vspace{.5cm}
+    \textbf{Option}\\ \vspace{.5cm}
+    Ingénierie des Télécommunication et Réseaux \\ \vspace{.5cm}
+    \textbf{Sujet} \\ \vspace{1cm}
+    \huge{
+    Conception et implémentation d'une architecture \vspace{.3cm}\\ Cloud à base des containers}
+
+  };
+
+
+  \node (left) [text width=6cm,anchor=north west] at ($(current page.west)+(2,-5)$) {
+    \large
+    Soutenu par: \\ \vspace{.5cm}
+    \textbf{M. Ahmed MAJIDI}\\ \vspace{.5cm}
+    \textbf{M. Ahmed ELGHAZAL}
+  };
+
+  \node (right) [text width=9cm,anchor=north east] at ($(current page.east)+(-1.5,-5)$) {
+    \large
+    Sous la direction de: \\ \vspace{.5cm}
+    \textbf{M. A. S. DOUKKALI (ENSIAS)} \\ \vspace{.1cm}
+    \textbf{M. Aminearrahmane ACHARGUI (Sayoo)} \\ \vspace{.1cm}
+    \textbf{M. Mohamed OUHAMMI (Sayoo)} \\ \vspace{.3cm}
+    Jury : \\ \vspace{.5cm}
+    \textbf{M. B. REGRAGUI (Examinateur)} \\ \vspace{.1cm}
+    \textbf{M.  (Président)} \\ \vspace{.1cm}
+  };
+
+
+  \node (footer) [anchor=south] at ($(current page.south)+(0,2)$) {\large Année Universitaire 2014 -- 2015};
+\end{tikzpicture}
+
+\end{document}
