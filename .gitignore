@@ -5,7 +5,6 @@
 *.lof
 *.log
 *.out
-*.pdf
 *.synctex.gz
 Output/*
 */Output/*
@@ -16,4 +15,3 @@ Output/*
 */*.lof
 */*.log
 */*.out
-*/*.pdf
