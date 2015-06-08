@@ -32,6 +32,26 @@
 
 \subsection{Motivations}
 
+Il va s'en dire que le processus de la provision des applications ERP pour les clients est archaïque. D'où les motivations d'opter vers une solution cloud. Voici une liste des problèmes que rencontrent Sayoo lors du processus du déploiement actuel.
+
+\begin{itemize}
+
+\item La provision des instances Odoo est complètement manuelle. Ceci étant dit, quand un client demande une version de test d'Odoo par exemple, l'équipe de Sayoo est contrainte d'éxécuté une série d'étapes répétitives à partier de la commande, l'installation et la configuration su serveur jusqu'à la mise en place de l'application Odoo, configuration DNS, etc...;
+
+\item Il y a un besoin récurrent des administrateurs qui doivent garder en permanence l'oeil sur applications des différents clients;
+
+\item La supervision est quant à elle manuelle. En effet, au fur et à mesure que le nombre de clients augmente, l'administrateur doit ajouter les applications au système de supervision. Ceci est pénible, voire impossible, à suivre quand ,Ce qui rend le processus faible et non évolutive;
+
+\item L'absense d'automatisme fait que l'équipe de Sayoo consacre la plupart du temps au tâches répétitives au lieu de le consacrer au développement et la personnalisation de l'application Odoo de chaque client. 
+
+\item Il faut acheter un serveur pour chaque client pour y installer son application, ceci est un overkill pour atteindre le but. De plus, cela affecte le coùt de la solution.
+
+\item Absence d'une architecture robuste qui peut garantir des éxigences non fonctionnelles énormes, à savoir la configurabilité, la haute disponibilité, la sécurité et la scalabilité. Ainsi, Sayoo ne garantie pas un SLA à ses clients;
+
+\end{itemize}
+
+
+
 
 \section{Objectifs du projet}
 
