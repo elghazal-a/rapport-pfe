@@ -75,8 +75,6 @@ PaaS se situe quelque part entre IaaS et SaaS. Il est pas un produit fini, comme
 
 \section{Virtualisation ou containérisation}
 
-
-
 \subsection{Virtualisation}
 
 Avec des racines profondément ancrées dans l'informatique, la virtualisation sert à partitionner un seul serveur physique en plusieurs machines virtuelles, comme un espace de stockage ou un réseau, en plusieurs ressources virtuelles. Elle permet une consolidation de serveurs avec une grande souplesse d'utilisation. Dans le contexte de l'informatique en nuage, la virtualisation est importante pour la mise en service et le retrait rapide de serveurs. Ceci étant dit, la scalabilité est la principale caractéristique du Cloud moderne, faute de cela, on ne peut en parler. Ainsi la virtualisation a permis de créer des machines virtuelle, les faire monter en charge à la demande, faire de la migration à chaud, etc. Un logiciel de virtualisation du Cloud présente également une perspective dynamique et une vue unifiée de l'utilisation et de l'efficacité des ressources, cela afin d'assurer le fonctionnement des services du Cloud. La virtualisation est une technologie permettant d'arriver à une utilisation rentable des serveurs tout en prenant en charge la séparation entre de multiples locataires d'un matériel physique.
@@ -85,21 +83,65 @@ Il existe plusieurs solutions de virtualisation, l'on peut citer à titre inform
 
 \begin{itemize}
 \item VMware, Cette solution, séduisante, pose certains problèmes. En effet, il propose des outils propriétaires et incompatible avec le noyau Linux;
-
-\item Xen est un hyperviseur libre de machines virtuelles, il est considéré comme un outile de virtualisation des plus performants;
-
+\item Xen est un hyperviseur libre de machines virtuelles, il est considéré comme un outil de virtualisation des plus performants;
 \item KVM, Kernel-based Virtual Machine est devenue rapidement la solution de virtualisation de référence pour Linux. Elle est basée sur les architectures Intel ou les architectures AMD;
-
 \item QEMU, est un émulateur machine générique. C'est une solution de virtualisation à utiliser si le processeur de système hôte ne possède pas d'extension matérielle spécifique à la virtualisation.
 
 \end{itemize}
 
 \subsection{Containérisation}
 
+Noyau Linux permet de lancer plusieurs instances isolées de l'espace utilisateur. Un conteneur est un environnement isolé où un ou plusieurs processus peuvent être exécutés. Les conteneurs se concentrent sur l'isolation des processus au lieu d'émuler une machine physique complet.
+
+Historiquement, chroot dans le noyau Linux a fourni un certain niveau d'isolation en fournissant un environnement pour créer et héberger une copie virtualisée d'un logiciel, et ceci depuis le début des années 80. Mais le terme «conteneurs» n'est pas venu jusque vers la fin de l'année 2006. Il a été renommé «Control Groups» (cgroups) pour éviter toute confusion causée par de multiples significations du terme «conteneurs» dans le noyau Linux. «Control Groups est une fonctionnalité du noyau linux qui est disponible depuis la version v2.6.24, elle limite et isole l'utilisation des ressources d'un ensemble de processus. Par la suite, l'isolation de l'espace de noms a été ajouté.
+
+Cela a conduit à l'évolution de Linux Containers (LXC), un environnement de virtualisation au niveau du système d'exploitation qui est construit sur les fonctionnalités du noyau Linux mentionnés plus haut, comme chroot, cgroupes, l'isolation de l'espace de noms, etc.
+
+\paragraph{Cgroups}
+
+\begin{itemize}
+\item Isolation de l'usage des ressources (CPU, mémoire, E/S, etc.);
+\item Limitation des ressources: un groupe peut être configuré pour ne pas dépasser une certaine limite de la mémoire;
+\item Priorité: certains groupes peuvent obtenir une plus grande part de CPU ou de débit E/S disque;
+\item Mesure de l'usage des ressources;
+\item Contrôle: le gel des groupes ou des points de reprise et le redémarrage.
+\end{itemize}
+
+\paragraph{Namespaces}
+\begin{itemize}
+\item Partionnement des structures de kernel pour créer des environnements virtuels
+\item Des espaces de noms différents
+
+\begin{itemize}
+\item pid (processus)
+\item net (interfaces réseaux, routage, ...)
+\item ipc (communication inter-processus)
+\item mnt (points de montage, système de fichiers)
+\item uts (Nom de hôte)
+\item user (UIDs)
+\end{itemize}
+
+\end{itemize}
 
 
+\paragraph{}
+Contrairement à la virtualisation, la liste des solutions de containérisations n'est pas aussi longue. La plupart d'eux se basent sur ou convergent vers cgroups et namespaces. L'on cite:
+
+\begin{itemize}
+\item LXC, Linux containers, combine cgroups et namespace pour fournir un environnement isolé pour les applications;
+\item OpenVZ permet de créer multiples conteneurs pour Linux. Dorénavant, tous les efforts des développeurs d'OpenVZ vont aller dans le sens de fusionner les fonctionnalités d'OpenVZ avec LXC;
+\item lmctfy, Let Me Contain That For You, est une solution open source de containérisation de Google qui est basé sur cgroups. Le futur de lmctfy est flou vu que Google avait commencé à migrer les concepts de lmctfy vers Docker;
+\item Docker, ce n'est pas une autre solution, mais il est basé sur LXC et fournit une couche de haut niveau accessible pour l'utilsateur;
+
+\end{itemize}
 
 \subsection{Etude comparative}
+
+Le choix de la solution a été proposé fortement par la société. On a opté pour une solution de containérisation (Docker) dans la mesure où un benchmark prouve son efficacité et sa légèreté.
+
+
+
+
 
 \section{Docker}
 
