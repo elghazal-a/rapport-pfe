@@ -26,7 +26,11 @@
 \input{frontmatter/resume.tex}
 \input{frontmatter/abstract.tex}
 
+\cleardoublepage
+% \phantomsection Uncomment the \phantomsection line if you're using hyperref
+\addcontentsline{toc}{chapter}{\listfigurename}
 \listoffigures
+
 \tableofcontents
 
 \input{frontmatter/introduction.tex}
