@@ -79,9 +79,24 @@ PaaS se situe quelque part entre IaaS et SaaS. Il est pas un produit fini, comme
 
 \subsection{Virtualisation}
 
-Avec des racines profondément ancrées dans l’informatique, la virtualisation sert à partitionner un seul serveur physique en plusieurs machines virtuelles, comme un espace de stockage ou un réseau, en plusieurs ressources virtuelles. Elle permet une consolidation de serveurs avec une grande souplesse d'utilisation. Dans le contexte de l’informatique en nuage, la virtualisation est importante pour la mise en service et le retrait rapide de serveurs. Un logiciel de virtualisation du Cloud présente également une perspective dynamique et une vue unifiée de l’utilisation et de l’efficacité des ressources, cela afin d’assurer le fonctionnement des services du Cloud. La virtualisation est la principale technologie permettant d’arriver à une utilisation rentable des serveurs tout en prenant en charge la séparation entre de multiples locataires d’un matériel physique. Il existe d’autres solutions pour arriver à ces objectifs, mais ses avantages en font l’approche de choix.
+Avec des racines profondément ancrées dans l'informatique, la virtualisation sert à partitionner un seul serveur physique en plusieurs machines virtuelles, comme un espace de stockage ou un réseau, en plusieurs ressources virtuelles. Elle permet une consolidation de serveurs avec une grande souplesse d'utilisation. Dans le contexte de l'informatique en nuage, la virtualisation est importante pour la mise en service et le retrait rapide de serveurs. Ceci étant dit, la scalabilité est la principale caractéristique du Cloud moderne, faute de cela, on ne peut en parler. Ainsi la virtualisation a permis de créer des machines virtuelle, les faire monter en charge à la demande, faire de la migration à chaud, etc. Un logiciel de virtualisation du Cloud présente également une perspective dynamique et une vue unifiée de l'utilisation et de l'efficacité des ressources, cela afin d'assurer le fonctionnement des services du Cloud. La virtualisation est une technologie permettant d'arriver à une utilisation rentable des serveurs tout en prenant en charge la séparation entre de multiples locataires d'un matériel physique.
+
+Il existe plusieurs solutions de virtualisation, l'on peut citer à titre informatif:
+
+\begin{itemize}
+\item VMware, Cette solution, séduisante, pose certains problèmes. En effet, il propose des outils propriétaires et incompatible avec le noyau Linux;
+
+\item Xen est un hyperviseur libre de machines virtuelles, il est considéré comme un outile de virtualisation des plus performants;
+
+\item KVM, Kernel-based Virtual Machine est devenue rapidement la solution de virtualisation de référence pour Linux. Elle est basée sur les architectures Intel ou les architectures AMD;
+
+\item QEMU, est un émulateur machine générique. C'est une solution de virtualisation à utiliser si le processeur de système hôte ne possède pas d'extension matérielle spécifique à la virtualisation.
+
+\end{itemize}
 
 \subsection{Containérisation}
+
+
 
 
 \subsection{Etude comparative}
