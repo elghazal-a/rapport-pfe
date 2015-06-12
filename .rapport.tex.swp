@@ -1,0 +1,56 @@
+\input{preamble/preamble.tex}
+
+
+\input{preamble/glossaire.tex}
+
+\begin{document}
+{\fontfamily{lmr}\selectfont
+
+
+
+\includepdf[pages={1}]{cover/cover.pdf}
+
+% \newpage
+% \thispagestyle{empty}
+% \begin{figure}
+% \centering
+% \includegraphics[trim = 0mm 0mm 0mm 150mm,width=0.7\linewidth]{frontmatter/assets/quran}\\
+% \includegraphics[trim = 0mm 30mm 0mm 0mm,width=0.65\linewidth]{frontmatter/assets/aya}
+% \end{figure}
+% \clearemptydoublepage
+
+% \input{frontmatter/dedi_majidi.tex}
+% \input{frontmatter/dedi_elghazal.tex}
+% \input{frontmatter/arigato.tex}
+
+\input{frontmatter/resume.tex}
+\input{frontmatter/abstract.tex}
+
+\cleardoublepage
+% \phantomsection Uncomment the \phantomsection line if you're using hyperref
+\addcontentsline{toc}{chapter}{\listfigurename}
+\listoffigures
+
+\tableofcontents
+
+\input{frontmatter/introduction.tex}
+
+
+\input{chapitre1/chapitre1.tex}
+\input{chapitre2/chapitre2.tex}
+\input{chapitre3/chapitre3.tex}
+\input{chapitre4/chapitre4.tex}
+
+\input{frontmatter/conclusion.tex}
+
+\clearpage
+\printglossary[title=Glossaire, type=\acronymtype]
+\clearpage
+\printglossary[title=Liste des abréviations, toctitle=Liste des abréviations, type=\acronymtype]
+
+% \include{biblio/biblio.tex}
+\appendix
+\input{biblio/appendix.tex}
+
+\newpage
+\end{document}

@@ -20,9 +20,9 @@ la Société SAYOO tient à fournir des services de qualité à ses clients. Le 
 
 Le service \emph{ERP} tient une importance capitale au sein de la société parce qu'il déploie des ressources importantes. Par ailleurs, toute relation avec une entreprise nécessite une rigueur et une grande attention.
 
-Un client qui désire gérer les ressources de son entreprise  doit rencontrer un responsable de la clientèle de SAYOO pour spécifier ses besoins. Le responsable propose une version personnalisée de la suite \emph{Odoo} (anciennement \emph{Open ERP}) au client pour une gestion efficace.Par la suite, la société qui s'est déjà procurée  3 différents serveurs (Développement, Evaluation, Production) doit déployer une version de \emph{Odoo} sur le serveur de développement pour que les développeurs effectuent les premières personnalisations. Le client doit avoir accès au serveur Développement pour confirmer ou refuser.En cas de confirmation, l'administration doit déploier la version souhaitée sur le serveur production et conserver la version d'évaluation au cas d'une nouvelle mise à jour ou maintenance.Le serveur Evaluation a pour but de faire découvrir le client une version standard ou améliorée de la suite \emph{Odoo}.  
+Un client qui désire gérer les ressources de son entreprise  doit rencontrer un responsable de la clientèle de SAYOO pour spécifier ses besoins. Le responsable propose une version personnalisée de la suite \emph{Odoo} (anciennement \emph{Open ERP}) au client pour une gestion efficace. Par la suite, la société qui s'est déjà procurée  3 différents serveurs (Développement, Evaluation, Production) doit déployer une version de \emph{Odoo} sur le serveur de développement pour que les développeurs effectuent les premières personnalisations. Le client doit avoir accès au serveur Développement pour confirmer ou refuser. En cas de confirmation, l'administration doit déploier la version souhaitée sur le serveur production et conserver la version d'évaluation au cas d'une nouvelle mise à jour ou maintenance.Le serveur Evaluation a pour but de faire découvrir le client une version standard ou améliorée de la suite \emph{Odoo}.  
 
-Pour une meilleure fiabilté, la société se procure 2 serveurs ( Déveleppoment, Production) par client. elle doit périodiquement effectuer des maintenances pour assurer la disponibilité de son service. Chaque client de la société se différentie seulement par sa personnalisation de la suite \emph{Odoo} donc les étapes de configuration sont redondantes pour tous les clients.Le temps de configuration et de déploiement reste important donc le client doit attendre pour accéder à son service après chaque maintenance.Les pré-requis de ce service sont relativement coûteux et affecte par conséquent le prix final du client.
+Pour une meilleure fiabilté, la société se procure 2 serveurs ( Déveleppoment, Production) par client. elle doit périodiquement effectuer des maintenances pour assurer la disponibilité de son service. Chaque client de la société se différentie seulement par sa personnalisation de la suite \emph{Odoo} donc les étapes de configuration sont redondantes pour tous les clients. Le temps de configuration et de déploiement reste important donc le client doit attendre pour accéder à son service après chaque maintenance. Les pré-requis de ce service sont relativement coûteux et affecte par conséquent le prix final du client.
   
 
 
@@ -42,7 +42,7 @@ Pour une meilleure fiabilté, la société se procure 2 serveurs ( Déveleppomen
 
 \subsection{Motivations}
 
-Il va s'en dire que le processus de la provision des applications ERP pour les clients est archaïque. D'où les motivations d'opter vers une solution cloud. Voici une liste des problèmes que rencontrent Sayoo lors du processus du déploiement actuel.
+Il va s'en dire que le processus de la provision des applications ERP pour les clients n'est pas optimale. D'où les motivations d'opter vers une solution cloud. Voici une liste des problèmes que rencontrent Sayoo lors du processus du déploiement actuel.
 
 \begin{itemize}
 
@@ -64,7 +64,19 @@ Il va s'en dire que le processus de la provision des applications ERP pour les c
 
 
 \section{Objectifs du projet}
+Ce projet vise principalement à améliorer le service ERP au sein de Sayoo par l'automatisation de certaines tâches notamment la configuration et le déploiement. L'objectif de ce projet est de déploier une architecture qui se caractérise par une haute disponibilité, une scalabilité selon les exigences et une sécurité sans faille. Par conséquent, cela revient à déployer une architecture \emph{cloud} qui répond aux exigences suivantes.
+\begin{itemize}
 
+\item Faciliter la configuration et le déploiement des instances Odoo pour les clients.
+
+\item Eviter les tâches répétitives et faciliter la personnalisation de Odoo.
+
+\item Réduire le coût en terme de temps et d'argent pour Sayoo.
+
+\item Inclure un mécanisme de supervision fiable et évolutif.
+
+\item Gérer aisement plusieurs clients en même temps.  
+ 
 
 
 
