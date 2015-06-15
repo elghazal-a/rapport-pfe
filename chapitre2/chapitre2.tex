@@ -234,6 +234,39 @@ En somme, il va s'en dire que Docker l'emporte largement par rapport à KVM, tan
 
 
 \section{Docker}
+\subsection{Présentation de Docker}
+Docker est un logiciel open source qui automatise le déploiement d'applications dans des conteneurs logiciels. C'est un outil qui peut empaqueter une application et ses dépendances dans un conteneur virtuel, qui pourra être exécuté sur n'importe quel serveur Linux ou Windows (Boot2Docker). En fait, Docker a pour objectif de \textbf{faciliter le déploiement d’applications}, d’avoir plusieurs versions d’une même application sur un son serveur (phase de développement, tests), mais aussi d’\textbf{automatiser le packaging d’applications}. Avec Docker, on s’oriente vers de l’intégration et du déploiement en continu grâce au système de container. De plus, Docker permet de garder son système de base propre, tout en installant de nouvelles fonctionnalités au sein de containers, on part d’une base qui est le système d’exploitation et on ajoute différentes briques conteneurisées. Docker a été distribué en tant que projet open source à partir de mars 2013.
+\begin{figure}[H]
+\centering
+\includegraphics [scale=0.5]{chapitre2/assets/docker.png}
+\caption{Logo de Docker}
+\end{figure}
+
+\subsection{Utilisation de Docker}
+Docker propose de nombreux templates qui permettent de déployer des applications en container, très rapidement. La communauté est très active, ce qui permet aux utilisateurs de disposer de nombreux containers applicatifs préfaits.
+Docker est basé sur LXC (Linux Containers) qui est une référence sous Linux quant à l’utilisation des containers. Par ailleurs, Docker intègre les éléments suivants :
+\begin{itemize}
+\item Control Groups : Fonctionnalité du noyau Linux pour limiter, compter et isoler les ressources (CPU, RAM, etc.) utilisées par un groupe de processus.
+\item AppArmor et SElinux : Gestion avancée des permissions aussi bien au niveau des applications qu’au niveau du système de fichiers.
+\item Kernel namespace : Fonctionnalité du noyau Linux qui permet l’isolation, afin de s’assurer qu’un container ne puisse pas en affecter un autre.
+\item chroot : Fonctionnalité qui permet de changer la racine d’un processus, afin de l’isoler sur un système par mesure de sécurité.
+\end{itemize}
+
+Docker propose des services pour effectuer facilement différentes actions : créer, éditer, publier et exécuter des containers. On parlera souvent des notions de containers, images et dockerfiles.
+
+\begin{itemize}
+\item DockerFile : Fichier source qui contient les instructions, éléments à installer, c’est un fichier de configuration.
+\item Image : Compilation d’un fichier DockerFile pour former une image portable, prête à être déployée.
+\item Container : Exécution d’une image, mise en container d’une image.
+\end{itemize}
+
+
+Le schéma suivant décrit le fonctionnement de l'outil \emph{Docker}: 
+\begin{figure}[H]
+\centering
+\includegraphics [scale=0.6]{chapitre2/assets/utilisation.png}
+\caption{Fonctionnement de Docker}
+\end{figure}
 
 \end{onehalfspace}
 \label{table:} % is used to refer this table in the text
