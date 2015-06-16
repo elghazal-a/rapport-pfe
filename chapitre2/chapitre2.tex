@@ -140,6 +140,96 @@ Contrairement à la virtualisation, la liste des solutions de containérisations
 Le choix de la solution a été proposé fortement par la société. On a opté pour une solution de containérisation (Docker) dans la mesure où un benchmark prouve son efficacité et sa légèreté.
 
 
+\begin{figure}[H]
+\centering
+\includegraphics [scale=0.5]{chapitre2/assets/vm-container.png}
+\caption{Virtualisation VS Containérisation}
+\end{figure}
+
+
+Dans la containérisation, ou la virtualisation au niveau du système d'exploitation, l'hôte et les invités partagent le même noyau. Cette approche réduit le gaspillage de ressources puisque chaque conteneur contient uniquement l'application et les bibliothèques et les binaires nécéssaires. Le rôle de l'hyperviseur est assurée par un moteur léger de la containérisation comme Docker, qui est installé au-dessus du système d'exploitation hôte.
+
+Le principal avantage des conteneurs c'est qu'ils sont libres de l'overhead du système d'exploitation contrairement aux machines virtuelles, ce qui leur rend considérablement plus légers, plus faciles à télécharger ainsi que plus rapides à lancer. Cet avantage permet également un serveur d'héberger potentiellement beaucoup plus de conteneurs que de machines virtuelles. Scalabilité, portabilité, facilité de déploiement sont quelques avantages.
+
+
+Lors de cette étude, nous allons se baser sur un travail réalisé par IBM*, où nous allons mettre l'accent sur les la différence des performances entre Docker et KVM. Le benchmark concerne 15 machines virtuelles simultanément en marche sous OpenStack.
+
+{\rowcolors{1}{tabOdd}{tabEven}
+\begin{center}
+\begin{table}[H]
+
+	\caption{Performances: Docker VS KVM \label{tab:table_label}}
+	\begin{tabular}{| c | c | c |} 
+
+
+	\hline
+	\rowcolor{tabHead}
+	\textbf{Tests} & \textbf{Docker} & \textbf{KVM}\\ [0.95ex] 
+	\hline\hline
+	Temps moyen de démarrage 					& 3.9s 				& 	5.88s \\ 
+	\hline\hline
+	Usage CPU démarrage (sys)					& 0.44\%			& 	2.08\% \\ 
+	\hline\hline
+	Usage CPU démarrage (usr)					& 1.14\% 			& 	12.6\% \\ 
+	\hline\hline
+	Usage de mémoire au démarrage				& 45.8Mb/VM 		& 	185Mb/VM \\ 
+	\hline\hline
+
+	Temps moyen de redémarrage 					& 2.54s 			& 	124.45s \\ 
+	\hline\hline
+	Usage CPU redémarrage (sys)					& 0.11\% 			& 	0.19\% \\ 
+	\hline\hline
+	Usage CPU redémarrage (usr)					& 0.34\% 			& 	0.82\% \\ 
+	\hline\hline
+	Usage de mémoire au redémarrage				& 57Mb	 			& 	467Mb	  \\ 
+	\hline\hline
+
+	Temps moyen de suppression 					& 4.09s 			& 	4.45s \\ 
+	\hline\hline
+
+	Temps moyen de Snapshot (VM to Image) 		& 26.39s 			& 	42.93s \\ 
+	\hline\hline
+	Usage CPU de Snapshot (sys)			 		& 0.11\% 			& 	1.07\% \\ 
+	\hline\hline
+	Usage CPU de Snapshot (usr)			 		& 0.4\% 			& 	1.58\% \\ 
+	\hline\hline
+	Usage de mémoire de Snapshot		 		& 48Mb 				& 	114Mb \\ 
+	\hline\hline
+
+	Usage de mémoire état stable				& 3.52s 			& 	5.87s \\ 
+	\hline\hline
+
+	Calcul des nombres premier jusqu'à 20000	& 15.11s 			& 	15.08s \\ 
+	\hline\hline
+
+	Débit du réseaux (Mbits/s)					& 940.26 			& 	940.56 \\ 
+	\hline
+	\end{tabular}
+\end{table}
+\end{center}
+}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics [width=160mm]{chapitre2/assets/file-io-read.png}
+\caption{Lecture du disque dur}
+\label{fig:}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics [width=160mm]{chapitre2/assets/file-io-write.png}
+\caption{Ecriture dans le disque dur}
+\label{fig:}
+\end{figure}
+
+
+En somme, il va s'en dire que Docker l'emporte largement par rapport à KVM, tant qu'en termes de la gestion des ressources (CPU, RAM) qu'en termes du temps consommé pour le démarrage, le redémarrage et la suppression. Par ailleurs, Docker est le meilleur dans lecture/écriture dans le disque dur et s'approche à des performances natives. Ainsi, Il serait donc judicieux de virtualiser les bases de données dans des conteneurs que dans des machines virtuelles. 
+
+
+
+
 
 
 
@@ -179,3 +269,4 @@ Le schéma suivant décrit le fonctionnement de l'outil \emph{Docker}:
 \end{figure}
 
 \end{onehalfspace}
+\label{table:} % is used to refer this table in the text
