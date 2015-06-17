@@ -29,4 +29,34 @@ Les capacités d'orchestration de Docker sont construites sur les fondations de 
 \includegraphics [scale=0.5]{chapitre3/assets/dockercompose.jpg}
 \caption{Docker Compose}
 \end{figure}
+\section{Orchestration Google}
+L'entreprise Google est aussi interessée par l'orchestration des conteneurs docker, elle a d'ailleurs lancée un projet nommée \textbf{Kubernetes}.Ce projet est récent mais très promoteur et pourrait révolutionner le domaine du Cloud s'il est suffisament mature pour la production. Kubernetes a pour objectif de fournir un outil de supervision unique capable de déplacer des conteneurs Docker d'un cloud à un autre. Autrement dit, de proposer une forme d’interopérabilité dans le nuage, via un framework de gestion des conteneurs solide, ouvert et adapté à toute application sur tous types d’environnements, qu’il s’agisse de Cloud privé, public ou hybride. Ce projet a le soutien et l'attention des géants du cloud notamment Microsoft, IBM, RedHat qui tiennent à s'assurer que cet outil sera compatible avec leurs clouds et l'associer au projet \textbf{Openstack} qui est l'orchestrateur du cloud hybride open source.
+\subsection{Architecture de Kubernetes}
+Kubernetes est un outil open-source pour l'orchestration des conteneurs Docker. Il gère l'ordonnancement des noeuds dans un \textbf{cluster} et gère les ressources pour mieux correspondre à l'intention de l'utilisateur. En Utilisant les concepts de "\emph{labels}" et "\emph{pods}", il permet un regroupement optimal des conteneurs pour une meilleure gestion et une découverte facile.
+\begin{figure}[H]
+\centering
+\includegraphics [scale=0.5]{chapitre3/assets/archkuber.png}
+\caption{Architecture de Kubernetes}
+\end{figure}
+
+\begin{itemize}
+\item \textbf{Kubernetes Master} : Il contrôle l'ensemble du cluster et exécute l'API pour le cluster. Fondamentalement, il est responsable du cluster.
+
+\item \textbf{Nodes} : Un nœud est un serveur physique (ou une machine virtuelle ) à l'intérieur du cluster. Il communique avec les maîtres et contient des conteneurs, on peut ajouter ou supprimer des noeuds à volonté.
+
+\item \textbf{Pods} : Un "Pod" est le bloque basique de construction dans \emph{Kubernetes}.Dans un pod, il est possible de lancer plusieurs conteneurs. L'allocation des CPU, mémoire et des autres ressources est gérée dans un pod. Chaque pod possède sa propre adresse ip et son nom d'hôte pour éviter d'éventuels conflicts de ports.
+
+\item \textbf{Replication Controller} : Il est vrai que le Pod est un composant puissant au sein de \emph{Kubernetes} mais il ne permet pas la gestion des échecs. Les échecs sont des événements inévitables bien qu'il faudrait que le service soit toujours disponible. c'est de ce fait qu'intervient \emph{Replication Controller}. Ce dernier s'assure qu'un nombre donné de pods sont exécutés au sein du cluster , il peut enlever et ajouter des pods du cluster donc il faudra définir un pod template pour assurer sa fonction.
+
+\item \textbf{Services} : les Pods sont ajoutés ou supprimés donc il faudrait permettre un \textbf{load-balancing} du traffic dans ses pods. "\emph{Service}" agit comme un \emph{load-balancer} dynamique pour un ensemble de pods, il est très efficace et utilise différentes techniques ( IP Tables, ...) pour éviter la surchage.
+
+\end{itemize}
+\begin{figure}[H]
+\centering
+\includegraphics [scale=0.5]{chapitre3/assets/kuber.png}
+\caption{Résumé de Kubernetes}
+\end{figure}
+
+ 
+
 \end{onehalfspace}
