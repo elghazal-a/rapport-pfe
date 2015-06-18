@@ -43,32 +43,40 @@
 \definecolor{mygreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
 \definecolor{mymauve}{rgb}{0.22,0.06,0.16}
+\definecolor{backcolor}{rgb}{0.95,0.95,0.92}
 \definecolor{tabHead}{HTML}{918F90}
 \definecolor{tabOdd}{HTML}{EEEEEE}
 \definecolor{tabEven}{HTML}{CCCCCC}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
 
 
 
 
-
-\DeclareCaptionFormat{listing}{#1#2#3}
-\captionsetup[lstlisting]{format=listing,singlelinecheck=false, margin=0pt, font={sf}}
+% \DeclareCaptionFormat{listing}{#1#2#3}
+% \captionsetup[lstlisting]{format=listing,singlelinecheck=false, margin=0pt, font={sf}}
 
 
 \lstdefinestyle{customc}{
-  backgroundcolor=\color{mymauve},
-  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
-  belowcaptionskip=1\baselineskip,
-  breaklines=true,
-  frame=L,
-  xleftmargin=\parindent,
-  language=bash,
-  showstringspaces=false,
-  basicstyle=\footnotesize\ttfamily,
-  keywordstyle=\bfseries\color{white},
-  commentstyle=\itshape\color{white},
-  identifierstyle=\color{white},
-  stringstyle=\color{white},
+  backgroundcolor=\color{backcolour},   
+  commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,
+    language=bash,
+    tabsize=2
 }
 \lstset{style=customc}
 
