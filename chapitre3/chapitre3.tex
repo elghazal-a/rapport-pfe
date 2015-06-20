@@ -57,6 +57,45 @@ Kubernetes est un outil open-source pour l'orchestration des conteneurs Docker. 
 \caption{Résumé de Kubernetes}
 \end{figure}
 
+\section{Orchestration Apache}
+L'entreprise Apache a toujours été intéressée par le domaine du Cloud, le lancement de son projet \textbf{Mesos} visait principalement à améliorer l'orchestration des \emph{"datacenters"} ceci bien avant l'emergence des conteneurs et docker. Le projet Mesos est très promoteur pour le futur avec les conteneurs bien qu'il soit déjà mature avec les machines virtuelles. Plusieurs grandes entreprise utilisent Mesos notamment \emph{Twitter}, \emph{Paypal} et \emph{Airbnb}.
+Mesos agit comme un "Cluster Manager" et offre de nombreuses fonctionnalités telles que :
+\begin{itemize}
+\item Une scalabilité à plus de 10000 noeuds.
+\item Isolement des ressources pour les tâches via les conteneurs linux (LXC).
+\item Gestion efficace du CPU et de la mémoire interne.
+\item Haute disponibilité du master via Apache Zookeeper.
+\item Une interface Web pour le monitoring des clusters.
+\end{itemize}
+\subsection{Architecture de Mesos}
+\emph{Mesos} possède une architecture composée principalement de maîtres, esclaves et "Frameworks". Nous définirons dans cette partie les composants pertinents de l'architecture suivante.
+\begin{figure}[H]
+\centering
+\includegraphics [scale=0.65]{chapitre3/assets/mesosarch.png}
+\caption{Architecture de Mesos}
+\end{figure}
+\begin{itemize}
+\item \textbf{Master daemon} : Il tourne dans noeud "master" et gère les esclaves.
+\item \textbf{Slave daemon} : Il tourne aussi dans un noeud "master" et exécute les tâches des "Frameworks".
+\item \textbf{Framework} : connu aussi par l'application Mesos, il est composé d'un ordonnaceur qui gère les offres d'allocation de ressources, et d'un ou plusieurs "executors" qui lancent les tâches sur les esclaves.
+\item \textbf{Offer} : C'est une liste des ressources disponibles de la mémoire et du CPU propre à un noeud esclave. Tous les noeuds esclaves envoient des offres pour le maître  et ce dernier transmet ces offres aux "frameworks" disponibles.
+\item  \textbf{Task} : c'est un tâche qui est ordonnancée par un "framework" et qui est exécutée dans un noeud esclave. Cette tâche peut être de n'importe quel type (commande, script bash ,requête SQL, Hadoop Job, ...)
+\item \textbf{Apache ZooKeeper }: C'est un logiciel qui coordonne les noeuds maîtres.
+\end{itemize}
+\subsection{Frameworks Mesos}
+Le framework ou l'application Mesos tient une importante place au sein de l'architecture. Dans cette partie , on présentera 2 importants frameworks qui sont \textbf{Marathon} et \textbf{Chronos}.
+\begin{figure}[H]
+\centering
+\includegraphics [scale=0.65]{chapitre3/assets/framework.png}
+\caption{Composants de l'architecture Mesos}
+\end{figure}
+\subsubsection{Marathon}
+\emph{Marathon} est un framework Mesos développé pour éxécuté les applications "\emph{long-running}". Il sert de remplacement pour le système \emph{init}. Il possède de nombreuses fonctionnalités qui simplifient les applications en cours d'exécution dans un environnement en cluster telles que la haute disponibilité, les contraintes de nœuds, des contrôles de santé de l'application, une API pour scriptabilité et la découverte de service et un outil facile à utiliser l'interface utilisateur Web UI. Il ajoute ses capacités de mise à l'échelle et d'auto- guérison de l'ensemble des fonctionnalités de Mesos. 
+\subsubsection{Chronos}
+\emph{Chronos} est une application Mesos qui a été initialement développé par Airbnb comme remplacement pour le système \emph{cron}.Il est un ordonnanceur pleinement fonctionnel , distribué et tolérant aux pannes pour \emph{Mesos}, ce qui facilite l'orchestration des "\emph{jobs}" qui sont des collections de tâches . Il comprend une API qui permet d'exécuter les scripts de la planification de tâches et une interface web pour la facilité d'utilisation.
+\emph{Chronos} est complémentaire à \emph{Marathon} car il fournit une autre façon d'exécuter des applications selon un calendrier ou d'autres conditions telles que la réalisationn d'un autre emploi. Il est également capable de la planification de tâches sur plusieurs noeuds esclaves Mesos, et fournit des statistiques sur les échecs et les réussites d'emploi.
+
+   
  
 
 \end{onehalfspace}
