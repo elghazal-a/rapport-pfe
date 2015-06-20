@@ -97,7 +97,7 @@ Historiquement, chroot dans le noyau Linux a fourni un certain niveau d'isolatio
 
 Cela a conduit à l'évolution de Linux Containers (LXC), un environnement de virtualisation au niveau du système d'exploitation qui est construit sur les fonctionnalités du noyau Linux mentionnés plus haut, comme chroot, cgroupes, l'isolation de l'espace de noms, etc.
 
-\paragraph{Cgroups}
+\subsubsection*{Cgroups}
 
 \begin{itemize}
 \item Isolation de l'usage des ressources (CPU, mémoire, E/S, etc.);
@@ -107,7 +107,7 @@ Cela a conduit à l'évolution de Linux Containers (LXC), un environnement de vi
 \item Contrôle: le gel des groupes ou des points de reprise et le redémarrage.
 \end{itemize}
 
-\paragraph{Namespaces}
+\subsubsection*{Namespaces}
 \begin{itemize}
 \item Partionnement des structures de kernel pour créer des environnements virtuels
 \item Des espaces de noms différents
@@ -124,7 +124,6 @@ Cela a conduit à l'évolution de Linux Containers (LXC), un environnement de vi
 \end{itemize}
 
 
-\paragraph{}
 Contrairement à la virtualisation, la liste des solutions de containérisations n'est pas aussi longue. La plupart d'eux se basent sur ou convergent vers cgroups et namespaces. L'on cite:
 
 \begin{itemize}
