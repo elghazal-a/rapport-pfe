@@ -25,7 +25,7 @@
 \usepackage{lettrine}
 \usepackage{fourier}
 
-\usepackage[pdftex,linkcolor=test,citecolor=vertsombre,colorlinks=true,pagebackref,bookmarks=true, plainpages=true,urlcolor=freeblue]{hyperref}
+\usepackage[pdftex,linkcolor=test,citecolor=vertsombre,colorlinks=true,bookmarks=true, plainpages=true,urlcolor=freeblue]{hyperref}
 
 \usepackage{pdfpages}
 \usepackage{fancyhdr}
@@ -47,6 +47,9 @@
 \newcommand*\l@subsubsubsection{\@dottedtocline{3}{10.0em}{4.1em}}
 \newcommand*{\subsubsubsectionmark}[1]{}
 \makeatother
+
+\usepackage[backend=biber]{biblatex}
+\addbibresource{biblio/ref.bib}
  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%     Couleurs      %%%%%%%%%%%

@@ -82,36 +82,13 @@ La scalabilité était toujours parmi nos aspirations tout au long de ce projet.
 	\item Lors d'un pic de charge, on a intérêt à lancer les nouveaux conteneurs dans un nouveau serveur. On va tout d'abord lancer avec le fichier d'initialisation du cluster. Désormais, de façon automatique, le serveur appartient au cluster. Ainsi, les conteneurs lancés sur ce nouveau serveur sont supervisés automatiquement comme le décrit le scénario 1.
 \end{itemize}
 
-Grafana, l'interface utilisateur, sera disponible dans la machine dans laquelle \emph{fleet} décide d'installer le trio Heapster/InfluxDB/Grafana. Cela signifie que Grafana peut changer de position dans le cluster à l'improviste et n'aura donc pas une adresse IP pour y accéder. Comme perspective, il serait préférable de mettre en place une sorte de proxy par lequel on accéde à Grafana partout où il soit.
+Grafana, l'interface utilisateur, sera disponible dans la machine dans laquelle \emph{Fleet} décide d'installer le trio Heapster, InfluxDB et Grafana. Cela signifie que Grafana peut changer de position dans le cluster à l'improviste et n'aura donc pas une adresse IP pour y accéder. Comme perspective, il serait préférable de mettre en place une sorte de proxy par lequel on accéde à Grafana partout où il soit.
 
 \subsection{Sécurité}
 
 
 \subsection{Messages logs}
 
-
-% Angular, en utilisant le mécanisme d'injection de dépendance, permet le couplage faible entre les composants de présentation, de données, et les composants métiers. En utilisant Angular des services côté serveur traditionnelles, telles que les vues, les contrôleurs et le routage passent au côté client. Par conséquent, une grande partie de la charge sur le backend est réduite, ce qui conduit à des applications beaucoup plus légères
-% \endnote
-% {
-% 	\textbf
-% 	{
-% 		Le framework AngularJs
-% 	}, [En ligne], 
-% 	\textit
-% 	{
-% 		date de consultation:
-% 	} 3/28/2014 
-% 	\textit
-% 	{
-% 		disponible sur:
-% 	} \\
-% 	\indent
-% 	\indent
-% 	\url
-% 	{
-% 		http://blog.tsoin.com/2013/09/28/introduction-a-angularjs
-% 	}
-% }
 
 
 \end{onehalfspace}
