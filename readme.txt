@@ -1,12 +1,17 @@
 How to generate glossary ?
-build report.tex
-[cd Output]
-makeglossaries report
-build report.tex
+build rapport.tex
+cd Output
+makeglossaries rapport
+build rapport.tex
 
+
+\newacronym{yaml}{YAML}{YAML Ain't Markup Language}
+\acrlong{yaml} 		=> YAML Ain't Markup Language
+\acrshort{yaml} 	=> YAML
+\acrfull{yaml}		=> YAML Ain't Markup Language (YAML)
+
+-----------------------------------------------------
 
 How to generate pdf cover ?
-cd cover
-build cover.tex
-cd ../
-build report.tex
+build cover/cover.tex
+build rapport.tex
