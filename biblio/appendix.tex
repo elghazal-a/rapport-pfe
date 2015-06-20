@@ -64,3 +64,82 @@
 	\begin{lstlisting}[language=bash,caption=Lancement d'Odoo avec Docker-compose]
 		$ docker-compose up -d
 	\end{lstlisting}
+
+
+\chapter{Installation du superviseur}
+	
+	Voici les fichiers d'installations de cAdvisor, InfluxDB, Heapster et Grafana. On va les charger dans le cluster puis les installer un à la suite de l'autre.
+
+	\begin{lstlisting}[language=,caption=cadvisor.service]
+		[Unit]
+		After=docker.service
+		Requires=docker.service
+		[Service]
+		Restart=always
+		ExecStartPre=/usr/bin/docker pull google/cadvisor:latest
+		ExecStartPre=-/bin/bash -c "docker inspect cadvisor >/dev/null 2>&1 && docker rm -f cadvisor || true"
+		ExecStart=/usr/bin/docker run --volume=/var/run:/var/run:rw --volume=/sys/fs/cgroup/:/sys/fs/cgroup:ro --volume=/var/lib/docker/:/var/lib/docker:ro --publish=8080:8080 --name=cadvisor google/cadvisor:latest
+		ExecStop=/usr/bin/docker rm -f cadvisor
+		[X-Fleet]
+		Global=true
+
+	\end{lstlisting}
+
+	\begin{lstlisting}[language=,caption=influxdb.service]
+		[Unit]
+		After=docker.service
+		Requires=docker.service
+		Rquires=docker_configs.mount
+		[Service]
+		ExecStartPre=-/usr/bin/docker kill influxdb
+		ExecStartPre=-/usr/bin/docker rm influxdb
+		ExecStartPre=/usr/bin/docker pull kubernetes/heapster_influxdb:v0.3
+		ExecStart=/usr/bin/docker run -p 8083:8083 -p 8086:8086 -v /data/influxdb:/data --hostname="influxdb" --name influxdb kubernetes/heapster_influxdb:v0.3
+		ExecStop=/usr/bin/docker stop nodejscluster
+		TimeoutStartSec=0
+		Restart=always
+		RestartSec=5s
+
+	\end{lstlisting}
+
+	\begin{lstlisting}[language=,caption=heapster.service]
+		[Unit]
+		After=docker.service
+		After=influxdb.service
+		Requires=docker.service
+		Requires=influxdb.service
+		[Service]
+		TimeoutStartSec=0
+		ExecStartPre=-/usr/bin/docker kill heapster
+		ExecStartPre=-/usr/bin/docker rm heapster
+		ExecStart=/bin/bash -c "HOST_IP=`getent hosts %H|/usr/bin/cut -d\" \" -f1`; /usr/bin/docker run --name heapster --link influxdb:influxdb kubernetes/heapster:v0.13.0 --source=\"cadvisor:coreos?fleetEndpoint=http://$HOST_IP:4001&cadvisorPort=8080\" --sink='influxdb:http://influxdb:8086'"
+		Restart=always
+		RestartSec=5
+		ExecStop=/usr/bin/docker stop heapster
+		[X-Fleet]
+		X-ConditionMachineOf=influxdb.service
+	\end{lstlisting}
+
+	\begin{lstlisting}[language=,caption=grafana.service]
+		[Unit]
+		After=docker.service
+		After=influxdb.service
+		Requires=docker.service
+		Requires=influxdb.service
+		[Service]
+		TimeoutStartSec=0
+		ExecStartPre=-/usr/bin/docker kill grafana
+		ExecStartPre=-/usr/bin/docker rm grafana
+		ExecStart=/usr/bin/docker run --name=grafana --link influxdb:influxdb -p 8090:8080 -e INFLUXDB_HOST=influxdb kubernetes/heapster_grafana:v0.7
+		Restart=always
+		RestartSec=5
+		ExecStop=/usr/bin/docker stop grafana
+		[X-Fleet]
+		X-ConditionMachineOf=influxdb.service
+	\end{lstlisting}	
+
+	\begin{lstlisting}[language=bash,caption=Lancement des services]
+		$ ssh core@104.154.75.6 
+		$ fleetctl load cadvisor.service
+		$ fleetctl start cadvisor.service
+	\end{lstlisting}
