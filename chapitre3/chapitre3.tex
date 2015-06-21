@@ -1,8 +1,77 @@
 \chapter{Orchestration des applications distribuées}
 \begin{onehalfspace}
-Docker est un outil qui a révolutionné le monde informatique par l'introduction de la notion de container, donc il est normal de chercher  à l'utiliser en production. De nos jours, les développeurs utilisent de plus en plus Docker pour déployer des applications qui s'éxecutent sur plusieurs conteneurs et plusieurs hôtes. Orchestrer ces applications distribuées nécessite une approche \textbf{multi-conteneur} et \textbf{multi-hôte} native avec une interface utilisateur et de l'outillage commun qui fonctionne sur toutes les infrastructures. Plusieurs outils ont été présentés par de grandes entreprises et sont toujours en cours de développement. Nous exposerons dans ce chapitre les projets promoteurs dans l'orchestration des applications distribuées.
+
+\initial{D}ocker est un outil qui a révolutionné le monde informatique par l'introduction de la notion de container, donc il est normal de chercher  à l'utiliser en production. De nos jours, les développeurs utilisent de plus en plus Docker pour déployer des applications qui s'éxecutent sur plusieurs conteneurs et plusieurs hôtes. Orchestrer ces applications distribuées nécessite une approche \textbf{multi-conteneur} et \textbf{multi-hôte} native avec une interface utilisateur et de l'outillage commun qui fonctionne sur toutes les infrastructures. Plusieurs outils ont été présentés par de grandes entreprises et sont toujours en cours de développement. Nous exposerons dans ce chapitre les projets promoteurs dans l'orchestration des applications distribuées.
+
+\newpage
+
+\section{Le clustering}
+
+Nous avons présenté dans le chapitre 2 le Cloud Computing ainsi que les services classiques que l'on peut trouver. Dans cette section, nous allons parler du cluster comme service et l'on va le situer dans le pyramide des services du Cloud (Figure ~\ref{fig:pyramide-cluster}, page~\pageref{fig:pyramide-cluster}).
+
+\begin{figure}[H]
+\centering
+\includegraphics [scale=0.7]{chapitre3/assets/pyramide}
+\caption{Le cluster dans le cloud}
+\label{fig:pyramide-cluster}
+\end{figure}
+
+\begin{itemize}
+	\item \textbf{Plate-forme}: On développe une application dans un ensemble particulier de langages de programmation à l'aide d'un ensemble particulier des \acrshort{api}s et l'on pousse ce code vers la plate-forme. La plate-forme exécute et lance une seule copie ou éventuellement plusieurs copies de celui-ci dépendemment du traffic, il monte en charge automatiquement. 
+	\item \textbf{\acrshort{iaas}}: A l'autre bout du pyramide, on trouve l'\acrshort{iaas}, seulement des machines virtuelles, donc ce sont des ordinateurs ordinaires, sauf qu'ils vivent essentiellement dans l'internet. Quand on va chez un fournisseur \acrshort{iaas} et l'on demande de nous fournir un ordinateur avec une telle quantité de mémoire et de disque, un tel nombre de \acrshort{cpu} et qui exécute une version spécifique de Linux; dans quelques secondes on a notre ordinateur où l'on peut exécuter n'importe quel logiciel, mais on est responsable de la gestion de la machine entière.
+	\item \textbf{Cluster}: C'est lorsque l'on veut gérer un ensemble de machines, un cluster de machines comme une seule entité, pas seulement un ordinateur individuel (\acrshort{iaas}) et pas toute une plate-forme magique parce que l'on veut faire plus. C'est une question d'agilité et de la flexibilité.
+
+\end{itemize}
+
+
+\def\arraystretch{1.6}%  1 is the default, change whatever you need
+
+{\rowcolors{1}{tabOdd}{tabEven}
+\begin{center}
+\begin{table}[H]
+
+	\caption{Le cluster dans le cloud \label{tab:table_label}}
+	\begin{tabu}{| X[c] | X[c] | X[c] | X[c] |} 
+
+
+	\hline
+	\rowcolor{tabHead}
+	\textbf{} & \textbf{IaaS (VMs)} & \textbf{Cluster} & \textbf{Plate-forme}\\ [0.95ex] 
+	\hline\hline
+	A quoi sert ? 	& Créer et déployer les images des machines virtuels & Créer et déployer des conteneurs & créer et déployer des applications (services) \\ 
+	Automatise					& - & Ordonnancement & Tout \\ 
+	gére					& Un seul atome & Des serveurs & Des applications \\ 
+	fléxibilité					& ++ 	& + 	& - \\ 
+	Agilité						& - 	& + 	& ++ \\ 
+	\hline
+	\end{tabu}
+\end{table}
+\end{center}
+}
+
+
+\begin{itemize}
+	\item Master: C'est la machine qui est responsable du cluster. Il veille sur son bon fonctionnement grâce au système de découverte des services et l'ordonnanceur
+	\item Ordonnanceur: Dans un ordinateur ordinaire, pour démarrer un processus, on a besoin d'un gestionnaire des processus pour les faire fonctionner et les garder en cours d'exécution. L'ordonnanceur le fera sur l'ensemble des machines (cluster)
+	\item Noeud: Une machine qui appartient au cluster, elle peut être réel ou virtuel
+	\item Gestionnaire des conteneurs: C'est la partie de logiciel qui est distribué dans chaque machine du cluster. Il supervise les conteneurs ordonnancés, les redémarre en cas de nécéssité...
+	\item Conteneurs ordonnancés: Un service fonctionne à l'intérieur d'un conteneur ordonnancé. En effet, ce conteneur ne s'est pas trouvé dans une telle machine par hasard ou suivant la volonté du développeur, mais parce que le développeur a déclaré à l'ordonnanceur de cluster, le maître, que le service a besoin, par exemple, d'exécuter dix copies de ce service, 3 coeurs, 2 Go de mémoire et peu de disque. L'ordonnanceur fournit pour le service un endroit où il peut vivre en paix.
+\end{itemize}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics [scale=0.55]{chapitre3/assets/cluster}
+\caption{Un cluster en général}
+\label{fig:}
+\end{figure}
+
+Nous avons vu la notion de cluster et les processus d'automatisation, d'organisation, de coordination, et de gestion de services informatiques distribués incontournables à son fonctionnement, c'est ce que l'on appelle \textbf{l'orchestration}. Dans la section suivante, nous allons détailler les différents solutions d'orchestration qui existent dans le monde de containérisation (Docker).
+
 \section{Orchestration Docker}
 Les capacités d'orchestration de Docker sont construites sur les fondations de l'engine Docker existante. Ces capacités sont assurées par trois nouveaux services de la plate-forme qui sont conçus pour couvrir tous les aspects du cycle de vie dynamique des applications distribuées. Selon l'entreprise Docker, toutes ces caractéristiques sont conçues avec la philosophie de conception "\emph{Batteries Included, but Removable}" qui indique qu'ils peuvent fonctionner avec des services tierces. Ceci offre le choix aux clients de choisir entre les différents outils d'orchestration de Docker et les alternatives communautaires.
+
+
 %\begin{figure}[H]
 %\centering
 %\includegraphics [scale=0.4]{chapitre3/assets/orchestrationdocker.png}

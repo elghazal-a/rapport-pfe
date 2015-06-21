@@ -57,7 +57,7 @@ Heapster est un projet open source de Google qui comble la limitation de cAdviso
 Nous allons installer ce système de supervision dans un cluster Deis dont les serveurs fonctionne au-dessus de CoreOS. Comme c'est déjà mentionné, tous les services, sous CoreOS, sont installés en tant que conteneur. L'on trouvera les fichiers d'installations dans les annexes.  
 
 \begin{itemize}
-	\item cAdvisor doit être installé sur tous les serveurs du cluster. Heureusement, l'ordonnanceur Fleet effectue cette opération de façon automatique et scalable. En effet, il suffit de mentionner \emph{Global=true} dans le fichier d'installation;
+	\item cAdvisor doit être installé sur tous les serveurs du cluster; Heureusement, l'ordonnanceur Fleet effectue cette opération de façon automatique et scalable. En effet, il suffit de mentionner \emph{Global=true} dans le fichier d'installation;
 	\item InfluxDB, Heapster et Grafana doivent être installé dans le même serveur. L'on exprime cette contrainte par \emph{X-ConditionMachineOf=influxdb.service}. Ainsi, Fleet va s'en sortir pour faire coexister les trois services.
 \end{itemize}
 
