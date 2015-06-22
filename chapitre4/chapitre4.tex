@@ -89,9 +89,14 @@ La scalabilité était toujours parmi nos aspirations tout au long de ce projet.
 
 Grafana, l'interface utilisateur, sera disponible dans la machine dans laquelle \emph{Fleet} décide d'installer le trio Heapster, InfluxDB et Grafana. Cela signifie que Grafana peut changer de position dans le cluster à l'improviste et n'aura donc pas une adresse IP pour y accéder. Comme perspective, il serait préférable de mettre en place une sorte de proxy par lequel on accéde à Grafana partout où il soit.
 
-\subsection{Sécurité}
+\subsection{Sécurité avec le protocole \acrshort{ssl}/\acrshort{tls}}
 
+C'est un système qui permet d'échanger des informations entre 2 ordinateurs de façon sûre. SSL assure 3 choses:
 
+Confidentialité: Il est impossible d'espionner les informations échangées.
+Intégrité: Il est impossible de truquer les informations échangées.
+Authentification: Il permet de s'assurer de l'identité du programme, de la personne ou de l'entreprise avec lequelle on communique.
+SSL est un complément à TCP/IP et permet (potentiellement) de sécuriser n'importe quel protocole ou programme utilisant TCP/IP.
 
 \subsection{Messages logs}
 
