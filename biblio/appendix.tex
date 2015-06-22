@@ -148,10 +148,10 @@
 
 \chapter{Installation de la PaaS Deis}
 
-\chapter{Douzes-éléments d'un SaaS}
+\chapter{Douze-éléments d'un SaaS}
 
 
-Dans l'informatique moderne, le logiciel est généralement livré comme un service: appelés \acrshort{saas}. Les douzes-éléments d'un SaaS est une méthodologie pour la création d'application qui:
+Dans l'informatique moderne, le logiciel est généralement livré comme un service: appelés \acrshort{saas}. Les douze-éléments d'un SaaS est une méthodologie pour la création d'application qui:
 
 \begin{itemize}
 	\item Réduit le temps et le coût pour les nouveaux développeurs participant au projet;
@@ -162,7 +162,7 @@ Dans l'informatique moderne, le logiciel est généralement livré comme un serv
 \end{itemize}
 
 
-La méthodologie des douzes-éléments synthétise l'éxpérience de l'équipe de Heroku, un des tout premiers services cloud \cite{12-factors}. Elles peut être appliquée à des applications écrites dans n'importe quel langage de programmation, et qui sont combinées à n'importe quel services (base de données, file d'attente, mémoire cache, etc.).
+La méthodologie des douze-éléments synthétise l'éxpérience de l'équipe de Heroku, un des tout premiers services cloud \cite{12-factors}. Elles peut être appliquée à des applications écrites dans n'importe quel langage de programmation, et qui sont combinées à n'importe quel services (base de données, file d'attente, mémoire cache, etc.).
 
 
 \section*{code source}
@@ -177,11 +177,20 @@ La plupart des langages de programmation un sytème de gestion de dépendances. 
 
 Les variables de configurations peuvent varier entre les environnements (développement, test, production, etc). Ces variables ne doivent jamais être stockées dans des constantes à l'intérieur du code. Une bonne pratique c'est les stocker dans des variables d'environnement.
 
-\section*{title}
+\section*{Services de support}
 
-
+Traiter tous les services de support (base de données, file d'attente, serveur \acrshort{smtp}, etc.)  comme des ressources liées.
 
 \section*{Build, release, run}
+
+Pour déployer une application, il faut passer par trois étapes:
+\begin{itemize}
+	\item build: transformer le code source en exécutable;
+	\item release: combiner l'exécutable avec les configurations;
+	\item run: lancer les processus dans l'environnement d'exécution .
+\end{itemize}
+
+
 \section*{Processus}
 
 Les processus d'une application doivent être \textbf{sans état} (stateless). Les données persistentes doivent être stockées dans une base de donnée.
@@ -192,6 +201,7 @@ Chaque service doit être exporté via un port.
 
 \section*{Concurrence}
 
+Les processus d'une application ne doivent jamais lancés comme un démon. Au lieu de cela,il faut compter sur le gestionnaire de processus du système d'exploitation (systemd, init.d, upstart, etc.).
 
 \section*{Jetable}
 
@@ -206,3 +216,5 @@ Il faut garder tous les environnements (développement, test, production, etc) s
 Les messages logs sont très importants, il faut les traiter comme des flux d'événements.
 
 \section*{Processus admin}
+
+Les taches d'administration doivent être exécutés dans un unique processus avec un environnement identique à celui du processus principal.
