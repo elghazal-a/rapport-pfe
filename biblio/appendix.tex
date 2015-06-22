@@ -148,4 +148,61 @@
 
 \chapter{Installation de la PaaS Deis}
 
-\chapter{Douzes éléments d'un SaaS}
+\chapter{Douzes-éléments d'un SaaS}
+
+
+Dans l'informatique moderne, le logiciel est généralement livré comme un service: appelés \acrshort{saas}. Les douzes-éléments d'un SaaS est une méthodologie pour la création d'application qui:
+
+\begin{itemize}
+	\item Réduit le temps et le coût pour les nouveaux développeurs participant au projet;
+	\item offre une \textbf{portabilité maximale} entre les environnements d'exécution;
+	\item Sont appropriées pour le \textbf{déploiement} sur les \textbf{plates-formes de cloud} modernes, éliminant ainsi la nécessité de serveurs et d'administration de systèmes;
+	\item \textbf{Réduit la divergence} entre le développement et la production, permettant un déploiement continu;
+	\item peut \textbf{monter en charge} sans toucher aux outils, à l'architecture, ou à les pratiques de développement.
+\end{itemize}
+
+
+La méthodologie des douzes-éléments synthétise l'éxpérience de l'équipe de Heroku, un des tout premiers services cloud \cite{12-factors}. Elles peut être appliquée à des applications écrites dans n'importe quel langage de programmation, et qui sont combinées à n'importe quel services (base de données, file d'attente, mémoire cache, etc.).
+
+
+\section*{code source}
+
+Le code source de l'application doit être unique mis et suivi depuis un système de contrôle de version comme Git.
+
+\section*{Dépendances}
+
+La plupart des langages de programmation un sytème de gestion de dépendances. Ainsi, une application doit déclarer explicitement et isoler les dépendances. Un SaaS robuste ne repose jamais sur l'éxistence implicite des dépendances. 
+
+\section*{Configuration}
+
+Les variables de configurations peuvent varier entre les environnements (développement, test, production, etc). Ces variables ne doivent jamais être stockées dans des constantes à l'intérieur du code. Une bonne pratique c'est les stocker dans des variables d'environnement.
+
+\section*{title}
+
+
+
+\section*{Build, release, run}
+\section*{Processus}
+
+Les processus d'une application doivent être \textbf{sans état} (stateless). Les données persistentes doivent être stockées dans une base de donnée.
+
+\section*{Attachement de port}
+
+Chaque service doit être exporté via un port.
+
+\section*{Concurrence}
+
+
+\section*{Jetable}
+
+Les processus d'une application sont jetables, ils peuvent être stoppés ou démarrés à n'importe quel moment rapidement et sans causer de problèmes.
+
+\section*{Parité Dev/Prod}
+
+Il faut garder tous les environnements (développement, test, production, etc) similaires.
+
+\section*{Messages logs}
+
+Les messages logs sont très importants, il faut les traiter comme des flux d'événements.
+
+\section*{Processus admin}
