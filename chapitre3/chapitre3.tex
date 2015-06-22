@@ -104,7 +104,7 @@ L'entreprise Google est aussi interessée par l'orchestration des conteneurs doc
 Kubernetes est un outil open-source pour l'orchestration des conteneurs Docker. Il gère l'ordonnancement des noeuds dans un \textbf{cluster} et gère les ressources pour mieux correspondre à l'intention de l'utilisateur. En Utilisant les concepts de "\emph{labels}" et "\emph{pods}", il permet un regroupement optimal des conteneurs pour une meilleure gestion et une découverte facile.
 \begin{figure}[H]
 \centering
-\includegraphics [scale=0.5]{chapitre3/assets/archkuber.png}
+\includegraphics [scale=0.4]{chapitre3/assets/archkuber.png}
 \caption{Architecture de Kubernetes}
 \end{figure}
 
@@ -120,11 +120,11 @@ Kubernetes est un outil open-source pour l'orchestration des conteneurs Docker. 
 \item \textbf{Services} : les Pods sont ajoutés ou supprimés donc il faudrait permettre un \textbf{load-balancing} du traffic dans ses pods. "\emph{Service}" agit comme un \emph{load-balancer} dynamique pour un ensemble de pods, il est très efficace et utilise différentes techniques ( IP Tables, ...) pour éviter la surchage.
 
 \end{itemize}
-\begin{figure}[H]
-\centering
-\includegraphics [scale=0.5]{chapitre3/assets/kuber.png}
-\caption{Résumé de Kubernetes}
-\end{figure}
+%\begin{figure}[H]
+%\centering
+%\includegraphics [scale=0.5]{chapitre3/assets/kuber.png}
+%\caption{Résumé de Kubernetes}
+%\end{figure}
 
 \section{Orchestration Apache}
 L'entreprise Apache a toujours été intéressée par le domaine du Cloud, le lancement de son projet \textbf{Mesos} visait principalement à améliorer l'orchestration des \emph{"datacenters"} ceci bien avant l'emergence des conteneurs et docker. Le projet Mesos est très promoteur pour le futur avec les conteneurs bien qu'il soit déjà mature avec les machines virtuelles. Plusieurs grandes entreprise utilisent Mesos notamment \emph{Twitter}, \emph{Paypal} et \emph{Airbnb}.
@@ -163,8 +163,34 @@ Le framework ou l'application Mesos tient une importante place au sein de l'arch
 \subsubsection{Chronos}
 \emph{Chronos} est une application Mesos qui a été initialement développé par Airbnb comme remplacement pour le système \emph{cron}.Il est un ordonnanceur pleinement fonctionnel , distribué et tolérant aux pannes pour \emph{Mesos}, ce qui facilite l'orchestration des "\emph{jobs}" qui sont des collections de tâches . Il comprend une API qui permet d'exécuter les scripts de la planification de tâches et une interface web pour la facilité d'utilisation.
 \emph{Chronos} est complémentaire à \emph{Marathon} car il fournit une autre façon d'exécuter des applications selon un calendrier ou d'autres conditions telles que la réalisationn d'un autre emploi. Il est également capable de la planification de tâches sur plusieurs noeuds esclaves Mesos, et fournit des statistiques sur les échecs et les réussites d'emploi.
-
-   
- 
-
+\section{Coreos}
+\textbf{Coreos} est un système d'exploitation open-source basé sur le noyau \emph{Linux} et construit pour fournir des infrastructures aux déploiements en cluster. En effet, il est un système minimaliste, sur lequel est greffé des conteneurs applicatifs indépendants et sécurisés. Coreos est conçu pour être léger et performant afin de gérer les datacenters. Coreos consomme 40\% moins de mémoire au démarrage en moyenne par rapport à un serveur linux. Coreos est disponible sur plusieurs plateforms comme Amazon Compute Cloud, Google Compute Engine et plusieurs autres.
+%\begin{figure}[H]
+%\centering
+%\includegraphics [scale=0.4]{chapitre3/assets/logocoreos.png}
+%\caption{Logo de Coreos}
+%\end{figure}
+\subsection{Composants de Coreos}
+\subsubsection{Le service systemd}
+\emph{systemd} est une suite de gestion de système, de bibliothèques et utilitaires conçus comme un système central de management et configuration pour le système d'exploitation Linux. Il est contrôle dans le système d'exploitation Coreos par le service \emph{Fleet}.
+\subsubsection{Le service etcd}
+Le service \emph{etcd} est une base de données distribuée de clé-valeur qui fournit une configuration partagée et un service de découverte pour les clusters Coreos.Il fonctionne sur chaque machine dans un cluster et gère l'élection du master lors des partitionnements réseaux ou la perte du master.
+\begin{figure}[H]
+\centering
+\includegraphics [scale=0.4]{chapitre3/assets/etcd-cluster.png}
+\caption{Service etcd.}
+\end{figure}
+\subsubsection{Le service Fleet}
+\emph{Fleet} permet de traiter le cluster \emph{Coreos} comme s'il partageait un unique système d'initialisation. Il encourage les uitlisateurs à écrire des applications sous forme de petites unités éphémères qui peuvent facilement migrer autour d'un cluster. En utilisant \emph{fleet}, les développeurs peuvent se concentrer sur la gestion des conteneurs sans soucier des machines qui tournent les conteneurs. Le service fleet a plusieurs avantages: 
+\begin{itemize}
+\item Déployer conteneurs docker sur des hôtes arbitraires dans un cluster.
+\item Distribuer des services à travers un cluster à l'aide de niveau machine anti-affinité.
+\item Découvrir les machines fonctionnant dans le cluster.
+\item SSH automatiquement dans la machine exécutant un emploi.
+\end{itemize}
+\begin{figure}[H]
+\centering
+\includegraphics [scale=0.5]{chapitre3/assets/fleet.png}
+\caption{Service management fleet.}
+\end{figure}
 \end{onehalfspace}
