@@ -163,8 +163,20 @@ Le framework ou l'application Mesos tient une importante place au sein de l'arch
 \subsubsection{Chronos}
 \emph{Chronos} est une application Mesos qui a été initialement développé par Airbnb comme remplacement pour le système \emph{cron}.Il est un ordonnanceur pleinement fonctionnel , distribué et tolérant aux pannes pour \emph{Mesos}, ce qui facilite l'orchestration des "\emph{jobs}" qui sont des collections de tâches . Il comprend une API qui permet d'exécuter les scripts de la planification de tâches et une interface web pour la facilité d'utilisation.
 \emph{Chronos} est complémentaire à \emph{Marathon} car il fournit une autre façon d'exécuter des applications selon un calendrier ou d'autres conditions telles que la réalisationn d'un autre emploi. Il est également capable de la planification de tâches sur plusieurs noeuds esclaves Mesos, et fournit des statistiques sur les échecs et les réussites d'emploi.
-
-   
- 
+\section{Coreos}
+\textbf{Coreos} est un système d'exploitation open-source basé sur le noyau \emph{Linux} et construit pour fournir des infrastructures aux déploiements en cluster. En effet, il est un système minimaliste, sur lequel est greffé des conteneurs applicatifs indépendants et sécurisés. Coreos est conçu pour être léger et performant afin de gérer les datacenters. Coreos consomme 40\% moins de mémoire au démarrage en moyenne par rapport à un serveur linux. Coreos est disponible sur plusieurs plateforms comme Amazon Compute Cloud, Google Compute Engine et plusieurs autres.
+%\begin{figure}[H]
+%\centering
+%\includegraphics [scale=0.4]{chapitre3/assets/logocoreos.png}
+%\caption{Logo de Coreos}
+%\end{figure}
+\subsection{Composants de Coreos}
+\subsubsection{etcd}
+\emph{etcd} est une base de données distribuée de clé-valeur qui fournit une configuration partagée et un service de découverte pour les clusters Coreos. \emph{etcd} fonctionne sur chaque machine dans un cluster et gère l'élection du master lors des partitionnements réseaux ou la perte du master.
+\begin{figure}[H]
+\centering
+\includegraphics [scale=0.4]{chapitre3/assets/etcd-cluster.png}
+\caption{Service etcd.}
+\end{figure}
 
 \end{onehalfspace}
