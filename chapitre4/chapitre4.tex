@@ -76,6 +76,21 @@ Nous allons installer ce système de supervision dans un cluster Deis dont les s
 
 \subsubsection{Interfaces graphique}
 
+Notre cluster se compose de trois serveurs. Les figures suivantes présentes la quantité totale de CPU et de la mémoire consommé par le cluster ainsi que les quantités consommées par chaque serveur. Nous aurions pu présenter pas mal de choses qu'offre Grafana.
+
+\begin{figure}[H]
+\centering
+\includegraphics [scale=0.6]{chapitre4/assets/cluster-cpu}
+\caption{Quantité de CPU consommées par le cluster}
+\label{fig:}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics [scale=0.6]{chapitre4/assets/cluster-memory}
+\caption{Quantité de mémoire consommées par le cluster}
+\label{fig:}
+\end{figure}
 
 
 \subsubsection{Supervision et scalabilité}
@@ -129,11 +144,6 @@ Après avoir activé le protocole \acrshort{https}, le navigateur envoie un arve
 \caption{Communication sécurisée avec le protocole HTTPS}
 \label{fig:https}
 \end{figure}
-
-
-
-\subsection{Messages logs}
-
 
 
 
