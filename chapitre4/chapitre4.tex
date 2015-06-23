@@ -91,12 +91,46 @@ Grafana, l'interface utilisateur, sera disponible dans la machine dans laquelle 
 
 \subsection{Sécurité avec le protocole \acrshort{ssl}/\acrshort{tls}}
 
-C'est un système qui permet d'échanger des informations entre 2 ordinateurs de façon sûre. SSL assure 3 choses:
+\subsubsection{\acrshort{ssl}/\acrshort{tls}}
 
-Confidentialité: Il est impossible d'espionner les informations échangées.
-Intégrité: Il est impossible de truquer les informations échangées.
-Authentification: Il permet de s'assurer de l'identité du programme, de la personne ou de l'entreprise avec lequelle on communique.
-SSL est un complément à TCP/IP et permet (potentiellement) de sécuriser n'importe quel protocole ou programme utilisant TCP/IP.
+\acrshort{ssl} est un protocole qui permet d'échanger des informations entre 2 ordinateurs de façon sûre. \acrshort{ssl} assure 3 choses:
+
+\begin{itemize}
+	\item \textbf{Confidentialité}: Il est impossible d'espionner les informations échangées;
+	\item \textbf{Intégrité}: Il est impossible de truquer les informations échangées;
+	\item \textbf{Authentification}: Il permet de s'assurer de l'identité du programme, de la personne ou de l'entreprise avec lequelle on communique.
+\end{itemize}
+
+
+
+Nous allons installer \acrshort{ssl} dans la plate-forme pour établir un lien crypté entre le navigateur et serveur (\acrshort{https}). Ce qui est intéréssant, c'est que lorsque \acrshort{ssl} est activé pour le cluster, il le sera pour toute les services qui s'exécute sur le cluster.
+
+
+\subsubsection{Installation}
+
+L'installation de SSL dans la plate-forme se fait en 2 étapes:
+\begin{itemize}
+	\item Générer d'une clé privée et une certificat signée. Normalement, la certificat doit être signé par les PKI, des parties tierces aux-quelles l'on fait confiance, qui chargent une somme d'argent annuelle. Dans un environnement de test, on peut se contenter par une certificat que nous allons signer nous même;
+	\item Attacher la clé privée et la certificat avec la plate-forme. En fait, elles doivent être installées dans l'équilibreur de charge. Il y a deux choix qui se portent à nous, soit les installer dans notre équilibreur de charge de \acrshort{gce} ou dans les proxy de Deis. Nous avons décidé de l'installer dans les équilibreurs de charge propres à Deis vu que c'est une solution portable et ne dépend pas de l'environnement où Deis est installé.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics [scale=0.5]{chapitre4/assets/certificat}
+\caption{Certificat non fiable}
+\label{fig:certificat}
+\end{figure}
+
+Après avoir activé le protocole \acrshort{https}, le navigateur envoie un arvertissement (Figure ~\ref{fig:certificat}, page~\pageref{fig:certificat}). En effet, nous avons signé la certificat nous-même au lieu de la déléguer à une partie tierne de confiance (\acrshort{pki}), ce qui devrait être fait en production. En dépit de cela, nous avons bel et bien sécurisé la communication (Figure ~\ref{fig:https}, page~\pageref{fig:https}).
+
+\begin{figure}[H]
+\centering
+\includegraphics [scale=0.5]{chapitre4/assets/https}
+\caption{Communication sécurisée avec le protocole HTTPS}
+\label{fig:https}
+\end{figure}
+
+
 
 \subsection{Messages logs}
 
