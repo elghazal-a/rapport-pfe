@@ -194,3 +194,48 @@ Le service \emph{etcd} est une base de données distribuée de clé-valeur qui f
 \caption{Service management fleet.}
 \end{figure}
 \end{onehalfspace}
+
+
+\section{Récapitulation}
+
+
+\def\arraystretch{1.6}%  1 is the default, change whatever you need
+
+{\rowcolors{1}{tabOdd}{tabEven}
+\begin{center}
+\begin{table}[H]
+
+	\caption{Matrice de décision pour le choix de solution d'orchestration \label{tab:table_label}}
+	\begin{tabu}{| X[c] | X[c] | X[c] |} 
+
+
+	\hline
+	\rowcolor{tabHead}
+	\textbf{CoreOS} & \textbf{Kubernetes} & \textbf{Mesos}\\ [0.95ex] 
+	\hline\hline
+	Etcd élit le leader du cluster 	& Un master par cluster & Haute disponibilité des masters \\ 
+	Orchestration bas niveau & Orchestration haut niveau & Orchestration bas niveau \\ 
+	Stable					& Version de pré-production & Stable \\ 
+	Rapidité d'instalation du cluster & Moins rapide & Moins rapide \\ 
+	Bien documenté & Documentation pauvre & Bien documenté \\ 
+	Inconscience vis-à-vis les ressources du cluster & Inconscience vis-à-vis les ressources du cluster & Ordonnancement conscient des ressources du cluster \\ 
+	Axé sur les conteneurs & Il rassemble des années d'éxpériences de Google avec l'orchestration des conteneurs	& moins axé sur les conteneurs \\ 
+	Destiné pour Docker & Destiné pour Docker	& Utilisé depuis des années pour l'orchestration de Hadoop, il vient de subir un réusinage de code pour supporter Docker \\ 
+	Limité & Complet (encore plus dans le futur) & Management générique du cluster, extensibilité par les différents ordonnanceurs \\ 
+	Pas de proxy et d'équilibreur de charge & Dispose de son propre proxy & Des proxy matures e,enfichables \\ 
+	\hline
+	\end{tabu}
+\end{table}
+\end{center}
+}
+
+
+Mesos, Kubernetes et CoreOS essaient tous de résoudre des problèmes très similaires, chaqu'un agit dans un niveau d'abstraction. L'on peut imaginer faire des combinaisons les trois solutions d'orchestration en cas de nécéssité:
+
+\begin{itemize}
+	\item \textbf{CoreOS + Kubernetes}: CoreOS est parfait pour créer rapidement un cluster. Il va ordonnancer les composants de base de Kubernetes dans le cluster. L'ordonnancement des conteneurs va être délégué à Kubernetes;
+	\item \textbf{Mesos + Kubernetes}: Mesos n'inclut pas nativement un ordonnanceur. L'extensibilité de Mesos fait qu'il est possible de laisser Kubernetes agir comme l'ordonnanceur de Mesos;
+	\item \textbf{CoreOS + Mesos + Kubernetes}: L'idée c'est de jouir de tous les points forts des solutions. En contrepartie, on perd en simplicité de l'architecture. A ne pas adopter qu'en cas de nécéssité.
+\end{itemize}
+
+Faute de maturité, nous allons adopter CoreOS pour sa stabilité, sa simplicité et sa documentation disponible en dépit qu'il est bas niveau.
