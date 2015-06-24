@@ -8,6 +8,32 @@
 \subsection{Base de donnée}
 
 
+Odoo, comme toute autre application, a besoin d'une base de donnée \emph{PostgreSQL} pour persister des informations. Malheureusement, la communauté de Docker n'est pas si satifsfaite vis-à-vis l'idée de containériser les bases de données. Nous allons prouver à travers deux scénarios qu'il serait une imprudence de tourner les bases de données dans des conteneurs.
+
+Le fait de la rapidé et la légèreté de Docker et des conteneurs en général a poussé CoreOS d'adopter une certaine philosophie à l'égard de la gestion et l'ordonnancement des conteneurs. En effet, lorsqu'un conteneur s'est arrêté pour une raison quelconque, il va être automatiquement écrasé et remplacé par un nouveau qui va tourner le même service. Une philosophie, certes, moins prudente et parait naive, mais sa simplicité épargne beaucoup de problèmes à tout le monde.
+
+Par conséquent, on ne peut en aucun cas mettre les données dans le système de fichiers d'un conteneur sous peine de les perdre. La figure \ref{fig:database1} montre qu'après avoir tuer un conteneur, ses données sont perdues.
+
+\begin{figure}[H]
+\centering
+\includegraphics [scale=0.5]{chapitre4/assets/database1}
+\caption{Données perdues - scénario 1}
+\label{fig:database1}
+\end{figure}
+
+Pour y remédier, l'on peut penser à monter le volume des données dans le serveur hôte, ainsi les données sont plus ou moins persistées. Outre le fait que les données seront certainement perdues quand le serveur tombe en panne, le conteneur n'aura plus accès aux données quand il sera réordonnancé. En effet, le caractère imprivisible de l'ordonnanceur \emph{Fleet} fait qu'il n'y a pas de garantie qu'un conteneur réside dans le même serveur. La figure \ref{fig:database2} montre ce scénario.
+
+\begin{figure}[H]
+\centering
+\includegraphics [scale=0.5]{chapitre4/assets/database2}
+\caption{Données perdues - scénario 2}
+\label{fig:database2}
+\end{figure}
+
+
+Dans un environnement de production, il est encore tôt pour mettre les bases de donnée et les applications à états (stateful) en général dans des conteneurs. De ce fait, il serait judicieux de les faire sortir de l'architecture à base de conteneurs. En effet, deux solutions se portent à nous, les bases de données vont être mis en place suivant l'informatique classique ou elles vont être consommées comme un service à partir d'une partie tierce cloud (Délégation de l'informatique). La dernière solution est couteuse mais il est plus fiable.
+
+
 \section{Réalisation à base d'un Cluster}
 
 
@@ -17,7 +43,7 @@
 
 \subsection{Supervision}
 
-La Paas \emph{Deis} ne dispose pas d'un système de supervision intégré. Puisque les services déployés dans Deis fonctionnenet entièrement à l'intérieur des conteneurs Docker, cela signifie que les outils de supervision des conteneurs Docker devraient fonctionner avec Deis. L'on va utiliser les plus matures d'entre eux.
+La \acrshort{paas} \emph{Deis} ne dispose pas d'un système de supervision intégré. Puisque les services déployés dans Deis fonctionnenet entièrement à l'intérieur des conteneurs Docker, cela signifie que les outils de supervision des conteneurs Docker devraient fonctionner avec Deis. L'on va utiliser les plus matures d'entre eux.
 
 
 \subsubsection{Outils de supervision utilisés}
