@@ -4,7 +4,6 @@
 \newpage
 
 \section{Conception}
-\subsection{}
 \subsection{Base de donnée}
 
 
@@ -32,6 +31,53 @@ Pour y remédier, l'on peut penser à monter le volume des données dans le serv
 
 
 Dans un environnement de production, il est encore tôt pour mettre les bases de donnée et les applications à états (stateful) en général dans des conteneurs. De ce fait, il serait judicieux de les faire sortir de l'architecture à base de conteneurs. En effet, deux solutions se portent à nous, les bases de données vont être mis en place suivant l'informatique classique ou elles vont être consommées comme un service à partir d'une partie tierce cloud (Délégation de l'informatique). La dernière solution est couteuse mais il est plus fiable.
+
+
+
+\subsection{Scalabilité et haute disponibilité}
+
+
+
+\ref{annexe:12factors}
+
+
+Parmi les  qui ont poussé Sayou à mi
+
+En fait, la scalabilité n'est pas apporté pas le Cloud seulement,  Ce n'est pas toute application déployé dans un milieu élastique Cloud peut être évolutive
+
+\begin{itemize}
+	\item Application \textbf{stateful} ou à états: 
+	\item Application \textbf{stateless} ou sans états: 
+\end{itemize}
+
+L'espace de mémoire ou système de fichiers du processus peuvent être utilisés comme une brève, cache une seule transaction. Par exemple, le téléchargement d'un fichier de grande taille, opérant sur elle, et de stocker les résultats de l'opération dans la base de données. L'application de douze facteur suppose que rien ne cache en mémoire ou sur le disque sera disponible sur une demande ou futur emploi - avec de nombreux processus de chaque type course, les chances sont élevées que la demande future sera servi par un procédé différent. Même lors de l'exécution un seul processus, un redémarrage (déclenché par code déploiement, le changement de configuration, ou l'environnement d'exécution de déménager le processus à un autre emplacement physique) sera généralement effacer tous (par exemple, la mémoire et système de fichiers) état local.
+
+\begin{figure}[H]
+\centering
+\includegraphics [scale=0.5]{chapitre4/assets/stateful}
+\caption{Service non scalable}
+\label{fig:}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics [scale=0.5]{chapitre4/assets/stateless}
+\caption{Service scalable}
+\label{fig:}
+\end{figure}
+
+
+
+\subsection{Architecture}
+
+\begin{figure}[H]
+\centering
+\includegraphics [scale=0.7]{chapitre4/assets/architecture}
+\caption{Achitecture de la solution}
+\label{fig:}
+\end{figure}
+
+
 
 
 \section{Réalisation à base d'un Cluster}
@@ -170,7 +216,6 @@ Après avoir activé le protocole \acrshort{https}, le navigateur envoie un arve
 \caption{Communication sécurisée avec le protocole HTTPS}
 \label{fig:https}
 \end{figure}
-
 
 
 \end{onehalfspace}
