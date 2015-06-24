@@ -1,10 +1,9 @@
-\chapter{Conception et réalisation}
+\chapter{Conception}
 \begin{onehalfspace}
 
 \newpage
 
-\section{Conception}
-\subsection{Base de donnée}
+\section{Base de donnée}
 
 
 Odoo, comme toute autre application, a besoin d'une base de donnée \emph{PostgreSQL} pour persister des informations. Malheureusement, la communauté de Docker n'est pas si satifsfaite vis-à-vis l'idée de containériser les bases de données. Nous allons prouver à travers deux scénarios qu'il serait une imprudence de tourner les bases de données dans des conteneurs.
@@ -34,7 +33,7 @@ Dans un environnement de production, il est encore tôt pour mettre les bases de
 
 
 
-\subsection{Scalabilité et haute disponibilité}
+\section{Scalabilité et haute disponibilité}
 
 
 
@@ -68,7 +67,7 @@ L'espace de mémoire ou système de fichiers du processus peuvent être utilisé
 
 
 
-\subsection{Architecture}
+\section{Architecture}
 
 \begin{figure}[H]
 \centering
@@ -80,142 +79,6 @@ L'espace de mémoire ou système de fichiers du processus peuvent être utilisé
 
 
 
-\section{Réalisation à base d'un Cluster}
-
-
-\section{Réalisation à base d'un mini PaaS}
-
-
-
-\subsection{Supervision}
-
-La \acrshort{paas} \emph{Deis} ne dispose pas d'un système de supervision intégré. Puisque les services déployés dans Deis fonctionnenet entièrement à l'intérieur des conteneurs Docker, cela signifie que les outils de supervision des conteneurs Docker devraient fonctionner avec Deis. L'on va utiliser les plus matures d'entre eux.
-
-
-\subsubsection{Outils de supervision utilisés}
-
-
-\subsubsubsection*{cAdvisor}
-
-
-
-\begin{wrapfigure}{l}{3.5cm}
-\centering
-\includegraphics[scale=0.2]{chapitre4/assets/cadvisor}
-\end{wrapfigure}
-\noindent \emph{cAdvisor} (Container Advisor) fournit aux utilisateurs de conteneurs une vue de l'utilisation des ressources et des caractéristiques de performance de leurs conteneurs en cours d'exécution. C'est un démon, toujours en exécution, qui recueille, agrège, analyse, et exporte informations sur l'exécution des conteneurs. Plus précisément, pour chaque conteneur, il conserve l'historique de l'utilisation des ressources, les histogrammes des historiques complets d'utilisation des ressources et des statistiques du réseau. Ces données peuvent être exportées pour chaque conteneur ou pour toute la machine.
-
-cAdvisor a un support natif pour les conteneurs Docker et devrait supporter à peu près tout autre solution de containérisation. Par ailleurs, cAdvisor fournit une interface utilisateur ainsi qu'une REST API.
-
-
-\subsubsubsection*{Heapster}
-
-Heapster est un projet open source de Google qui comble la limitation de cAdvisor qui supervise un seul serveur. Heapster receuille les données à travers les HTTP API fournit par les cAdvisor installés sur les serveurs, puis les stocker dans la base de donnée InfluxDB. Ainsi, Heapster est considéré comme un superviseur au niveau du cluster.
-
-\subsubsubsection*{InfluxDB}
-
-\begin{wrapfigure}{l}{3.5cm}
-\centering
-\includegraphics[scale=0.2]{chapitre4/assets/influxdb}
-\end{wrapfigure}
-\noindent Influxdb est une base de donnée distribuée destinée pour le stockage des métriques, des événements et des analyses de performances. Influxdb est simple à installer et à gerer, et rapide car il vise à répondre aux requête en temps-réel. En effet, chaque point de données est indéxé et diponible pour des requêtes qui retournent des réponses dans < 100 ms. Enfin, il dispose d'une HTTP API intégré qui va être sollicité par l'interface utilisateur Grafana.
-
-\subsubsubsection*{Grafana}
-
-\begin{wrapfigure}{l}{3.5cm}
-\centering
-\includegraphics[scale=0.3]{chapitre4/assets/grafana}
-\end{wrapfigure}
-\noindent Grafana est l'un des meilleurs projets open source pour la visualisation des données de mesure. Il fournit un moyen puissant et élégant pour créer, partager et explorer les données et les tableaux de bord à partir des bases de données de métriques. Grafana assure un support riche pour les bases de données Graphite, InfluxDB et OpenTSDB. Grafana sera utilisé pour visualiser les mesures stockées dans InfluxDB.
-
-
-\subsubsection{Démarche d'installation}
-
-Nous allons installer ce système de supervision dans un cluster Deis dont les serveurs fonctionne au-dessus de CoreOS. Comme c'est déjà mentionné, tous les services, sous CoreOS, sont installés en tant que conteneur. L'on trouvera les fichiers d'installations dans les annexes.  
-
-\begin{itemize}
-	\item cAdvisor doit être installé sur tous les serveurs du cluster; Heureusement, l'ordonnanceur Fleet effectue cette opération de façon automatique et scalable. En effet, il suffit de mentionner \emph{Global=true} dans le fichier d'installation;
-	\item InfluxDB, Heapster et Grafana doivent être installé dans le même serveur. L'on exprime cette contrainte par \emph{X-ConditionMachineOf=influxdb.service}. Ainsi, Fleet va s'en sortir pour faire coexister les trois services.
-\end{itemize}
-
-\begin{figure}[H]
-\centering
-\includegraphics [scale=0.6]{chapitre4/assets/monitoring-cluster}
-\caption{Architecture de la supervision}
-\label{fig:}
-\end{figure}
-
-
-\subsubsection{Interfaces graphique}
-
-Notre cluster se compose de trois serveurs. Les figures suivantes présentes la quantité totale de CPU et de la mémoire consommé par le cluster ainsi que les quantités consommées par chaque serveur. Nous aurions pu présenter pas mal de choses qu'offre Grafana.
-
-\begin{figure}[H]
-\centering
-\includegraphics [scale=0.6]{chapitre4/assets/cluster-cpu}
-\caption{Quantité de CPU consommées par le cluster}
-\label{fig:}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics [scale=0.6]{chapitre4/assets/cluster-memory}
-\caption{Quantité de mémoire consommées par le cluster}
-\label{fig:}
-\end{figure}
-
-
-\subsubsection{Supervision et scalabilité}
-
-La scalabilité était toujours parmi nos aspirations tout au long de ce projet. Le système de supervision réalisé est conçu pour fonctionner de façon indépendante, complétement automatisée et hautement scalable. Nous allons prouver cela à travers ces deux scénarios:
-
-\begin{itemize}
-	\item Quand un nouveau service est lancé sur un des serveurs du cluster, cAdvisor se rendra compte de ce nouveau conteneur et va mettra à la disposition de Heapster les données qui va les stocker dans la base de données pour des consultations via l'interface graphique;
-	\item Lors d'un pic de charge, on a intérêt à lancer les nouveaux conteneurs dans un nouveau serveur. On va tout d'abord lancer avec le fichier d'initialisation du cluster. Désormais, de façon automatique, le serveur appartient au cluster. Ainsi, les conteneurs lancés sur ce nouveau serveur sont supervisés automatiquement comme le décrit le scénario 1.
-\end{itemize}
-
-Grafana, l'interface utilisateur, sera disponible dans la machine dans laquelle \emph{Fleet} décide d'installer le trio Heapster, InfluxDB et Grafana. Cela signifie que Grafana peut changer de position dans le cluster à l'improviste et n'aura donc pas une adresse IP pour y accéder. Comme perspective, il serait préférable de mettre en place une sorte de proxy par lequel on accéde à Grafana partout où il soit.
-
-\subsection{Sécurité avec le protocole \acrshort{ssl}/\acrshort{tls}}
-
-\subsubsection{\acrshort{ssl}/\acrshort{tls}}
-
-\acrshort{ssl} est un protocole qui permet d'échanger des informations entre 2 ordinateurs de façon sûre. \acrshort{ssl} assure 3 choses:
-
-\begin{itemize}
-	\item \textbf{Confidentialité}: Il est impossible d'espionner les informations échangées;
-	\item \textbf{Intégrité}: Il est impossible de truquer les informations échangées;
-	\item \textbf{Authentification}: Il permet de s'assurer de l'identité du programme, de la personne ou de l'entreprise avec lequelle on communique.
-\end{itemize}
-
-
-
-Nous allons installer \acrshort{ssl} dans la plate-forme pour établir un lien crypté entre le navigateur et serveur (\acrshort{https}). Ce qui est intéréssant, c'est que lorsque \acrshort{ssl} est activé pour le cluster, il le sera pour toute les services qui s'exécute sur le cluster.
-
-
-\subsubsection{Installation}
-
-L'installation de SSL dans la plate-forme se fait en 2 étapes:
-\begin{itemize}
-	\item Générer d'une clé privée et une certificat signée. Normalement, la certificat doit être signé par les PKI, des parties tierces aux-quelles l'on fait confiance, qui chargent une somme d'argent annuelle. Dans un environnement de test, on peut se contenter par une certificat que nous allons signer nous même;
-	\item Attacher la clé privée et la certificat avec la plate-forme. En fait, elles doivent être installées dans l'équilibreur de charge. Il y a deux choix qui se portent à nous, soit les installer dans notre équilibreur de charge de \acrshort{gce} ou dans les proxy de Deis. Nous avons décidé de l'installer dans les équilibreurs de charge propres à Deis vu que c'est une solution portable et ne dépend pas de l'environnement où Deis est installé.
-\end{itemize}
-
-\begin{figure}[H]
-\centering
-\includegraphics [scale=0.5]{chapitre4/assets/certificat}
-\caption{Certificat non fiable}
-\label{fig:certificat}
-\end{figure}
-
-Après avoir activé le protocole \acrshort{https}, le navigateur envoie un arvertissement (Figure ~\ref{fig:certificat}, page~\pageref{fig:certificat}). En effet, nous avons signé la certificat nous-même au lieu de la déléguer à une partie tierne de confiance (\acrshort{pki}), ce qui devrait être fait en production. En dépit de cela, nous avons bel et bien sécurisé la communication (Figure ~\ref{fig:https}, page~\pageref{fig:https}).
-
-\begin{figure}[H]
-\centering
-\includegraphics [scale=0.5]{chapitre4/assets/https}
-\caption{Communication sécurisée avec le protocole HTTPS}
-\label{fig:https}
-\end{figure}
 
 
 \end{onehalfspace}
