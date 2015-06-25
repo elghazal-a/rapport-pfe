@@ -33,40 +33,6 @@ Dans un environnement de production, il est encore tôt pour mettre les bases de
 
 
 
-\section{Scalabilité et haute disponibilité}
-
-
-
-\ref{annexe:12factors}
-
-
-Parmi les  qui ont poussé Sayou à mi
-
-En fait, la scalabilité n'est pas apporté pas le Cloud seulement,  Ce n'est pas toute application déployé dans un milieu élastique Cloud peut être évolutive
-
-\begin{itemize}
-	\item Application \textbf{stateful} ou à états: 
-	\item Application \textbf{stateless} ou sans états: 
-\end{itemize}
-
-L'espace de mémoire ou système de fichiers du processus peuvent être utilisés comme une brève, cache une seule transaction. Par exemple, le téléchargement d'un fichier de grande taille, opérant sur elle, et de stocker les résultats de l'opération dans la base de données. L'application de douze facteur suppose que rien ne cache en mémoire ou sur le disque sera disponible sur une demande ou futur emploi - avec de nombreux processus de chaque type course, les chances sont élevées que la demande future sera servi par un procédé différent. Même lors de l'exécution un seul processus, un redémarrage (déclenché par code déploiement, le changement de configuration, ou l'environnement d'exécution de déménager le processus à un autre emplacement physique) sera généralement effacer tous (par exemple, la mémoire et système de fichiers) état local.
-
-\begin{figure}[H]
-\centering
-\includegraphics [scale=0.5]{chapitre4/assets/stateful}
-\caption{Service non scalable}
-\label{fig:}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics [scale=0.5]{chapitre4/assets/stateless}
-\caption{Service scalable}
-\label{fig:}
-\end{figure}
-
-
-
 \section{Architecture}
 
 \begin{figure}[H]
@@ -76,9 +42,51 @@ L'espace de mémoire ou système de fichiers du processus peuvent être utilisé
 \label{fig:}
 \end{figure}
 
+L'architecture est très simplifiée car on a fait abstraction du comportement de plusieurs composants Fleet-etcd-Systemd
+
+
+Il y a trois composants
+
+-Client
+
+-Développeur
+
+-
 
 
 
+\section{Scalabilité et disponibilité}
+
+
+Parmi les contraintes qui ont poussé Sayoo à migrer vers une le Cloud, c'est de garantir une scalabilité infinie et une haute disponibilité.
+
+La haute disponibilité fait référence au fait qu'un service est en quelque sorte tolérant à une échec ou à une panne. Nous allons réaliser cela en faisant la redondance des services dans différents serveurs du cluser.
+
+La scalabilité ou l'évolutivité c'est la capacité d'une application à pouvoir exploiter des nouvelles ressources récemment déployées pour répondre à un pic de charge. En fait, la scalabilité n'est pas apporté par le Cloud, qui lui apporte l'élasticité, mais c'est l'application elle-même qui l'apporte. L'idée que toute application déployée dans un milieu élastique Cloud peut être évolutive est fausse.
+
+
+En effet, la figure \ref{fig:non-scalable} 
+s
+\begin{itemize}
+	\item Application \textbf{stateful} ou à états: C'est une application dont les processus ne stockent aucune donnée qui doit persister, même dans un temps aussi petit qu'il soit, dans son espace mémoire ou système de fichiers;
+	\item Application \textbf{stateless} ou sans états: C'est une application qui stocke tous les données persistentes dans un service de support externe (Base de donnée, queue, mémoire cache, etc.).
+\end{itemize}
+
+L'espace de mémoire ou le système de fichiers du processus peuvent être utilisés comme un cache. Par exemple, le stockage les résultats d'une opération coûteuse comme une requête vers la base de données. L'application de douze facteur suppose que rien ne cache en mémoire ou sur le disque sera disponible sur une demande ou futur emploi - avec de nombreux processus de chaque type course, les chances sont élevées que la demande future sera servi par un procédé différent. Même lors de l'exécution un seul processus, un redémarrage (déclenché par un déploiement, un changement de configuration, ou un réordonnancement) éffacera les états locals (mémoire, système de fichiers, etc.).
+
+\begin{figure}[H]
+\centering
+\includegraphics [scale=0.5]{chapitre4/assets/stateful}
+\caption{Service non scalable}
+\label{fig:non-scalable}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics [scale=0.5]{chapitre4/assets/stateless}
+\caption{Service scalable}
+\label{fig:scalable}
+\end{figure}
 
 
 \end{onehalfspace}
