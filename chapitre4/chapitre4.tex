@@ -81,15 +81,13 @@ La figure \ref{fig:non-scalable} montre un service qui n'est évolutive contrair
 \label{fig:}
 \end{figure}
 
-L'architecture est très simplifiée car on a fait abstraction du comportement de plusieurs composants Fleet-etcd-Systemd
+L'architecture est très simplifiée car on a fait abstraction du comportement internes des composants de CoreOS. Elle décrit trois processus et implique trois acteurs:
 
-
-L'architecture décrit trois processus et implique trois acteurs:
 
 \begin{itemize}
- 	\item Développeur: Il développe, personnalise et adapte l'image Odoo de base aux besoin du client,
- 	\item Exploitant:
- 	\item Client:
+ 	\item Développeur: Il développe, personnalise et adapte l'image Odoo de base aux besoin du client. Une fois le développement est fait, le développeur pousse l'image Odoo vers le registre des images de Docker. Cette image est étiquetée par un nom, une version et un environnement (dévelopement, test, production);
+ 	\item Exploitant: Il exploite l'ordonnanceur Fleet pour déployer l'application que le développeur vient de pousser dans le registre. L'exploitant va demander à l'ordonnanceur, par exemple, de lancer le service en mode haute disponibilité. L'ordonnanceur lance plusieurs instances du service dans des serveurs différents. L'exploitant, remarquant un pic de charge sur ce service, va demander de lancer une autre instance qui compense la surcharge;
+ 	\item Client: C'est l'utilisateur final de l'application. Il va saisir l'\acrshort{url} de son application. Son requête tombe dans un équilibreur de charge qui va faire suivre la demande à un des serveurs du cluster. Quand la requête est arrivée, il tombe sur le proxy de ce serveur qui va faire suivre la requête à l'instance du service la plus disponible, quitte même à la faire suivre vers une instance dans un autre serveur.
  \end{itemize} 
 
 
