@@ -6,9 +6,10 @@
 \section{Base de donnée}
 
 
-Odoo, comme toute autre application, a besoin d'une base de donnée \emph{PostgreSQL} pour persister des informations. Malheureusement, la communauté de Docker n'est pas si satifsfaite vis-à-vis l'idée de containériser les bases de données. Nous allons prouver à travers deux scénarios qu'il serait une imprudence de tourner les bases de données dans des conteneurs.
 
-Le fait de la rapidé et la légèreté de Docker et des conteneurs en général a poussé CoreOS d'adopter une certaine philosophie à l'égard de la gestion et l'ordonnancement des conteneurs. En effet, lorsqu'un conteneur s'est arrêté pour une raison quelconque, il va être automatiquement écrasé et remplacé par un nouveau qui va tourner le même service. Une philosophie, certes, moins prudente et parait naive, mais sa simplicité épargne beaucoup de problèmes à tout le monde.
+Odoo, comme toute autre application, a besoin d'une base de donnée \emph{PostgreSQL} pour persister des informations. Malheureusement, la communauté de Docker n'est pas si satisfaite vis-à-vis l'idée de containériser les bases de données. Nous allons prouver à travers deux scénarios qu'il serait une imprudence de tourner les bases de données dans des conteneurs.
+
+Le fait de la rapidité et la légèreté de Docker et des conteneurs en général a poussé CoreOS d'adopter une certaine philosophie à l'égard de la gestion et l'ordonnancement des conteneurs. En effet, lorsqu'un conteneur s'est arrêté pour une raison quelconque, il va être automatiquement écrasé et remplacé par un nouveau qui va tourner le même service. Une philosophie, certes, moins prudente et parait naïve, mais sa simplicité épargne beaucoup de problèmes à tout le monde.
 
 Par conséquent, on ne peut en aucun cas mettre les données dans le système de fichiers d'un conteneur sous peine de les perdre. La figure \ref{fig:database1} montre qu'après avoir tuer un conteneur, ses données sont perdues.
 
@@ -19,7 +20,7 @@ Par conséquent, on ne peut en aucun cas mettre les données dans le système de
 \label{fig:database1}
 \end{figure}
 
-Pour y remédier, l'on peut penser à monter le volume des données dans le serveur hôte, ainsi les données sont plus ou moins persistées. Outre le fait que les données seront certainement perdues quand le serveur tombe en panne, le conteneur n'aura plus accès aux données quand il sera réordonnancé. En effet, le caractère imprivisible de l'ordonnanceur \emph{Fleet} fait qu'il n'y a pas de garantie qu'un conteneur réside dans le même serveur. La figure \ref{fig:database2} montre ce scénario.
+Pour y remédier, l'on peut penser à monter le volume des données dans le serveur hôte, ainsi les données sont plus ou moins persistées. Outre le fait que les données seront certainement perdues quand le serveur tombe en panne, le conteneur n'aura plus accès aux données quand il sera réordonnancé. En effet, le caractère imprévisible de l'ordonnanceur \emph{Fleet} fait qu'il n'y a pas de garantie qu'un conteneur réside dans le même serveur. La figure \ref{fig:database2} montre ce scénario.
 
 \begin{figure}[H]
 \centering
@@ -31,6 +32,44 @@ Pour y remédier, l'on peut penser à monter le volume des données dans le serv
 
 Dans un environnement de production, il est encore tôt pour mettre les bases de donnée et les applications à états (stateful) en général dans des conteneurs. De ce fait, il serait judicieux de les faire sortir de l'architecture à base de conteneurs. En effet, deux solutions se portent à nous, les bases de données vont être mis en place suivant l'informatique classique ou elles vont être consommées comme un service à partir d'une partie tierce cloud (Délégation de l'informatique). La dernière solution est couteuse mais il est plus fiable.
 
+
+
+\section{Scalabilité et disponibilité}
+
+
+Parmi les contraintes qui ont poussé Sayoo à migrer vers le Cloud, c'est de garantir une haute disponibilité et une scalabilité infinie.
+
+La haute disponibilité fait référence au fait qu'un service est en quelque sorte tolérant à une échec ou à une panne. Nous allons assurer cela en faisant la redondance des services dans différents serveurs du cluser.
+
+La scalabilité ou l'évolutivité c'est la capacité d'une application à pouvoir exploiter des nouvelles ressources récemment déployées pour répondre à un pic de charge. En fait, la scalabilité n'est pas apporté par le Cloud, qui lui apporte l'élasticité, mais c'est l'application elle-même qui l'apporte. L'idée que toute application déployée dans un milieu élastique Cloud peut être évolutive est fausse.
+
+
+Pour faire une bonne conception d'un \acrshort{saas} scalable, il faut distinguer d'abord deux types d'application:
+
+\begin{itemize}
+	\item Application \textbf{stateful} ou à états: C'est une application dont les processus ne stockent aucune donnée qui doit persister, même dans un temps aussi petit qu'il soit, dans son espace mémoire ou système de fichiers;
+	\item Application \textbf{stateless} ou sans états: C'est une application qui stocke tous les données persistentes dans un service de support externe (Base de donnée, queue, mémoire cache, etc.).
+\end{itemize}
+
+Une application scalable doit être \textbf{stateless}, plus que cela, il doit respecter les douze-facteurs définies dans l'annexe \ref{annexe:12factors}. Une application scalable suppose qu'aucune donnée mise en cache (mémoire, disque) ne sera disponible dans une requête ultérieure. En effet, les chances sont élevées qu'une future requête sera servi par un processus différent du même service.
+
+
+La figure \ref{fig:non-scalable} montre un service qui n'est évolutive contrairement au service présenté dans la figure \ref{fig:scalable}.
+
+
+\begin{figure}[H]
+\centering
+\includegraphics [scale=0.5]{chapitre4/assets/stateful}
+\caption{Service non scalable}
+\label{fig:non-scalable}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics [scale=0.5]{chapitre4/assets/stateless}
+\caption{Service scalable}
+\label{fig:scalable}
+\end{figure}
 
 
 \section{Architecture}
@@ -54,39 +93,7 @@ Il y a trois composants
 -
 
 
-
-\section{Scalabilité et disponibilité}
-
-
-Parmi les contraintes qui ont poussé Sayoo à migrer vers une le Cloud, c'est de garantir une scalabilité infinie et une haute disponibilité.
-
-La haute disponibilité fait référence au fait qu'un service est en quelque sorte tolérant à une échec ou à une panne. Nous allons réaliser cela en faisant la redondance des services dans différents serveurs du cluser.
-
-La scalabilité ou l'évolutivité c'est la capacité d'une application à pouvoir exploiter des nouvelles ressources récemment déployées pour répondre à un pic de charge. En fait, la scalabilité n'est pas apporté par le Cloud, qui lui apporte l'élasticité, mais c'est l'application elle-même qui l'apporte. L'idée que toute application déployée dans un milieu élastique Cloud peut être évolutive est fausse.
-
-
-En effet, la figure \ref{fig:non-scalable} 
-s
-\begin{itemize}
-	\item Application \textbf{stateful} ou à états: C'est une application dont les processus ne stockent aucune donnée qui doit persister, même dans un temps aussi petit qu'il soit, dans son espace mémoire ou système de fichiers;
-	\item Application \textbf{stateless} ou sans états: C'est une application qui stocke tous les données persistentes dans un service de support externe (Base de donnée, queue, mémoire cache, etc.).
-\end{itemize}
-
-L'espace de mémoire ou le système de fichiers du processus peuvent être utilisés comme un cache. Par exemple, le stockage les résultats d'une opération coûteuse comme une requête vers la base de données. L'application de douze facteur suppose que rien ne cache en mémoire ou sur le disque sera disponible sur une demande ou futur emploi - avec de nombreux processus de chaque type course, les chances sont élevées que la demande future sera servi par un procédé différent. Même lors de l'exécution un seul processus, un redémarrage (déclenché par un déploiement, un changement de configuration, ou un réordonnancement) éffacera les états locals (mémoire, système de fichiers, etc.).
-
-\begin{figure}[H]
-\centering
-\includegraphics [scale=0.5]{chapitre4/assets/stateful}
-\caption{Service non scalable}
-\label{fig:non-scalable}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics [scale=0.5]{chapitre4/assets/stateless}
-\caption{Service scalable}
-\label{fig:scalable}
-\end{figure}
+L'idée c'est que une application doit être capable d'envoyer les réponses de façon consistente à partir de n'importe instance éxécutant l'application.
 
 
 \end{onehalfspace}
