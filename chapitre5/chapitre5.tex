@@ -7,12 +7,12 @@
 
 
 \begin{itemize}
-	\item Réseau privé: Le faire de faire communiquer les serveurs du cluster via une interface réseau privé est contraignant. En effet, les serveurs doivent être installés dans la même zone. En contrepartie, on gagne en termes de sécurité;
-	\item Réseau public: 
+	\item Réseau privé: Les serveurs du Cluster se communique avec des adresses \acrshort{ip} privées. Cette solution est contraignante. En effet, les serveurs doivent être installés dans la même zone. De plus les fournisseurs chargent des coûts supplémentaires pour l'installation d'une interface réseau privée. En contrepartie, on gagne en termes de sécurité;
+	\item Réseau public: Les serveurs du Cluster peuvent se communiquer mutuellement via une interface réseau public et donc une adresse \acrshort{ip} public. De ce fait, beaucoup d'avantages se dégagent. D'une part, les serveurs peuvent être distribués dans le monde entier et ainsi garantir une disponibilité maximale. D'autre part, une migration à chaud de toute la plate-forme peut être faite. Cette migration est silencieuse et transparente pour tous les clients.
 \end{itemize}
 
 
-La solution à base d'un cluster CoreOS motorisé par des équilibreurs de charges élastique est très puissante, mais son utilisation demeure très bas niveau. Le fait d' intéragir directement avec le cluster nécéssite des administrateurs systèmes très compétents. C'est la raison pour laquelle nous allons essayer d'adopter une solution à base d'une \acrshort{paas}
+La solution à base d'un cluster CoreOS motorisé par des équilibreurs de charges élastique est très puissante, mais son utilisation demeure très bas niveau. Le fait d'intéragir directement avec le cluster nécéssite des administrateurs systèmes très compétents. C'est la raison pour laquelle nous allons essayer d'adopter une solution à base d'une \acrshort{paas}.
 
 
 \section{A base d'une \acrshort{paas}}
@@ -90,6 +90,7 @@ Deis peut être déployé sur un n'importe quelle système qui supporte CoreOS: 
 Nous allons installer \acrshort{ssl} dans la plate-forme pour établir un lien crypté entre le navigateur et serveur (\acrshort{https}). Ce qui est intéréssant, c'est que lorsque \acrshort{ssl} est activé pour le cluster, il le sera pour toute les services qui s'exécute sur le cluster.
 
 
+
 \subsubsection{Installation}
 
 L'installation de SSL dans la plate-forme se fait en 2 étapes:
@@ -97,6 +98,18 @@ L'installation de SSL dans la plate-forme se fait en 2 étapes:
 	\item Générer d'une clé privée et une certificat signée. Normalement, la certificat doit être signé par les PKI, des parties tierces aux-quelles l'on fait confiance, qui chargent une somme d'argent annuelle. Dans un environnement de test, on peut se contenter par une certificat que nous allons signer nous même;
 	\item Attacher la clé privée et la certificat avec la plate-forme. En fait, elles doivent être installées dans l'équilibreur de charge. Il y a deux choix qui se portent à nous, soit les installer dans notre équilibreur de charge de \acrshort{gce} ou dans les proxy de Deis. Nous avons décidé de l'installer dans les équilibreurs de charge propres à Deis vu que c'est une solution portable et ne dépend pas de l'environnement où Deis est installé.
 \end{itemize}
+
+\begin{lstlisting}[language=bash,caption=Génération de la clé privée eet la certificat]
+	$ openssl genrsa -des3 -passout pass:x -out server.pass.key 2048
+	$ openssl rsa -passin pass:x -in server.pass.key -out server.key
+	$ openssl req -new -key server.key -out server.csr
+	$ openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
+\end{lstlisting}
+
+\begin{lstlisting}[language=bash,caption=Activation du protocole SSL]
+	$ deisctl config router set sslKey=server.key sslCert=server.crt
+	$ deisctl config router set enforceHTTPS=true
+\end{lstlisting}
 
 \begin{figure}[H]
 \centering
