@@ -3,8 +3,47 @@
 
 \newpage
 
-\section{Basée sur un Cluster}
-\section{Basée sur un PaaS}
+\section{A base d'un Cluster}
+
+
+
+
+
+\section{A base d'une \acrshort{paas}}
+
+\subsection{Plate-forme Deis}
+
+\subsubsection*{Deis}
+
+\begin{wrapfigure}{l}{3cm}
+\centering
+\includegraphics[scale=0.4]{chapitre5/assets/deis}
+\end{wrapfigure}
+\noindent \emph{Deis} est une Plate-forme en tant que service, \acrshort{paas}, open-source qui facilite la gestion et le déploiement des applications sur des serveurs. Deis se base sur Docker et CoreOS pour fournir une \acrshort{paas} très légere inspirée par la fameuse plate-forme Heroku.
+
+
+\subsubsection*{Applications supportées}
+
+Deis peut déployer n'importe quelle application ou service qui peut fonctionner à l'intérieur d'un conteneur Docker. Pour que l'application soit évolutive horizontalement, elles doivent suivre la méthodologie de 12-facteur de Heroku (Voir Annexe \ref{annexe:12factors}, page \pageref{annexe:12factors}).
+
+\subsubsection*{Plates-formes supportées}
+Deis peut être déployé sur un n'importe quelle système qui supporte CoreOS: poste de travail, ainsi que la plupart des clouds publics, clouds privés et les centres de données.
+
+
+\subsubsection*{Pourquoi Deis?}
+
+\begin{itemize}
+	\item Langage-agnostique: Deis déploie des services écrites dans n'importe quels langages avec une simple commande "git push";
+	\item Extensibilité: Deis est extensible, les outils de supervisions et de la gestions des messages logs peuvent être intégrés facilement;
+	\item Scalabilité: Une application est monté en charge avec une seule commande. Par ailleurs, La capacité de la plate-forme Deis peut être monté lors de la charge en ajoutant simplement des hôtes au cluster;
+	\item 100\% Open Source: Deis est un logiciel libre, open-source publié sous la licence Apache 2.0.
+\end{itemize}
+
+
+
+
+
+
 
 
 \subsection{Sécurité avec le protocole \acrshort{ssl}/\acrshort{tls}}
