@@ -159,10 +159,11 @@ Heapster est un projet open source de Google qui comble la limitation de cAdviso
 
 \subsection{Démarche d'installation}
 
-Nous allons installer ce système de supervision dans un cluster Deis dont les serveurs fonctionne au-dessus de CoreOS. Comme c'est déjà mentionné, tous les services, sous CoreOS, sont installés en tant que conteneur. L'on trouvera les fichiers d'installations dans les annexes.  
+Cette solution de supervision s'installe au-dessus du cluster de CoreOS et cohabite avec la plate-forme Deis. Comme c'est déjà mentionné, tous les services sous CoreOS sont installés en tant que conteneur. De même, cAdvisor, InfluxDB, Heapster et Grafana vont être installés dans des conteneurs.
+Les fichiers d'installation se trouvent dans le guide officielle de Heapster \cite{heapster-coreos}
 
 \begin{itemize}
-	\item cAdvisor doit être installé sur tous les serveurs du cluster; Heureusement, l'ordonnanceur Fleet effectue cette opération de façon automatique et scalable. En effet, il suffit de mentionner \emph{Global=true} dans le fichier d'installation;
+	\item cAdvisor doit être installé sur tous les serveurs du cluster. Heureusement, l'ordonnanceur Fleet effectue cette opération de façon automatique et scalable. En effet, il suffit de mentionner \emph{Global=true} dans le fichier d'installation;
 	\item InfluxDB, Heapster et Grafana doivent être installé dans le même serveur. L'on exprime cette contrainte par \emph{X-ConditionMachineOf=influxdb.service}. Ainsi, Fleet va s'en sortir pour faire coexister les trois services.
 \end{itemize}
 
@@ -173,10 +174,18 @@ Nous allons installer ce système de supervision dans un cluster Deis dont les s
 \label{fig:}
 \end{figure}
 
+Le code suivant montre comment charger et installer cAdvisor dans le cluster. C'est la même procédure pour les autres services.
+
+\begin{lstlisting}[language=bash,caption=Lancement du service cAdvisor]
+	$ ssh core@104.154.75.6 
+	$ fleetctl load cadvisor.service
+	$ fleetctl start cadvisor.service
+\end{lstlisting}
+
 
 \subsection{Interfaces graphique}
 
-Notre cluster se compose de trois serveurs. Les figures suivantes présentes la quantité totale de CPU et de la mémoire consommé par le cluster ainsi que les quantités consommées par chaque serveur. Nous aurions pu présenter pas mal de choses qu'offre Grafana.
+Notre cluster se compose de trois serveurs. Les figures suivantes présentes la quantité totale de \acrshort{cpu} et de la mémoire consommée par le cluster ainsi que les quantités consommées par chaque serveur.
 
 \begin{figure}[H]
 \centering
