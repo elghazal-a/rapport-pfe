@@ -7,12 +7,12 @@
 
 
 \begin{itemize}
-	\item Réseau privé: Le faire de faire communiquer les serveurs du cluster via une interface réseau privé est contraignant. En effet, les serveurs doivent être installés dans la même zone. En contrepartie, on gagne en termes de sécurité;
-	\item Réseau public: 
+	\item Réseau privé: Les serveurs du Cluster se communique avec des adresses \acrshort{ip} privées. Cette solution est contraignante. En effet, les serveurs doivent être installés dans la même zone. De plus les fournisseurs chargent des coûts supplémentaires pour l'installation d'une interface réseau privée. En contrepartie, on gagne en termes de sécurité;
+	\item Réseau public: Les serveurs du Cluster peuvent se communiquer mutuellement via une interface réseau public et donc une adresse \acrshort{ip} public. De ce fait, beaucoup d'avantages se dégagent. D'une part, les serveurs peuvent être distribués dans le monde entier et ainsi garantir une disponibilité maximale. D'autre part, une migration à chaud de toute la plate-forme peut être faite. Cette migration est silencieuse et transparente pour tous les clients.
 \end{itemize}
 
 
-La solution à base d'un cluster CoreOS motorisé par des équilibreurs de charges élastique est très puissante, mais son utilisation demeure très bas niveau. Le fait d' intéragir directement avec le cluster nécéssite des administrateurs systèmes très compétents. C'est la raison pour laquelle nous allons essayer d'adopter une solution à base d'une \acrshort{paas}
+La solution à base d'un cluster CoreOS motorisé par des équilibreurs de charges élastique est très puissante, mais son utilisation demeure très bas niveau. Le fait d'intéragir directement avec le cluster nécéssite des administrateurs systèmes très compétents. C'est la raison pour laquelle nous allons essayer d'adopter une solution à base d'une \acrshort{paas}.
 
 
 \section{A base d'une \acrshort{paas}}
@@ -90,6 +90,7 @@ Deis peut être déployé sur un n'importe quelle système qui supporte CoreOS: 
 Nous allons installer \acrshort{ssl} dans la plate-forme pour établir un lien crypté entre le navigateur et serveur (\acrshort{https}). Ce qui est intéréssant, c'est que lorsque \acrshort{ssl} est activé pour le cluster, il le sera pour toute les services qui s'exécute sur le cluster.
 
 
+
 \subsubsection{Installation}
 
 L'installation de SSL dans la plate-forme se fait en 2 étapes:
@@ -97,6 +98,18 @@ L'installation de SSL dans la plate-forme se fait en 2 étapes:
 	\item Générer d'une clé privée et une certificat signée. Normalement, la certificat doit être signé par les PKI, des parties tierces aux-quelles l'on fait confiance, qui chargent une somme d'argent annuelle. Dans un environnement de test, on peut se contenter par une certificat que nous allons signer nous même;
 	\item Attacher la clé privée et la certificat avec la plate-forme. En fait, elles doivent être installées dans l'équilibreur de charge. Il y a deux choix qui se portent à nous, soit les installer dans notre équilibreur de charge de \acrshort{gce} ou dans les proxy de Deis. Nous avons décidé de l'installer dans les équilibreurs de charge propres à Deis vu que c'est une solution portable et ne dépend pas de l'environnement où Deis est installé.
 \end{itemize}
+
+\begin{lstlisting}[language=bash,caption=Génération de la clé privée eet la certificat]
+	$ openssl genrsa -des3 -passout pass:x -out server.pass.key 2048
+	$ openssl rsa -passin pass:x -in server.pass.key -out server.key
+	$ openssl req -new -key server.key -out server.csr
+	$ openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
+\end{lstlisting}
+
+\begin{lstlisting}[language=bash,caption=Activation du protocole SSL]
+	$ deisctl config router set sslKey=server.key sslCert=server.crt
+	$ deisctl config router set enforceHTTPS=true
+\end{lstlisting}
 
 \begin{figure}[H]
 \centering
@@ -110,7 +123,7 @@ Après avoir activé le protocole \acrshort{https}, le navigateur envoie un arve
 \begin{figure}[H]
 \centering
 \includegraphics [scale=0.5]{chapitre5/assets/https}
-\caption{Communication sécurisée avec le protocole HTTPS}
+\caption{Communication sécurisée avec le protocole \acrshort{https}}
 \label{fig:https}
 \end{figure}
 
@@ -159,10 +172,11 @@ Heapster est un projet open source de Google qui comble la limitation de cAdviso
 
 \subsection{Démarche d'installation}
 
-Nous allons installer ce système de supervision dans un cluster Deis dont les serveurs fonctionne au-dessus de CoreOS. Comme c'est déjà mentionné, tous les services, sous CoreOS, sont installés en tant que conteneur. L'on trouvera les fichiers d'installations dans les annexes.  
+Cette solution de supervision s'installe au-dessus du cluster de CoreOS et cohabite avec la plate-forme Deis. Comme c'est déjà mentionné, tous les services sous CoreOS sont installés en tant que conteneur. De même, cAdvisor, InfluxDB, Heapster et Grafana vont être installés dans des conteneurs.
+Les fichiers d'installation se trouvent dans le guide officielle de Heapster \cite{heapster-coreos}
 
 \begin{itemize}
-	\item cAdvisor doit être installé sur tous les serveurs du cluster; Heureusement, l'ordonnanceur Fleet effectue cette opération de façon automatique et scalable. En effet, il suffit de mentionner \emph{Global=true} dans le fichier d'installation;
+	\item cAdvisor doit être installé sur tous les serveurs du cluster. Heureusement, l'ordonnanceur Fleet effectue cette opération de façon automatique et scalable. En effet, il suffit de mentionner \emph{Global=true} dans le fichier d'installation;
 	\item InfluxDB, Heapster et Grafana doivent être installé dans le même serveur. L'on exprime cette contrainte par \emph{X-ConditionMachineOf=influxdb.service}. Ainsi, Fleet va s'en sortir pour faire coexister les trois services.
 \end{itemize}
 
@@ -173,10 +187,18 @@ Nous allons installer ce système de supervision dans un cluster Deis dont les s
 \label{fig:}
 \end{figure}
 
+Le code suivant montre comment charger et installer cAdvisor dans le cluster. C'est la même procédure pour les autres services.
+
+\begin{lstlisting}[language=bash,caption=Lancement du service cAdvisor]
+	$ ssh core@104.154.75.6 
+	$ fleetctl load cadvisor.service
+	$ fleetctl start cadvisor.service
+\end{lstlisting}
+
 
 \subsection{Interfaces graphique}
 
-Notre cluster se compose de trois serveurs. Les figures suivantes présentes la quantité totale de CPU et de la mémoire consommé par le cluster ainsi que les quantités consommées par chaque serveur. Nous aurions pu présenter pas mal de choses qu'offre Grafana.
+Notre cluster se compose de trois serveurs. Les figures suivantes présentes la quantité totale de \acrshort{cpu} et de la mémoire consommée par le cluster ainsi que les quantités consommées par chaque serveur.
 
 \begin{figure}[H]
 \centering
