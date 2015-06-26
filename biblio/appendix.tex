@@ -136,7 +136,28 @@ Les messages logs sont très importants, il faut les traiter comme des flux d'é
 
 \section*{Processus admin}
 
-Les taches d'administration doivent être exécutés dans un unique processus avec un environnement identique à celui du processus principal.
-
+Les tâches d'administration doivent être exécutés dans un unique processus avec un environnement identique à celui du processus principal. 
 
 \chapter{Fournisseurs du Cloud}
+
+\section*{Amazon Web Services}
+
+\acrshort{aws} est une collection de services informatiques distants fournis via internet par le groupe américain de commerce électronique Amazon.com. Lancé officiellement en 2006, Amazon Web Services fournit des services en lignes à d'autres sites internet ou applications clientes. La plupart d'entre eux ne sont pas directement exposés à l'utilisateur final, mais offrent des fonctionnalités que d'autres développeurs peuvent utiliser. Parmi les services qu'offre \acrshort{aws}, on trouve Elastic Compute Cloud (EC2), fournissant des serveurs virtuels évolutifs utilisant Xen. 
+
+\acrshort{aws} offre aux nouveaux clients une version d'évaluation de 12 mois, ce qui a permit d'utiliser le service EC2 dans ce projet pour créer un cluster de trois serveurs.
+
+\section*{Google Compute Engine}
+
+Google est présent depuis de nombreuses années sur les services \acrshort{saas} et \acrshort{paas} via Google Apps et Google App Engine. Ce n'est qu'en décembre 2013 que Google a fait son entrée sur le marché du \acrshort{iaas} avec une version finale.
+
+Sur le marché du IaaS, Amazon EC2 est aujourd'hui la référence en termes de nombre d'utilisateurs, de qualité de service et de fonctionnalités, mais Google a fait une entrée assez fracassante avec une offre qui dépasse déjà le reste du marché. En effet, Google propose une volumétrie de stockage plus importante, une meilleure bande passante ainsi qu'un temps de démarrage des machines virtuelles optimisé.
+
+\acrshort{gce} offre aux nouveaux clients 300 dollars virtuels à consommer au moins de 2 mois. Ce qui a permit d'essayer cette \acrshort{iaas} dans ce projet pour créer un cluster où nous avons installé Deis.
+
+\section*{Heroku}
+
+Heroku est un service de cloud computing de type plate-forme en tant que service. Créé en 2007, il était l'un des tout premiers services cloud, puis a été racheté par Salesforce.com. Cette plate-forme est destinée pour les développeurs pour y mettre leurs applications programmées dans la plupart des technologies web.
+
+Hereku n'est pas utilisé durant notre projet, mais il a influencé le projet indirectement. En effet, Heroku a tellement inspiré Deis de sorte qu'elle a été décrite comme un mini-Heroku privé. 
+
+\chapter{Ordonnancement avec Fleet}
