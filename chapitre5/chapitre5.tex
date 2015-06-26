@@ -6,7 +6,13 @@
 \section{A base d'un Cluster}
 
 
+\begin{itemize}
+	\item Réseau privé: Le faire de faire communiquer les serveurs du cluster via une interface réseau privé est contraignant. En effet, les serveurs doivent être installés dans la même zone. En contrepartie, on gagne en termes de sécurité;
+	\item Réseau public: 
+\end{itemize}
 
+
+La solution à base d'un cluster CoreOS motorisé par des équilibreurs de charges élastique est très puissante, mais son utilisation demeure très bas niveau. Le fait d' intéragir directement avec le cluster nécéssite des administrateurs systèmes très compétents. C'est la raison pour laquelle nous allons essayer d'adopter une solution à base d'une \acrshort{paas}
 
 
 \section{A base d'une \acrshort{paas}}
@@ -40,8 +46,29 @@ Deis peut être déployé sur un n'importe quelle système qui supporte CoreOS: 
 \end{itemize}
 
 
+\subsection{Architecture}
+
+\begin{figure}[H]
+\centering
+\includegraphics [scale=0.55]{chapitre5/assets/deis-architecture}
+\caption{Architecture de la PaaS Deis}
+\label{fig:deis-architecture}
+\end{figure}
 
 
+\subsection{Envorinnement d'installation}
+
+\subsection{Avantages du \acrshort{paas} par rapport au Cluster}
+
+- Déploiement avec une seule commande
+
+- zero downtime migration
+
+- zero downtime deployment
+
+- scale avec une seule commande
+
+- en plus de ca, elle peut faire tout ce que la solution a base du cluster peut faire via une interface de commande de haut niveau.
 
 
 
