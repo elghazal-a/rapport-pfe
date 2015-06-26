@@ -1,13 +1,13 @@
 \chapter{Orchestration des applications distribuées}
 \begin{onehalfspace}
 
-\initial{D}ocker est un outil qui a révolutionné le monde informatique par l'introduction de la notion de container, donc il est normal de chercher  à l'utiliser en production. De nos jours, les développeurs utilisent de plus en plus Docker pour déployer des applications qui s'éxecutent sur plusieurs conteneurs et plusieurs hôtes. Orchestrer ces applications distribuées nécessite une approche \textbf{multi-conteneur} et \textbf{multi-hôte} native avec une interface utilisateur et de l'outillage commun qui fonctionne sur toutes les infrastructures. Plusieurs outils ont été présentés par de grandes entreprises et sont toujours en cours de développement. Nous exposerons dans ce chapitre les projets promoteurs dans l'orchestration des applications distribuées.
+\initial{D}ocker est un outil qui a révolutionné le monde informatique par l'introduction de la notion de container, donc il est normal de chercher à l'utiliser en production. De nos jours, les développeurs utilisent de plus en plus Docker pour déployer des applications qui s'éxecutent sur plusieurs conteneurs et plusieurs hôtes. Orchestrer ces applications distribuées nécessite une approche \textbf{multi-conteneur} et \textbf{multi-hôte} native avec une interface utilisateur et de l'outillage commun qui fonctionne sur toutes les infrastructures. Plusieurs outils ont été présentés par de grandes entreprises et sont toujours en cours de développement. Nous exposerons dans ce chapitre les projets promoteurs dans l'orchestration des applications distribuées.
 
 \newpage
 
 \section{Le clustering}
 
-Nous avons présenté dans le chapitre 2 le Cloud Computing ainsi que les services classiques que l'on peut trouver. Dans cette section, nous allons parler du cluster comme service et l'on va le situer dans le pyramide des services du Cloud (Figure ~\ref{fig:pyramide-cluster}, page~\pageref{fig:pyramide-cluster}).
+Nous avons présenté dans le chapitre 2 le Cloud Computing ainsi que ses services classiques. Dans cette section, nous allons parler du cluster comme service et le situer dans le pyramide des services du Cloud (Figure ~\ref{fig:pyramide-cluster}).
 
 \begin{figure}[H]
 \centering
@@ -17,9 +17,9 @@ Nous avons présenté dans le chapitre 2 le Cloud Computing ainsi que les servic
 \end{figure}
 
 \begin{itemize}
-	\item \textbf{Plate-forme}: On développe une application dans un ensemble particulier de langages de programmation à l'aide d'un ensemble particulier des \acrshort{api}s et l'on pousse ce code vers la plate-forme. La plate-forme exécute et lance une seule copie ou éventuellement plusieurs copies de celui-ci dépendemment du traffic, il monte en charge automatiquement. 
-	\item \textbf{\acrshort{iaas}}: A l'autre bout du pyramide, on trouve l'\acrshort{iaas}, seulement des machines virtuelles, donc ce sont des ordinateurs ordinaires, sauf qu'ils vivent essentiellement dans l'internet. Quand on va chez un fournisseur \acrshort{iaas} et l'on demande de nous fournir un ordinateur avec une telle quantité de mémoire et de disque, un tel nombre de \acrshort{cpu} et qui exécute une version spécifique de Linux; dans quelques secondes on a notre ordinateur où l'on peut exécuter n'importe quel logiciel, mais on est responsable de la gestion de la machine entière.
-	\item \textbf{Cluster}: C'est lorsque l'on veut gérer un ensemble de machines, un cluster de machines comme une seule entité, pas seulement un ordinateur individuel (\acrshort{iaas}) et pas toute une plate-forme magique parce que l'on veut faire plus. C'est une question d'agilité et de la flexibilité.
+	\item \textbf{Plate-forme}: Un développeur crée une application dans un ensemble particulier de langages de programmation à l'aide d'un ensemble particulier des \acrshort{api}s et pousse ce code vers la plate-forme. La plate-forme exécute et lance une seule copie ou éventuellement plusieurs copies de celui-ci dépendemment du traffic, il monte en charge automatiquement. 
+	\item \textbf{\acrshort{iaas}}: A l'autre bout du pyramide, il se trouve l'\acrshort{iaas}, seulement des machines virtuelles sauf qu'ils vivent essentiellement dans l'internet. Quand un utilisateur va chez un fournisseur \acrshort{iaas} et demande de lui fournir un ordinateur avec une telle quantité de mémoire et de disque, un tel nombre de \acrshort{cpu} et qui exécute une version spécifique de Linux; dans quelques secondes on a notre ordinateur où il peut exécuter n'importe quel logiciel, mais il est responsable de la gestion de la machine entière.
+	\item \textbf{Cluster}: C'est lorsque il y a un besoin gérer un ensemble de machines, un cluster de machines comme une seule entité, pas seulement un ordinateur individuel (\acrshort{iaas}) et non plus toute une plate-forme magique qui fait plus. C'est une question d'agilité et de flexibilité.
 
 \end{itemize}
 
@@ -49,6 +49,8 @@ Nous avons présenté dans le chapitre 2 le Cloud Computing ainsi que les servic
 \end{center}
 }
 
+
+En général, un cluster se compose*********** 
 
 \begin{itemize}
 	\item Master: C'est la machine qui est responsable du cluster. Il veille sur son bon fonctionnement grâce au système de découverte des services et l'ordonnanceur
