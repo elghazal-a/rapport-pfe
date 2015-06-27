@@ -1,7 +1,7 @@
 \chapter{Le cloud computing}
 \begin{onehalfspace}
 
-\initial{L} e but de ce chapitre est d'exposer le travail fait au niveau de la documentation. Ce chapitre est très riche en concepts incontournables et nécessaires à la suite de ce rapport. En effet, nous allons commencé par expliquer concrétement la signification du Cloud. Ensuite, nous présenterons les types de Cloud les plus classiques, à savoir IaaS, PaaS et SaaS. Enfin, nous verrons les notions de virtualisation et containérisation ainsi que la différence entre les deux.
+\initial{L} e but de ce chapitre est d'exposer le travail fait au niveau de la documentation. Ce chapitre est très riche en concepts incontournables et nécessaires à la suite de ce rapport. En effet, nous allons commencé par expliquer concrètement la signification du Cloud. Ensuite, nous présenterons les types de Cloud les plus classiques, à savoir IaaS, PaaS et SaaS. Enfin, nous verrons les notions de virtualisation et containérisation ainsi que la différence entre les deux.
 
 
 \newpage
@@ -13,7 +13,7 @@
 
 Le \textbf{Cloud Computing} est l'exploitation de la puissance de calcul ou de stockage de serveurs informatiques distants par l'intermédiaire du réseau internet. Ces serveurs sont loués à la demande selon des critères techniques (Bande passante, puissance, etc.). Le Cloud Computing se caractérise par sa grande souplesse. En effet, il est destiné et ouvert à tous les utilisateurs.
 
-Le Cloud est rendu possible grâce à la virtualisation, l'ubiquité des réseaux à grande vitesse, les capacités des navigateurs d'aujourd'hui et l'évolution des piles de développement Web. Avec ces choses en place, il devient moins nécessaire de posséder sa propre infrastructure, ou même de posséder son propre logiciel. Il est possible de subvenir à ses besoins à partir du Cloud Computing.
+Le Cloud est rendu possible grâce à la virtualisation, l'ubiquité des réseaux à grande vitesse, les capacités des navigateurs actuels et l'évolution des piles de développement Web. Avec ces choses en place, il devient moins nécessaire de posséder sa propre infrastructure, ou même de posséder son propre logiciel. Il est possible de subvenir à ses besoins à partir du Cloud Computing.
 
 
 \subsection{Caractéristiques}
@@ -39,7 +39,7 @@ Sans ces caractéristiques, l'informatique en nuage n'apporte rien par rapport �
 
 \subsection{Les types de Cloud}
 
-Le Cloud Computing est un concept qui décrit une large collection de services. Dans ce rapport, nous allons exposé les différents types de services de Cloud communément appelé Software as a Service (SaaS),  Platform as a Service (PaaS) et Infrastructure as a Service (IaaS) et décrire plus en détails ceux qui touchent à notre sujet.
+Le Cloud Computing est un concept qui décrit une large collection de services. Dans ce rapport, nous allons exposé les différents types de services de Cloud communément appelé \emph{Software as a Service} (SaaS),  \emph{Platform as a Service} (PaaS) et \emph{Infrastructure as a Service} (IaaS) et décrire plus en détails ceux qui touchent à notre sujet.
 
 \begin{figure}[H]
 \centering
@@ -57,13 +57,13 @@ SaaS est orienté vers les utilisateurs finaux de l'entreprise et ne nécessite 
 
 IaaS est à l'autre bout du pyramide du Cloud. Lorsque l'on souhaite garder le contrôle de l'environnement logiciel, mais on ne veut pas maintenir aucun équipement ni acheter des serveurs et les mettre dans une pièce à température contrôlée. On consulte une offre Iaas d'un fournisseur IaaS pour commander et acheter tout simplement une machine virtuelle.
 
-On peut mettre n'importe quel logiciel que l'on souhaite au-dessus d'IaaS. En arrière plan, le fournisseur fournit les ressources nécessaires pour satisfaire le besoin. Ceci est rendu plus facile avec les technologies de virtualisation, qui séparent les ressources physiques de la machine virtuelle qui éxécute le logiciel. IaaS est disponible sur Amazon EC2, GCE de Google et bien d'autres.
+On peut mettre n'importe quel logiciel que l'on souhaite au-dessus d'IaaS. En arrière plan, le fournisseur fournit les ressources nécessaires pour satisfaire le besoin. Ceci est rendu plus facile avec les technologies de virtualisation, qui séparent les ressources physiques de la machine virtuelle qui exécute le logiciel. IaaS est disponible sur Amazon EC2, GCE de Google et bien d'autres.
 
 L'infrastructure en tant que service ou l'IaaS ne touche pas directement à notre sujet. Du coup, il ne sera mentionné que rarement par la suite.
 
 \subsubsection*{Platform as a Service}
 
-PaaS se situe entre IaaS et SaaS. Il n'est pas un produit fini comme SaaS, encore moins une simple ressource virtuelle vierge comme IaaS. PaaS est destiné pour les développeurs, il leur donne des outils et des interfaces de haut niveau pour mieux développer. Par exemple, Windows Azure de Microsoft vous donne des outils pour développer des applications mobiles, des applications sociales, sites Web, jeux et plus encore. Vous construisez ces choses, mais vous utilisez les API et les outils pour les accrocher et éxécuter dans l'environnement Azure.
+PaaS se situe entre IaaS et SaaS. Il n'est pas un produit fini comme SaaS, encore moins une simple ressource virtuelle vierge comme IaaS. PaaS est destiné pour les développeurs, il leur donne des outils et des interfaces de haut niveau pour mieux développer. Par exemple, Windows Azure de Microsoft vous donne des outils pour développer des applications mobiles, des applications sociales, sites Web, jeux et plus encore. Vous construisez ces choses, mais vous utilisez les API et les outils pour les accrocher et exécuter dans l'environnement Azure.
 
 
 \begin{figure}[H]
@@ -93,9 +93,9 @@ Il existe plusieurs solutions de virtualisation, l'on peut citer à titre inform
 
 Noyau Linux permet de lancer plusieurs instances isolées de l'espace utilisateur. Un conteneur est un environnement isolé où un ou plusieurs processus peuvent être exécutés. Les conteneurs se concentrent sur l'isolation des processus au lieu d'émuler une machine physique complète.
 
-Historiquement, \emph{chroot} dans le noyau Linux a fourni un certain niveau d'isolation en fournissant un environnement pour créer et héberger une copie virtualisée d'un logiciel, et ceci depuis le début des années 80. Mais le terme «conteneurs» n'est apparu que vers la fin de l'année 2006. Il a été renommé «\emph{Control Groups}» (cgroups) pour éviter toute confusion causée par de multiples significations du terme «conteneurs» dans le noyau Linux. «\emph{Control Groups}» est une fonctionnalité du noyau linux qui est disponible depuis la version v2.6.24, elle limite et isole l'utilisation des ressources d'un ensemble de processus. Par la suite, l'isolation de l'espace de noms a été ajoutée.
+Historiquement, \emph{chroot} dans le noyau Linux a fourni un certain niveau d'isolation en fournissant un environnement pour créer et héberger une copie virtualisée d'un logiciel, et ceci depuis le début des années 80. Mais le terme «conteneurs» n'est apparu que vers la fin de l'année 2006. Il a été renommé «\emph{Control Groups}» (cgroups) pour éviter toute confusion causée par de multiples significations du terme «conteneurs» dans le noyau Linux. «\emph{Control Groups}» est une fonctionnalité du noyau Linux qui est disponible depuis la version v2.6.24, elle limite et isole l'utilisation des ressources d'un ensemble de processus. Par la suite, l'isolation de l'espace de noms a été ajoutée.
 
-Cela a conduit à l'évolution de Linux Containers (LXC), un environnement de virtualisation au niveau du système d'exploitation qui est construit sur les fonctionnalités du noyau Linux comme chroot, cgroupes, l'isolation de l'espace de noms, etc.
+Cela a conduit à l'évolution de Linux Containers (LXC), un environnement de virtualisation au niveau du système d'exploitation qui est construit sur les fonctionnalités du noyau Linux comme \emph{chroot}, \emph{cgroupes}, l'isolation de l'espace de noms, etc.
 
 \subsubsection*{Cgroups}
 
@@ -109,7 +109,7 @@ Cela a conduit à l'évolution de Linux Containers (LXC), un environnement de vi
 
 \subsubsection*{Namespaces}
 \begin{itemize}
-\item Partionnement des structures de kernel pour créer des environnements virtuels
+\item Partitionnement des structures de Kernel pour créer des environnements virtuels
 \item Des espaces de noms différents
 
 \begin{itemize}
@@ -124,19 +124,19 @@ Cela a conduit à l'évolution de Linux Containers (LXC), un environnement de vi
 \end{itemize}
 
 
-Contrairement à la virtualisation, la liste des solutions de containérisations n'est pas aussi longue. La plupart d'eux se basent sur ou convergent vers cgroups et namespaces.
+Contrairement à la virtualisation, la liste des solutions de containérisations n'est pas aussi longue. La plupart d'eux se basent sur ou convergent vers \emph{cgroups} et \emph{namespaces}.
 
 \begin{itemize}
 \item \textbf{LXC} : Linux containers,  il combine cgroups et namespace pour fournir un environnement isolé pour les applications;
-\item \textbf{OpenVZ} : il  permet de créer multiples conteneurs pour Linux. Dorénavant, tous les efforts des développeurs vont aller dans le sens de fusionner les fonctionnalités d'\emph{OpenVZ} avec \emph{LXC};
-\item \textbf{lmctfy} : Let Me Contain That For You, est une solution open source de containérisation de Google qui est basé sur \emph{cgroups}. Le futur de \emph{lmctfy} est flou vu que Google avait commencé à migrer les concepts de \emph{lmctfy} vers Docker;
-\item \textbf{Docker} : ce n'est pas une autre solution, mais il est basé sur \emph{LXC} et fournit une couche de haut niveau accessible pour l'utilsateur;
+\item \textbf{OpenVZ} : il  permet de créer multiples conteneurs pour Linux. Dorénavant, tous les efforts des développeurs vont aller dans le sens de fusionner les fonctionnalités d'\emph{OpenVZ} avec \emph{LXC}.
+\item \textbf{lmctfy} : \emph{Let Me Contain That For You} est une solution open source de containérisation de Google qui est basé sur \emph{cgroups}. Le futur de \emph{lmctfy} est flou vu que Google avait commencé à migrer les concepts de \emph{lmctfy} vers Docker.
+\item \textbf{Docker} : ce n'est pas une autre solution, mais il est basé sur \emph{LXC} et fournit une couche de haut niveau accessible pour l’utilisateur.
 
 \end{itemize}
 
 \subsection{Etude comparative}
 
-Le choix de la solution a été proposé fortement par la société. On a opté pour une solution de containérisation (Docker) dans la mesure où un benchmark prouve son efficacité et sa légèreté.
+Le choix de la solution a été proposé fortement par la société. On a opté pour une solution de containérisation (Docker) dans la mesure où un \emph{Benchmark} prouve son efficacité et sa légèreté.
 
 
 \begin{figure}[H]
@@ -146,12 +146,12 @@ Le choix de la solution a été proposé fortement par la société. On a opté 
 \end{figure}
 
 
-Dans la containérisation, ou la virtualisation au niveau du système d'exploitation, l'hôte et les invités partagent le même noyau. Cette approche réduit le gaspillage de ressources puisque chaque conteneur contient uniquement l'application, les bibliothèques et les binaires nécéssaires. Le rôle de l'hyperviseur est assurée par un moteur léger de la containérisation comme Docker, qui est installé au-dessus du système d'exploitation hôte.
+Dans la containérisation, ou la virtualisation au niveau du système d'exploitation, l'hôte et les invités partagent le même noyau. Cette approche réduit le gaspillage de ressources puisque chaque conteneur contient uniquement l'application, les bibliothèques et les binaires nécessaires. Le rôle de l'hyperviseur est assurée par un moteur léger de la containérisation comme Docker, qui est installé au-dessus du système d'exploitation hôte.
 
-Le principal avantage des conteneurs c'est qu'ils sont libres de l'overhead du système d'exploitation contrairement aux machines virtuelles, ce qui leur rend considérablement plus légers, plus faciles à télécharger ainsi que plus rapides à lancer. Cet avantage permet également au serveur d'héberger potentiellement beaucoup plus de conteneurs que de machines virtuelles. Scalabilité, portabilité, facilité de déploiement sont quelques avantages.
+Le principal avantage des conteneurs c'est qu'ils sont libres de l'overhead du système d'exploitation contrairement aux machines virtuelles, ce qui leur rend considérablement plus légers, plus faciles à télécharger ainsi que plus rapides à lancer. Cet avantage permet également au serveur d'héberger potentiellement beaucoup plus de conteneurs que de machines virtuelles. Scalabilité, portabilité et facilité de déploiement sont quelques avantages.
 
 
-Lors de cette étude, nous allons se baser sur un travail réalisé par IBM\cite{ibm-benchmark-docker}, où nous allons mettre l'accent sur les performances de Docker et \emph{KVM}. Le benchmark concerne 15 machines virtuelles simultanément en marche sous OpenStack.
+Lors de cette étude, nous allons se baser sur un travail réalisé par IBM\cite{ibm-benchmark-docker}, où nous allons mettre l'accent sur les performances de Docker et \emph{KVM}. Le \emph{Benchmark} concerne 15 machines virtuelles simultanément en marche sous \emph{OpenStack}.
 
 
 \def\arraystretch{1.4}%  1 is the default, change whatever you need
@@ -232,7 +232,7 @@ En somme, il va s'en dire que Docker l'emporte largement par rapport à \emph{KV
 \end{figure}
 
 \subsection{Utilisation de Docker}
-Docker propose de nombreux templates qui permettent de déployer des applications en container, très rapidement. La communauté est très active, ce qui permet aux utilisateurs de disposer de nombreux conteneurs applicatifs préfaits.
+Docker propose de nombreux templates qui permettent de déployer des applications en container, très rapidement. La communauté est très active, ce qui permet aux utilisateurs de disposer de nombreux conteneurs applicatifs pré-faits.
 Docker est basé sur LXC (\emph{Linux Containers}) qui est une référence sous Linux quant à l’utilisation des containers. Par ailleurs, il intègre les éléments suivants :
 \begin{itemize}
 \item \textbf{Control Groups} : Fonctionnalité du noyau Linux pour limiter, compter et isoler les ressources (CPU, RAM, etc.) utilisées par un groupe de processus.

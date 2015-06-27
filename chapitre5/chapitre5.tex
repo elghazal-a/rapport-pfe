@@ -26,7 +26,7 @@ Quand l'ordonnanceur Fleet crée un service en mode haute disponibilité, Il sto
 \end{lstlisting}
 
 
-La solution à base d'un cluster CoreOS motorisé par des équilibreurs de charges élastique est très puissante, mais son utilisation demeure très bas niveau. Le fait d'intéragir directement avec le cluster nécéssite des administrateurs systèmes très compétents. C'est la raison pour laquelle nous allons essayer d'adopter une solution à base d'une \acrshort{paas}.
+La solution à base d'un cluster CoreOS motorisé par des équilibreurs de charges élastique est très puissante, mais son utilisation demeure très bas niveau. Le fait d’interagir directement avec le cluster nécessite des administrateurs systèmes très compétents. C'est la raison pour laquelle nous allons essayer d'adopter une solution à base d'une \acrshort{paas}.
 
 
 \section{A base d'une \acrshort{paas}}
@@ -39,7 +39,7 @@ La solution à base d'un cluster CoreOS motorisé par des équilibreurs de charg
 \centering
 \includegraphics[scale=0.4]{chapitre5/assets/deis}
 \end{wrapfigure}
-\noindent \emph{Deis} est une Plate-forme en tant que service, \acrshort{paas}, open-source qui facilite la gestion et le déploiement des applications sur des serveurs. Deis se base sur Docker et CoreOS pour fournir une \acrshort{paas} très légere inspirée par la fameuse plate-forme Heroku.
+\noindent \emph{Deis} est une Plate-forme en tant que service, \acrshort{paas}, open-source qui facilite la gestion et le déploiement des applications sur des serveurs. Deis se base sur Docker et CoreOS pour fournir une \acrshort{paas} très légère inspirée par la fameuse plate-forme Heroku.
 
 
 \subsubsection*{Applications supportées}
@@ -47,7 +47,7 @@ La solution à base d'un cluster CoreOS motorisé par des équilibreurs de charg
 Deis peut déployer n'importe quelle application ou service qui peut fonctionner à l'intérieur d'un conteneur Docker. Pour que l'application soit évolutive horizontalement, elles doivent suivre la méthodologie de 12-facteur de Heroku (Voir Annexe \ref{annexe:12factors}, page \pageref{annexe:12factors}).
 
 \subsubsection*{Plates-formes supportées}
-Deis peut être déployée sur un n'importe quelle système qui supporte CoreOS: poste de travail, ainsi que la plupart des Cloud publics, Clouds privés et les centres de données.
+Deis peut être déployée sur un n'importe quelle système qui supporte CoreOS : poste de travail, ainsi que la plupart des Clouds publics, privés et les centres de données.
 
 
 \subsubsection*{Pourquoi Deis?}
@@ -62,9 +62,9 @@ Deis peut être déployée sur un n'importe quelle système qui supporte CoreOS:
 
 \subsection{Architecture}
 
-l'architecture de Deisprésentée dans la figure \ref{fig:deis-architecture} a tellement de points de commun avec celle que nous avons proposé. Néanmoins, elle cache beaucoup de détails, notemment à l'intérieur du controlleur où beaucoup de magie se fait. Par ailleurs, Deis intègre ses propres routeurs (équilibreurs de charges) et un registre privé des images Docker. Les services de support, la suppervision, la gestion des messages logs et l'équilibreur de charge ne sont pas intégrés par la plate-forme Deis.
+l'architecture de Deisprésentée dans la figure \ref{fig:deis-architecture} a tellement de points de commun avec celle que nous avons proposé. Néanmoins, elle cache beaucoup de détails, notamment à l'intérieur du contrôleur où beaucoup de magie se fait. Par ailleurs, Deis intègre ses propres routeurs (équilibreurs de charges) et un registre privé des images Docker. Les services de support, la supervision, la gestion des messages logs et l'équilibreur de charge ne sont pas intégrés par la plate-forme Deis.
 
-Un développeur, voulant déployer une application, va pousser son code vers le contrôleur. Ce dernier construit l'image et la stocke dans le registre des images. Ensuite, le contrôleur passe le relai à l'ordonnanceur qui se débrouille pour lancer le service à l'intérieur d'un conteneur. Le conteneur est crée à base de l'image Docker.
+Un développeur, voulant déployer une application, va pousser son code vers le contrôleur. Ce dernier construit l'image et la stocke dans le registre des images. Ensuite, le contrôleur passe le relais à l'ordonnanceur qui se débrouille pour lancer le service à l'intérieur d'un conteneur. Le conteneur est crée à base de l'image Docker.
 
 
 
@@ -79,12 +79,12 @@ Un développeur, voulant déployer une application, va pousser son code vers le 
 \subsection{Installation}
 
 
-Deis nécéssite un Cluster de CoreOS pour s'installer dessus. Nous aurions pu installer Deis au-dessus du Cluster que nous avons déja réalisé, mais Deis nécéssite des ressources (au moins 4GB de RAM) que la version d'éssai de \acrshort{aws} n'offre pas. Nous avons opté pour \acrshort{gce}.
+Deis nécessite un Cluster de CoreOS pour s'installer dessus. Nous aurions pu installer Deis au-dessus du Cluster que nous avons déjà réalisé, mais Deis nécessite des ressources (au moins 4GB de RAM) que la version d’essai de \acrshort{aws} n'offre pas. Nous avons opté pour \acrshort{gce}.
 
 L'installation de Deis sur \acrshort{gce} est détaillé dans la documentation \cite{deis-gce}. Les grandes étapes d'installation:
 \begin{itemize}
 	\item Lancer des serveurs CoreOS avec le fichier d'initialisation de Deis fournit par la documentation;
-	\item Faire pointer l'équilibreur de charge de Google vers nos serveurs. Cette équilibreur de charge est élastique et donc reconnait dynamiquement des nouveaux serveurs;
+	\item Faire pointer l'équilibreur de charge de Google vers nos serveurs. Cette équilibreur de charge est élastique et donc reconnaît dynamiquement des nouveaux serveurs;
 	\item Configurer le \acrshort{dns} pour faire pointer le nom de domaine et tous les sous-domaines vers l'équilibreur de charge de Google (Figure \ref{fig:dns}).
 \end{itemize}
 
@@ -116,7 +116,7 @@ Après avoir lancé un service, l'exploitant, remarquant un pic de charge, va po
 
 \subsubsection*{Déploiement avec zero temps d'arrêt}
 
-Durant le déploiement d'une nouvelle version d'un service, Deis garantit un zero temps d'indisponibilité. En effet, les routeurs ne sont reconfigurés que lorsque le déploiement est terminé. Enfin, l'ancienne version est supprimée.
+Durant le déploiement d'une nouvelle version d'un service, Deis garantit un zéro temps d'indisponibilité. En effet, les routeurs ne sont reconfigurés que lorsque le déploiement est terminé. Enfin, l'ancienne version est supprimée.
 
 
 
@@ -133,12 +133,12 @@ Durant le déploiement d'une nouvelle version d'un service, Deis garantit un zer
 \begin{itemize}
 	\item \textbf{Confidentialité}: Il est impossible d'espionner les informations échangées;
 	\item \textbf{Intégrité}: Il est impossible de truquer les informations échangées;
-	\item \textbf{Authentification}: Il permet de s'assurer de l'identité du programme, de la personne ou de l'entreprise avec lequelle on communique.
+	\item \textbf{Authentification}: Il permet de s'assurer de l'identité du programme, de la personne ou de l'entreprise avec laquelle on communique.
 \end{itemize}
 
 
 
-Nous allons installer \acrshort{ssl} dans la plate-forme pour établir un lien crypté entre le navigateur et serveur (\acrshort{https}). Ce qui est intéréssant, c'est que lorsque \acrshort{ssl} est activé pour le cluster, il le sera pour toute les services qui s'exécute sur le cluster.
+Nous allons installer \acrshort{ssl} dans la plate-forme pour établir un lien crypté entre le navigateur et serveur (\acrshort{https}). Ce qui est intéressant, c'est que lorsque \acrshort{ssl} est activé pour le cluster, il le sera pour toute les services qui s'exécute sur le cluster.
 
 
 
@@ -169,7 +169,7 @@ L'installation de SSL dans la plate-forme se fait en 2 étapes:
 \label{fig:certificat}
 \end{figure}
 
-Après avoir activé le protocole \acrshort{https}, le navigateur envoie un arvertissement (Figure ~\ref{fig:certificat}, page~\pageref{fig:certificat}). En effet, nous avons signé la certificat nous-même au lieu de la déléguer à une partie tierne de confiance (\acrshort{pki}), ce qui devrait être fait en production. En dépit de cela, nous avons bel et bien sécurisé la communication (Figure ~\ref{fig:https}, page~\pageref{fig:https}).
+Après avoir activé le protocole \acrshort{https}, le navigateur envoie un avertissement (Figure ~\ref{fig:certificat}, page~\pageref{fig:certificat}). En effet, nous avons signé la certificat nous-même au lieu de la déléguer à une partie tierce de confiance (\acrshort{pki}), ce qui devrait être fait en production. En dépit de cela, nous avons bel et bien sécurisé la communication (Figure ~\ref{fig:https}, page~\pageref{fig:https}).
 
 \begin{figure}[H]
 \centering
@@ -181,12 +181,12 @@ Après avoir activé le protocole \acrshort{https}, le navigateur envoie un arve
 
 \section{Supervision}
 
-La \acrshort{paas} \emph{Deis} ne dispose pas d'un système de supervision intégré. Puisque les services déployés dans Deis fonctionnenet entièrement à l'intérieur des conteneurs Docker, cela signifie que les outils de supervision des conteneurs Docker devraient fonctionner avec Deis. L'on va utiliser les plus matures d'entre eux.
+La \acrshort{paas} \emph{Deis} ne dispose pas d'un système de supervision intégré. Puisque les services déployés dans Deis fonctionnant entièrement à l'intérieur des conteneurs Docker, cela signifie que les outils de supervision des conteneurs Docker devraient fonctionner avec Deis. L'on va utiliser les plus matures d'entre eux.
 
 
 \subsection{Outils de supervision utilisés}
 
-
+	
 \subsubsection*{cAdvisor}
 
 
@@ -202,7 +202,7 @@ cAdvisor a un support natif pour les conteneurs Docker et devrait supporter à p
 
 \subsubsection*{Heapster}
 
-Heapster est un projet open source de Google qui comble la limitation de cAdvisor qui supervise un seul serveur. Heapster receuille les données à travers les HTTP API fournit par les cAdvisor installés sur les serveurs, puis les stocker dans la base de donnée InfluxDB. Ainsi, Heapster est considéré comme un superviseur au niveau du cluster.
+Heapster est un projet open source de Google qui comble la limitation de cAdvisor qui supervise un seul serveur. Heapster recueille les données à travers les HTTP API fournit par les cAdvisor installés sur les serveurs, puis les stocker dans la base de donnée InfluxDB. Ainsi, Heapster est considéré comme un superviseur au niveau du cluster.
 
 \subsubsection*{InfluxDB}
 
@@ -210,7 +210,7 @@ Heapster est un projet open source de Google qui comble la limitation de cAdviso
 \centering
 \includegraphics[scale=0.2]{chapitre5/assets/influxdb}
 \end{wrapfigure}
-\noindent Influxdb est une base de donnée distribuée destinée pour le stockage des métriques, des événements et des analyses de performances. Influxdb est simple à installer et à gerer, et rapide car il vise à répondre aux requête en temps-réel. En effet, chaque point de données est indéxé et diponible pour des requêtes qui retournent des réponses dans < 100 ms. Enfin, il dispose d'une HTTP API intégré qui va être sollicité par l'interface utilisateur Grafana.
+\noindent Influxdb est une base de donnée distribuée destinée pour le stockage des métriques, des événements et des analyses de performances. Influxdb est simple à installer et à gérer, et rapide car il vise à répondre aux requête en temps-réel. En effet, chaque point de données est indexé et disponible pour des requêtes qui retournent des réponses dans < 100 ms. Enfin, il dispose d'une HTTP API intégré qui va être sollicité par l'interface utilisateur Grafana.
 
 \subsubsection*{Grafana}
 
@@ -268,14 +268,14 @@ Notre cluster se compose de trois serveurs. Les figures suivantes présentes la 
 
 \subsection{Supervision et scalabilité}
 
-La scalabilité était toujours parmi nos aspirations tout au long de ce projet. Le système de supervision réalisé est conçu pour fonctionner de façon indépendante, complétement automatisée et hautement scalable. Nous allons prouver cela à travers ces deux scénarios:
+La scalabilité était toujours parmi nos aspirations tout au long de ce projet. Le système de supervision réalisé est conçu pour fonctionner de façon indépendante, complètement automatisée et hautement scalable. Nous allons prouver cela à travers ces deux scénarios:
 
 \begin{itemize}
 	\item Quand un nouveau service est lancé sur un des serveurs du cluster, cAdvisor se rendra compte de ce nouveau conteneur et va mettra à la disposition de Heapster les données qui va les stocker dans la base de données pour des consultations via l'interface graphique;
 	\item Lors d'un pic de charge, on a intérêt à lancer les nouveaux conteneurs dans un nouveau serveur. On va tout d'abord lancer avec le fichier d'initialisation du cluster. Désormais, de façon automatique, le serveur appartient au cluster. Ainsi, les conteneurs lancés sur ce nouveau serveur sont supervisés automatiquement comme le décrit le scénario 1.
 \end{itemize}
 
-Grafana, l'interface utilisateur, sera disponible dans la machine dans laquelle \emph{Fleet} décide d'installer le trio Heapster, InfluxDB et Grafana. Cela signifie que Grafana peut changer de position dans le cluster à l'improviste et n'aura donc pas une adresse IP pour y accéder. Comme perspective, il serait préférable de mettre en place une sorte de proxy par lequel on accéde à Grafana partout où il soit.
+Grafana, l'interface utilisateur, sera disponible dans la machine dans laquelle \emph{Fleet} décide d'installer le trio Heapster, InfluxDB et Grafana. Cela signifie que Grafana peut changer de position dans le cluster à l'improviste et n'aura donc pas une adresse IP pour y accéder. Comme perspective, il serait préférable de mettre en place une sorte de proxy par lequel on accède à Grafana partout où il soit.
 
 
 
