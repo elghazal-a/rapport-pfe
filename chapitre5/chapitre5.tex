@@ -5,15 +5,17 @@
 
 \section{A base d'un Cluster}
 
-\subsection{Environnement d'installation}
+\subsection{Installation du Cluster}
 
-Nous allons mettre en place l'architecture (Figure \ref{fig:architecture}). 
+Nous allons mettre en place l'architecture décrite dans la figure \ref{fig:architecture}). 
 
 
 \begin{itemize}
-	\item Réseau privé: Les serveurs du Cluster se communique avec des adresses \acrshort{ip} privées. Cette solution est contraignante. En effet, les serveurs doivent être installés dans la même zone. De plus les fournisseurs chargent des coûts supplémentaires pour l'installation d'une interface réseau privée. En contrepartie, on gagne en termes de sécurité;
+	\item Réseau privé: Les serveurs du Cluster communiquent entre eux avec des adresses \acrshort{ip} privées. Cette solution est contraignante. En effet, les serveurs doivent être installés dans la même zone. De plus les fournisseurs chargent des coûts supplémentaires pour l'installation d'une interface réseau privée. En contrepartie, on gagne en termes de sécurité;
 	\item Réseau public: Les serveurs du Cluster peuvent se communiquer mutuellement via une interface réseau public et donc une adresse \acrshort{ip} public. De ce fait, beaucoup d'avantages se dégagent. D'une part, les serveurs peuvent être distribués dans le monde entier et ainsi garantir une disponibilité maximale. D'autre part, une migration à chaud de toute la plate-forme peut être faite. Cette migration est silencieuse et transparente pour tous les clients.
 \end{itemize}
+
+\subsection{Installation des proxy}
 
 Gogeta est un proxy dynamique dont la configuration est basée sur la base de donnée Etcd. En effet, Gogeta écoute en permanence Etcd pour assurer une reconfiguration dynamique en temps réel des routes sans redémarrage.
 
