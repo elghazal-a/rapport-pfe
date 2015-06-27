@@ -5,11 +5,25 @@
 
 \section{A base d'un Cluster}
 
+\subsection{Environnement d'installation}
+
+Nous allons mettre en place l'architecture (Figure \ref{fig:architecture}). 
+
 
 \begin{itemize}
 	\item Réseau privé: Les serveurs du Cluster se communique avec des adresses \acrshort{ip} privées. Cette solution est contraignante. En effet, les serveurs doivent être installés dans la même zone. De plus les fournisseurs chargent des coûts supplémentaires pour l'installation d'une interface réseau privée. En contrepartie, on gagne en termes de sécurité;
 	\item Réseau public: Les serveurs du Cluster peuvent se communiquer mutuellement via une interface réseau public et donc une adresse \acrshort{ip} public. De ce fait, beaucoup d'avantages se dégagent. D'une part, les serveurs peuvent être distribués dans le monde entier et ainsi garantir une disponibilité maximale. D'autre part, une migration à chaud de toute la plate-forme peut être faite. Cette migration est silencieuse et transparente pour tous les clients.
 \end{itemize}
+
+Gogeta est un proxy dynamique dont la configuration est basée sur la base de donnée Etcd. En effet, Gogeta écoute en permanence Etcd pour assurer une reconfiguration dynamique en temps réel des routes sans redémarrage.
+
+Quand l'ordonnanceur Fleet crée un service en mode haute disponibilité, Il stocke les donnée (\acrshort{ip} et port) dans Etcd sous forme de clé-valeur. Les proxy Gogeta, étant en écoute en permanence d'Etcd , se reconfigure pour prendre en considération le nouveau service. Ainsi, si une requête arrive sur l'un des proxy Gogeta, il la transmet vers une des instances avec la stratégie \emph{Round-robin} après avoir fait des bilans de santé.
+
+\begin{lstlisting}[language=bash,caption=Contenu de la base de donnée Etcd]
+	/domains/odoo.sayoo.org/value 	= odoo
+	/services/odoo/1/location		= {"host":"10.240.210.86", "port": 42654}
+	/services/odoo/2/location		= {"host":"10.240.228.23", "port": 42669}
+\end{lstlisting}
 
 
 La solution à base d'un cluster CoreOS motorisé par des équilibreurs de charges élastique est très puissante, mais son utilisation demeure très bas niveau. Le fait d'intéragir directement avec le cluster nécéssite des administrateurs systèmes très compétents. C'est la raison pour laquelle nous allons essayer d'adopter une solution à base d'une \acrshort{paas}.
