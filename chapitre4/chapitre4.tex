@@ -1,97 +1,126 @@
-\chapter{Conception}
+\chapter{Conception et réalisation}
 \begin{onehalfspace}
 
 \newpage
 
-\section{Base de donnée}
+\section{Conception}
+\subsection{}
+\subsection{Base de donnée}
+\section{Réalisation}
 
 
 
-Odoo, comme toute autre application, a besoin d'une base de donnée \emph{PostgreSQL} pour persister des informations. Malheureusement, la communauté de Docker n'est pas si satisfaite vis-à-vis l'idée de containériser les bases de données. Nous allons prouver à travers deux scénarios qu'il serait une imprudence de tourner les bases de données dans des conteneurs.
+\subsection{Supervision}
 
-Le fait de la rapidité et la légèreté de Docker et des conteneurs en général a poussé CoreOS d'adopter une certaine philosophie à l'égard de la gestion et l'ordonnancement des conteneurs. En effet, lorsqu'un conteneur s'est arrêté pour une raison quelconque, il va être automatiquement écrasé et remplacé par un nouveau qui va tourner le même service. Une philosophie, certes, moins prudente et parait naïve, mais sa simplicité épargne beaucoup de problèmes à tout le monde.
+La Paas \emph{Deis} ne dispose pas d'un système de supervision intégré. Puisque les services déployés dans Deis fonctionnent entièrement à l'intérieur des conteneurs Docker, cela signifie que les outils de supervision des conteneurs Docker devraient fonctionner avec Deis. L'on va utiliser les plus matures d'entre eux.
 
-Par conséquent, on ne peut en aucun cas mettre les données dans le système de fichiers d'un conteneur sous peine de les perdre. La figure \ref{fig:database1} montre qu'après avoir tuer un conteneur, ses données sont perdues.
 
-\begin{figure}[H]
+\subsubsection{Outils de supervision utilisés}
+
+
+\subsubsubsection*{cAdvisor}
+
+
+
+\begin{wrapfigure}{l}{3.5cm}
 \centering
-\includegraphics [scale=0.5]{chapitre4/assets/database1}
-\caption{Données perdues - scénario 1}
-\label{fig:database1}
-\end{figure}
+\includegraphics[scale=0.2]{chapitre4/assets/cadvisor}
+\end{wrapfigure}
+\noindent \emph{cAdvisor} (Container Advisor) fournit aux utilisateurs de conteneurs une vue de l'utilisation des ressources et des caractéristiques de performance de leurs conteneurs en cours d'exécution. C'est un démon, toujours en exécution, qui recueille, agrège, analyse, et exporte informations sur l'exécution des conteneurs. Plus précisément, pour chaque conteneur, il conserve l'historique de l'utilisation des ressources, les histogrammes des historiques complets d'utilisation des ressources et des statistiques du réseau. Ces données peuvent être exportées pour chaque conteneur ou pour toute la machine.
 
-Pour y remédier, l'on peut penser à monter le volume des données dans le serveur hôte, ainsi les données sont plus ou moins persistées. Outre le fait que les données seront certainement perdues quand le serveur tombe en panne, le conteneur n'aura plus accès aux données quand il sera réordonnancé. En effet, le caractère imprévisible de l'ordonnanceur \emph{Fleet} fait qu'il n'y a pas de garantie qu'un conteneur réside dans le même serveur. La figure \ref{fig:database2} montre ce scénario.
+cAdvisor a un support natif pour les conteneurs Docker et devrait supporter à peu près tout autre solution de containérisation. Par ailleurs, cAdvisor fournit une interface utilisateur ainsi qu'une REST API.
 
-\begin{figure}[H]
+
+\subsubsubsection*{Heapster}
+
+Heapster est un projet open source de Google qui comble la limitation de cAdvisor qui supervise un seul serveur. Heapster recueille les données à travers les HTTP API fournit par les cAdvisor installés sur les serveurs, puis les stocker dans la base de donnée InfluxDB. Ainsi, Heapster est considéré comme un superviseur au niveau du cluster.
+
+\subsubsubsection*{InfluxDB}
+
+\begin{wrapfigure}{l}{3.5cm}
 \centering
-\includegraphics [scale=0.5]{chapitre4/assets/database2}
-\caption{Données perdues - scénario 2}
-\label{fig:database2}
-\end{figure}
+\includegraphics[scale=0.2]{chapitre4/assets/influxdb}
+\end{wrapfigure}
+\noindent Influxdb est une base de donnée distribuée destinée pour le stockage des métriques, des événements et des analyses de performances. Influxdb est simple à installer et à gérer, et rapide car il vise à répondre aux requête en temps-réel. En effet, chaque point de données est indexé et disponible pour des requêtes qui retournent des réponses dans < 100 ms. Enfin, il dispose d'une HTTP API intégré qui va être sollicité par l'interface utilisateur Grafana.
+
+\subsubsubsection*{Grafana}
+
+\begin{wrapfigure}{l}{3.5cm}
+\centering
+\includegraphics[scale=0.3]{chapitre4/assets/grafana}
+\end{wrapfigure}
+\noindent Grafana est l'un des meilleurs projets open source pour la visualisation des données de mesure. Il fournit un moyen puissant et élégant pour créer, partager et explorer les données et les tableaux de bord à partir des bases de données de métriques. Grafana assure un support riche pour les bases de données Graphite, InfluxDB et OpenTSDB. Grafana sera utilisé pour visualiser les mesures stockées dans InfluxDB.
 
 
-Dans un environnement de production, il est encore tôt pour mettre les bases de donnée et les applications à états (stateful) en général dans des conteneurs. De ce fait, il serait judicieux de les faire sortir de l'architecture à base de conteneurs. En effet, deux solutions se portent à nous, les bases de données vont être mis en place suivant l'informatique classique ou elles vont être consommées comme un service à partir d'une partie tierce cloud (Délégation de l'informatique). La dernière solution est couteuse mais il est plus fiable.
+\subsubsection{Démarche d'installation}
 
-
-
-\section{Scalabilité et disponibilité}
-
-
-Parmi les contraintes qui ont poussé Sayoo à migrer vers le Cloud, c'est de garantir une haute disponibilité et une scalabilité infinie.
-
-La haute disponibilité fait référence au fait qu'un service est en quelque sorte tolérant à une échec ou à une panne. Nous allons assurer cela en faisant la redondance des services dans différents serveurs du cluser.
-
-La scalabilité ou l'évolutivité c'est la capacité d'une application à pouvoir exploiter des nouvelles ressources récemment déployées pour répondre à un pic de charge. En fait, la scalabilité n'est pas apporté par le Cloud, qui lui apporte l'élasticité, mais c'est l'application elle-même qui l'apporte. L'idée que toute application déployée dans un milieu élastique Cloud peut être évolutive est fausse.
-
-
-Pour faire une bonne conception d'un \acrshort{saas} scalable, il faut distinguer d'abord deux types d'application:
+Nous allons installer ce système de supervision dans un cluster Deis dont les serveurs fonctionne au-dessus de CoreOS. Comme c'est déjà mentionné, tous les services, sous CoreOS, sont installés en tant que conteneur. L'on trouvera les fichiers d'installations dans les annexes.  
 
 \begin{itemize}
-	\item Application \textbf{stateful} ou à états: C'est une application dont les processus ne stockent aucune donnée qui doit persister, même dans un temps aussi petit qu'il soit, dans son espace mémoire ou système de fichiers;
-	\item Application \textbf{stateless} ou sans états: C'est une application qui stocke tous les données persistentes dans un service de support externe (Base de donnée, queue, mémoire cache, etc.).
+	\item cAdvisor doit être installé sur tous les serveurs du cluster. Heureusement, l'ordonnanceur Fleet effectue cette opération de façon automatique et scalable. En effet, il suffit de mentionner \emph{Global=true} dans le fichier d'installation;
+	\item InfluxDB, Heapster et Grafana doivent être installé dans le même serveur. L'on exprime cette contrainte par \emph{X-ConditionMachineOf=influxdb.service}. Ainsi, Fleet va s'en sortir pour faire coexister les trois services.
 \end{itemize}
 
-Une application scalable doit être \textbf{stateless}, plus que cela, il doit respecter les douze-facteurs définies dans l'annexe \ref{annexe:12factors}. Une application scalable suppose qu'aucune donnée mise en cache (mémoire, disque) ne sera disponible dans une requête ultérieure. En effet, les chances sont élevées qu'une future requête sera servi par un processus différent du même service.
-
-
-La figure \ref{fig:non-scalable} montre un service qui n'est évolutive contrairement au service présenté dans la figure \ref{fig:scalable}.
-
-
 \begin{figure}[H]
 \centering
-\includegraphics [scale=0.5]{chapitre4/assets/stateful}
-\caption{Service non scalable}
-\label{fig:non-scalable}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics [scale=0.5]{chapitre4/assets/stateless}
-\caption{Service scalable}
-\label{fig:scalable}
-\end{figure}
-
-
-\section{Architecture}
-
-\begin{figure}[H]
-\centering
-\includegraphics [scale=0.7]{chapitre4/assets/architecture}
-\caption{Achitecture de la solution}
+\includegraphics [scale=0.6]{chapitre4/assets/monitoring-cluster}
+\caption{Architecture de la supervision}
 \label{fig:}
 \end{figure}
 
-L'architecture est très simplifiée car on a fait abstraction du comportement internes des composants de CoreOS. Elle décrit trois processus et implique trois acteurs:
 
+\subsubsection{Interfaces graphique}
+
+
+
+\subsubsection{Supervision et scalabilité}
+
+La scalabilité était toujours parmi nos aspirations tout au long de ce projet. Le système de supervision réalisé est conçu pour fonctionner de façon indépendante, complètement automatisée et hautement scalable. Nous allons prouver cela à travers ces deux scénarios:
 
 \begin{itemize}
- 	\item Développeur: Il développe, personnalise et adapte l'image Odoo de base aux besoin du client. Une fois le développement est fait, le développeur pousse l'image Odoo vers le registre des images de Docker. Cette image est étiquetée par un nom, une version et un environnement (dévelopement, test, production);
- 	\item Exploitant: Il exploite l'ordonnanceur Fleet pour déployer l'application que le développeur vient de pousser dans le registre. L'exploitant va demander à l'ordonnanceur, par exemple, de lancer le service en mode haute disponibilité. L'ordonnanceur lance plusieurs instances du service dans des serveurs différents. L'exploitant, remarquant un pic de charge sur ce service, va demander de lancer une autre instance qui compense la surcharge;
- 	\item Client: C'est l'utilisateur final de l'application. Il va saisir l'\acrshort{url} de son application. Son requête va être intercepté par l'équilibreur de charge qui va faire suivre la demande à un des serveurs du cluster. Quand la requête est arrivée, il tombe sur le proxy de ce serveur qui va faire suivre la requête à l'instance du service la moins chargée, quitte même à la faire suivre vers une instance dans un autre serveur.
- \end{itemize} 
+	\item Quand un nouveau service est lancé sur un des serveurs du cluster, cAdvisor se rendra compte de ce nouveau conteneur et va mettra à la disposition de Heapster les données qui va les stocker dans la base de données pour des consultations via l'interface graphique;
+	\item Lors d'un pic de charge, on a intérêt à lancer les nouveaux conteneurs dans un nouveau serveur. On va tout d'abord lancer avec le fichier d'initialisation du cluster. Désormais, de façon automatique, le serveur appartient au cluster. Ainsi, les conteneurs lancés sur ce nouveau serveur sont supervisés automatiquement comme le décrit le scénario 1.
+\end{itemize}
+
+Grafana, l'interface utilisateur, sera disponible dans la machine dans laquelle \emph{fleet} décide d'installer le trio Heapster/InfluxDB/Grafana. Cela signifie que Grafana peut changer de position dans le cluster à l'improviste et n'aura donc pas une adresse IP pour y accéder. Comme perspective, il serait préférable de mettre en place une sorte de proxy par lequel on accède à Grafana partout où il soit.
+
+\subsection{Sécurité}
 
 
-L'idée c'est que une application doit être capable d'envoyer les réponses de façon consistente à partir de n'importe instance éxécutant l'application.********
+\subsection{Messages logs}
+
+
+
+% The \Gls{latex} typesetting markup language is specially suitable 
+% for documents that include \gls{maths}. \Glspl{formula} are 
+% rendered properly an easily once one gets used to the commands.
+ 
+% Given a set of numbers, there are elementary methods to compute 
+% its \acrlong{gcd}, which is abbreviated \acrshort{gcd}. This 
+% process is similar to that used for the \acrfull{lcm}.
+
+% Angular, en utilisant le mécanisme d'injection de dépendance, permet le couplage faible entre les composants de présentation, de données, et les composants métiers. En utilisant Angular des services côté serveur traditionnelles, telles que les vues, les contrôleurs et le routage passent au côté client. Par conséquent, une grande partie de la charge sur le backend est réduite, ce qui conduit à des applications beaucoup plus légères
+% \endnote
+% {
+% 	\textbf
+% 	{
+% 		Le framework AngularJs
+% 	}, [En ligne], 
+% 	\textit
+% 	{
+% 		date de consultation:
+% 	} 3/28/2014 
+% 	\textit
+% 	{
+% 		disponible sur:
+% 	} \\
+% 	\indent
+% 	\indent
+% 	\url
+% 	{
+% 		http://blog.tsoin.com/2013/09/28/introduction-a-angularjs
+% 	}
+% }
 
 
 \end{onehalfspace}
