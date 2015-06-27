@@ -33,7 +33,7 @@ La solution à base d'un cluster CoreOS motorisé par des équilibreurs de charg
 Deis peut déployer n'importe quelle application ou service qui peut fonctionner à l'intérieur d'un conteneur Docker. Pour que l'application soit évolutive horizontalement, elles doivent suivre la méthodologie de 12-facteur de Heroku (Voir Annexe \ref{annexe:12factors}, page \pageref{annexe:12factors}).
 
 \subsubsection*{Plates-formes supportées}
-Deis peut être déployé sur un n'importe quelle système qui supporte CoreOS: poste de travail, ainsi que la plupart des clouds publics, clouds privés et les centres de données.
+Deis peut être déployée sur un n'importe quelle système qui supporte CoreOS: poste de travail, ainsi que la plupart des Cloud publics, Clouds privés et les centres de données.
 
 
 \subsubsection*{Pourquoi Deis?}
@@ -41,34 +41,71 @@ Deis peut être déployé sur un n'importe quelle système qui supporte CoreOS: 
 \begin{itemize}
 	\item Langage-agnostique: Deis déploie des services écrites dans n'importe quels langages avec une simple commande "git push";
 	\item Extensibilité: Deis est extensible, les outils de supervisions et de la gestions des messages logs peuvent être intégrés facilement;
-	\item Scalabilité: Une application est monté en charge avec une seule commande. Par ailleurs, La capacité de la plate-forme Deis peut être monté lors de la charge en ajoutant simplement des hôtes au cluster;
+	\item Scalabilité: Une application est montée en charge avec une seule commande. Par ailleurs, La capacité de la plate-forme Deis peut être montée en charge en ajoutant simplement des hôtes au cluster;
 	\item 100\% Open Source: Deis est un logiciel libre, open-source publié sous la licence Apache 2.0.
 \end{itemize}
 
 
 \subsection{Architecture}
 
+l'architecture de Deisprésentée dans la figure \ref{fig:deis-architecture} a tellement de points de commun avec celle que nous avons proposé. Néanmoins, elle cache beaucoup de détails, notemment à l'intérieur du controlleur où beaucoup de magie se fait. Par ailleurs, Deis intègre ses propres routeurs (équilibreurs de charges) et un registre privé des images Docker. Les services de support, la suppervision, la gestion des messages logs et l'équilibreur de charge ne sont pas intégrés par la plate-forme Deis.
+
+Un développeur, voulant déployer une application, va pousser son code vers le contrôleur. Ce dernier construit l'image et la stocke dans le registre des images. Ensuite, le contrôleur passe le relai à l'ordonnanceur qui se débrouille pour lancer le service à l'intérieur d'un conteneur. Le conteneur est crée à base de l'image Docker.
+
+
+
 \begin{figure}[H]
 \centering
-\includegraphics [scale=0.55]{chapitre5/assets/deis-architecture}
+\includegraphics [scale=0.6]{chapitre5/assets/deis-architecture}
 \caption{Architecture de la PaaS Deis}
 \label{fig:deis-architecture}
 \end{figure}
 
 
-\subsection{Envorinnement d'installation}
+\subsection{Installation}
+
+
+Deis nécéssite un Cluster de CoreOS pour s'installer dessus. Nous aurions pu installer Deis au-dessus du Cluster que nous avons déja réalisé, mais Deis nécéssite des ressources (au moins 4GB de RAM) que la version d'éssai de \acrshort{aws} n'offre pas. Nous avons opté pour \acrshort{gce}.
+
+L'installation de Deis sur \acrshort{gce} est détaillé dans la documentation \cite{deis-gce}. Les grandes étapes d'installation:
+\begin{itemize}
+	\item Lancer des serveurs CoreOS avec le fichier d'initialisation de Deis fournit par la documentation;
+	\item Faire pointer l'équilibreur de charge de Google vers nos serveurs. Cette équilibreur de charge est élastique et donc reconnait dynamiquement des nouveaux serveurs;
+	\item Configurer le \acrshort{dns} pour faire pointer le nom de domaine et tous les sous-domaines vers l'équilibreur de charge de Google (Figure \ref{fig:dns}).
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics [scale=0.55]{chapitre5/assets/dns}
+\caption{Configuration du DNS}
+\label{fig:dns}
+\end{figure}
+
 
 \subsection{Avantages du \acrshort{paas} par rapport au Cluster}
 
-- Déploiement avec une seule commande
+\subsubsection*{Déploiement avec une seule commande}
 
-- zero downtime migration
+	Quand le développeur finit de développer ou personnaliser une application, il peut la déployer rapidement.
 
-- zero downtime deployment
+	\begin{lstlisting}[language=bash,caption=Déploiement avec Deis]
+		$ git push deis master
+	\end{lstlisting}
 
-- scale avec une seule commande
+\subsubsection*{Montée en chargé avec une seule commande}
 
-- en plus de ca, elle peut faire tout ce que la solution a base du cluster peut faire via une interface de commande de haut niveau.
+Après avoir lancé un service, l'exploitant, remarquant un pic de charge, va pouvoir ajouter d'autres instances du service.Les routeurs sont dynamiquement reconfigurés pour diffuser la charge à travers toutes les instances.
+
+	\begin{lstlisting}[language=bash,caption=Montée en charge]
+		$ deis scale cmd=3
+	\end{lstlisting}
+
+\subsubsection*{Déploiement avec zero temps d'arrêt}
+
+Durant le déploiement d'une nouvelle version d'un service, Deis garantit un zero temps d'indisponibilité. En effet, les routeurs ne sont reconfigurés que lorsque le déploiement est terminé. Enfin, l'ancienne version est supprimée.
+
+
+
 
 
 
