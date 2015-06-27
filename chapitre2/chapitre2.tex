@@ -48,12 +48,14 @@ Le Cloud Computing est un concept qui décrit une large collection de services. 
 \end{figure}
 
 \subsubsection*{Software as a Service}
+\index{SaaS}
 
 La meilleure façon de comprendre ces services est de commencer avec le SaaS, la couche la plus abstraite et celle qu'on utilise peut-être déjà aujourd'hui, même à un niveau personnel. Un exemple simple de SaaS est un service de messagerie en ligne, comme Gmail. Lorsque l'on utilise Gmail, vous n'hébergez votre propre serveur de messagerie. C'est Google qui l'héberge, et l'accès est simplement via un navigateur comme un client.
 
 SaaS est orienté vers les utilisateurs finaux de l'entreprise et ne nécessite pas beaucoup de compétences pour l'utiliser. Le fournisseur décide sur le nombre de ressources à consacrer pour l'utilisation de l'application, les serveurs, les machines virtuelles, et les équipements réseaux. Enfin, il suffit de pointer le navigateur à l'application.
 
 \subsubsection*{Infrastructure as a Service}
+\index{IaaS}
 
 IaaS est à l'autre bout du pyramide du Cloud. Lorsque l'on souhaite garder le contrôle de l'environnement logiciel, mais on ne veut pas maintenir aucun équipement ni acheter des serveurs et les mettre dans une pièce à température contrôlée. On consulte une offre Iaas d'un fournisseur IaaS pour commander et acheter tout simplement une machine virtuelle.
 
@@ -62,6 +64,7 @@ On peut mettre n'importe quel logiciel que l'on souhaite au-dessus d'IaaS. En ar
 L'infrastructure en tant que service ou l'IaaS ne touche pas directement à notre sujet. Du coup, il ne sera mentionné que rarement par la suite.
 
 \subsubsection*{Platform as a Service}
+\index{PaaS}
 
 PaaS se situe entre IaaS et SaaS. Il n'est pas un produit fini comme SaaS, encore moins une simple ressource virtuelle vierge comme IaaS. PaaS est destiné pour les développeurs, il leur donne des outils et des interfaces de haut niveau pour mieux développer. Par exemple, Windows Azure de Microsoft vous donne des outils pour développer des applications mobiles, des applications sociales, sites Web, jeux et plus encore. Vous construisez ces choses, mais vous utilisez les API et les outils pour les accrocher et exécuter dans l'environnement Azure.
 
@@ -90,10 +93,13 @@ Il existe plusieurs solutions de virtualisation, l'on peut citer à titre inform
 \end{itemize}
 
 \subsection{Containérisation}
+\index{Containérisation}
 
 Noyau Linux permet de lancer plusieurs instances isolées de l'espace utilisateur. Un conteneur est un environnement isolé où un ou plusieurs processus peuvent être exécutés. Les conteneurs se concentrent sur l'isolation des processus au lieu d'émuler une machine physique complète.
 
 Historiquement, \emph{chroot} dans le noyau Linux a fourni un certain niveau d'isolation en fournissant un environnement pour créer et héberger une copie virtualisée d'un logiciel, et ceci depuis le début des années 80. Mais le terme «conteneurs» n'est apparu que vers la fin de l'année 2006. Il a été renommé «\emph{Control Groups}» (cgroups) pour éviter toute confusion causée par de multiples significations du terme «conteneurs» dans le noyau Linux. «\emph{Control Groups}» est une fonctionnalité du noyau Linux qui est disponible depuis la version v2.6.24, elle limite et isole l'utilisation des ressources d'un ensemble de processus. Par la suite, l'isolation de l'espace de noms a été ajoutée.
+
+\index{LXC}
 
 Cela a conduit à l'évolution de Linux Containers (LXC), un environnement de virtualisation au niveau du système d'exploitation qui est construit sur les fonctionnalités du noyau Linux comme \emph{chroot}, \emph{cgroupes}, l'isolation de l'espace de noms, etc.
 
@@ -224,6 +230,8 @@ En somme, il va s'en dire que Docker l'emporte largement par rapport à \emph{KV
 
 
 \section{L'outil Docker}
+\index{Docker}
+
 \subsection{Présentation de Docker}
 
 \begin{wrapfigure}{l}{3.8cm}

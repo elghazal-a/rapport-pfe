@@ -7,6 +7,8 @@
 
 \section{Le Clustering}
 
+\index{Cluster}
+
 Nous avons présenté dans le chapitre 2 le Cloud Computing ainsi que ses services classiques. Dans cette section, nous allons parler du cluster comme un service et le situer dans le pyramide des services du Cloud (Figure ~\ref{fig:pyramide-cluster}).
 
 \begin{figure}[H]
@@ -17,8 +19,8 @@ Nous avons présenté dans le chapitre 2 le Cloud Computing ainsi que ses servic
 \end{figure}
 
 \begin{itemize}
-	\item \textbf{Plate-forme}: Un développeur crée une application dans un ensemble particulier de langages de programmation à l'aide des \acrshort{api}s spécifiques et pousse ce code vers la plate-forme. La plate-forme l'exécute et lance une seule copie du service ou éventuellement plusieurs copies dépendamment du trafic. Finalement ce service monte en charge automatiquement. 
-	\item \textbf{\acrshort{iaas}}: A l'autre bout du pyramide se trouve l'\acrshort{iaas} composé seulement de machines virtuelles qui résident essentiellement dans l'internet. Quand un utilisateur consulte un fournisseur \acrshort{iaas} et demande  un ordinateur avec des spécifications données (quantité de mémoire et de disque, nombre de \acrshort{cpu}, une version spécifique Linux, etc). En quelques minutes, L'utilisateur pourra  exécuter n'importe quel logiciel sur le serveur mais il est entièrement responsable de la gestion de la machine.
+	\item \index{PaaS} \textbf{Plate-forme}: Un développeur crée une application dans un ensemble particulier de langages de programmation à l'aide des \acrshort{api}s spécifiques et pousse ce code vers la plate-forme. La plate-forme l'exécute et lance une seule copie du service ou éventuellement plusieurs copies dépendamment du trafic. Finalement ce service monte en charge automatiquement. 
+	\item \index{IaaS} \textbf{\acrshort{iaas}}: A l'autre bout du pyramide se trouve l'\acrshort{iaas} composé seulement de machines virtuelles qui résident essentiellement dans l'internet. Quand un utilisateur consulte un fournisseur \acrshort{iaas} et demande  un ordinateur avec des spécifications données (quantité de mémoire et de disque, nombre de \acrshort{cpu}, une version spécifique Linux, etc). En quelques minutes, L'utilisateur pourra  exécuter n'importe quel logiciel sur le serveur mais il est entièrement responsable de la gestion de la machine.
 	\item \textbf{Cluster}: C'est lorsqu'il y a un besoin de gérer un ensemble de machines, un cluster de machines comme une seule entité, pas seulement un ordinateur individuel (\acrshort{iaas}) et non plus toute une plate-forme magique.
 
 \end{itemize}
@@ -103,6 +105,9 @@ Les capacités d'orchestration de Docker sont construites sur les fondations exi
 \caption{Docker Compose}
 \end{figure}
 \section{Orchestration Google}
+
+\index{Kubernetes}
+
 L'entreprise Google est aussi intéressée par l'orchestration des conteneurs docker, elle a d'ailleurs lancée un projet nommée \textbf{Kubernetes}.Ce projet est récent mais promoteur et pourrait révolutionner le domaine du Cloud s'il est suffisamment mature pour la production. Kubernetes a pour objectif de fournir un outil de supervision unique capable de déplacer des conteneurs Docker d'un Cloud à un autre. Autrement dit, de proposer une forme d’interopérabilité dans le nuage, via un framework de gestion de conteneurs solide, ouvert et adapté à toute application sur tous types d’environnements, qu’il s’agisse de Cloud privé, public ou hybride. Ce projet a le soutien et l'attention des géants du Cloud notamment Microsoft, IBM, RedHat qui tiennent à s'assurer que cet outil sera compatible avec leurs Clouds et tentent de l'associer au projet \textbf{Openstack} qui est l'orchestrateur du cloud hybride open source.
 \subsection{Architecture de Kubernetes}
 Kubernetes est un outil open-source pour l'orchestration des conteneurs Docker. Il gère l'ordonnancement des nœuds dans un Cluster et gère les ressources pour mieux correspondre à l'intention de l'utilisateur. En utilisant les concepts de "\emph{labels}" et "\emph{pods}", il permet un regroupement optimal de conteneurs pour une meilleure gestion et une découverte facile.
@@ -131,6 +136,9 @@ Kubernetes est un outil open-source pour l'orchestration des conteneurs Docker. 
 %\end{figure}
 
 \section{Orchestration Apache}
+
+\index{Mesos}
+
 L'entreprise Apache a toujours été intéressée par le domaine du Cloud, le lancement de son projet \textbf{Mesos} visait principalement à améliorer l'orchestration des \emph{"datacenters"} ceci bien avant l’émergence des conteneurs et docker. Le projet Mesos est très promoteur pour le futur avec les conteneurs bien qu'il soit déjà mature avec les machines virtuelles. Plusieurs grandes entreprise utilisent Mesos notamment \emph{Twitter}, \emph{Paypal} et \emph{Airbnb}.
 Mesos agit comme un "Cluster Manager" et offre de nombreuses fonctionnalités telles que :
 \begin{itemize}
@@ -168,6 +176,7 @@ Le framework ou l'application Mesos tient une importante place au sein de l'arch
 \emph{Chronos} est une application Mesos qui a été initialement développé par Airbnb comme remplacement pour le système \emph{cron}.Il est un ordonnanceur pleinement fonctionnel , distribué et tolérant aux pannes pour \emph{Mesos}, ce qui facilite l'orchestration des "\emph{jobs}" qui sont des collections de tâches . Il comprend une API qui permet d'exécuter les scripts de la planification de tâches et une interface web pour la facilité d'utilisation.
 \emph{Chronos} est complémentaire à \emph{Marathon} car il fournit une autre façon d'exécuter des applications selon un calendrier ou d'autres conditions telles que la réalisationn d'un autre emploi. Il est également capable de la planification de tâches sur plusieurs nœuds esclaves \emph{Mesos}, et fournit des statistiques sur les échecs et les réussites d'emploi.
 \section{Coreos}
+\index{CoreOS}
 \textbf{Coreos} est un système d'exploitation open-source basé sur le noyau \emph{Linux} et construit pour fournir des infrastructures aux déploiements en Cluster. En effet, il est un système minimaliste, sur lequel est greffé des conteneurs applicatifs indépendants et sécurisés. Coreos est conçu pour être léger et performant afin de gérer les datacenters. Coreos consomme 40\% moins de mémoire au démarrage en moyenne par rapport à un serveur \emph{Linux}. Coreos est disponible sur plusieurs plates-formes comme Amazon Compute Cloud, Google Compute Engine et plusieurs autres.
 %\begin{figure}[H]
 %\centering
@@ -176,8 +185,10 @@ Le framework ou l'application Mesos tient une importante place au sein de l'arch
 %\end{figure}
 \subsection{Composants de Coreos}
 \subsubsection*{Le service Systemd}
+\index{Systemd}
 \emph{systemd} est une suite de gestion de système, de bibliothèques et utilitaires conçus comme un système central de management et configuration pour le système d'exploitation Linux. Il est contrôlé dans le système d'exploitation Coreos par le service \emph{Fleet}.
 \subsubsection*{Le service Etcd}
+\index{Etcd}
 Le service \emph{etcd} est une base de données distribuée de clé-valeur qui fournit une configuration partagée et un service de découverte pour les Clusters \emph{Coreos}.Il fonctionne sur chaque machine dans un Cluster et gère l'élection du maître lors des partitionnements réseaux ou la perte du maître.
 \begin{figure}[H]
 \centering
@@ -185,6 +196,7 @@ Le service \emph{etcd} est une base de données distribuée de clé-valeur qui f
 \caption{Service etcd.}
 \end{figure}
 \subsubsection*{Le service Fleet}
+\index{Fleet}
 \emph{Fleet} permet de traiter le Cluster \emph{Coreos} comme s'il partageait un unique système d'initialisation. Il encourage les utilisateurs à écrire des applications sous forme de petites unités éphémères qui peuvent facilement migrer autour d'un Cluster. En utilisant \emph{Fleet}, les développeurs peuvent se concentrer sur la gestion des conteneurs sans soucier des machines qui tournent les conteneurs. Le service \emph{Fleet} a plusieurs avantages: 
 \begin{itemize}
 \item Déployer conteneurs docker sur des hôtes arbitraires dans un cluster.

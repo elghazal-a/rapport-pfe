@@ -16,6 +16,7 @@ Nous allons mettre en place l'architecture décrite dans la figure \ref{fig:arch
 \end{itemize}
 
 \subsection{Installation des proxy}
+\index{Gogeta}
 
 Gogeta est un proxy dynamique dont la configuration est basée sur la base de donnée Etcd. En effet, Gogeta écoute en permanence Etcd pour assurer une reconfiguration dynamique en temps réel des routes sans redémarrage.
 
@@ -32,7 +33,7 @@ La solution à base d'un cluster CoreOS motorisé par des équilibreurs de charg
 
 
 \section{A base d'une \acrshort{paas}}
-
+\index{Deis}
 \subsection{Plate-forme Deis}
 
 \subsubsection*{Deis}
@@ -130,6 +131,9 @@ Durant le déploiement d'une nouvelle version d'un service, Deis garantit un zé
 
 \subsubsection{\acrshort{ssl}/\acrshort{tls}}
 
+\index{SSL}
+\index{TLS}
+
 \acrshort{ssl} est un protocole qui permet d'échanger des informations entre 2 ordinateurs de façon sûre. \acrshort{ssl} assure 3 choses:
 
 \begin{itemize}
@@ -191,7 +195,7 @@ La \acrshort{paas} \emph{Deis} ne dispose pas d'un système de supervision inté
 	
 \subsubsection*{cAdvisor}
 
-
+\index{cAdvisor}
 
 \begin{wrapfigure}{l}{3.5cm}
 \centering

@@ -1,4 +1,4 @@
-How to generate glossary ?
+How to generate glossary (acr) ?
 build rapport.tex
 cd Output
 makeglossaries rapport
@@ -18,3 +18,8 @@ build rapport.tex
 
 
 -----------------------------------------------------
+
+
+How to generate index
+makeindex Output/rapport.idx
+build rapport.tex
