@@ -20,7 +20,7 @@ Par conséquent, on ne peut en aucun cas mettre les données dans le système de
 \label{fig:database1}
 \end{figure}
 
-Pour y remédier, l'on peut penser à monter le volume des données dans le serveur hôte, ainsi les données sont plus ou moins persistées. Outre le fait que les données seront certainement perdues quand le serveur tombe en panne, le conteneur n'aura plus accès aux données quand il sera réordonnancé. En effet, le caractère imprévisible de l'ordonnanceur \emph{Fleet} fait qu'il n'y a pas de garantie qu'un conteneur réside dans le même serveur. La figure \ref{fig:database2} montre ce scénario.
+Pour y remédier, l'on peut penser à monter le volume des données dans le serveur hôte, ainsi les données sont plus ou moins persistantes. Outre le fait que les données seront certainement perdues quand le serveur tombe en panne, le conteneur n'aura plus accès aux données quand il sera réordonnancé. En effet, le caractère imprévisible de l'ordonnanceur \emph{Fleet} fait qu'il n'y a pas de garantie qu'un conteneur réside dans le même serveur. La figure \ref{fig:database2} montre ce scénario.
 
 \begin{figure}[H]
 \centering
@@ -30,7 +30,7 @@ Pour y remédier, l'on peut penser à monter le volume des données dans le serv
 \end{figure}
 
 
-Dans un environnement de production, il est encore tôt pour mettre les bases de donnée et les applications à états (stateful) en général dans des conteneurs. De ce fait, il serait judicieux de les faire sortir de l'architecture à base de conteneurs. En effet, deux solutions se portent à nous, les bases de données vont être mis en place suivant l'informatique classique ou elles vont être consommées comme un service à partir d'une partie tierce cloud (Délégation de l'informatique). La dernière solution est couteuse mais il est plus fiable.
+Dans un environnement de production, il est encore tôt pour mettre les bases de donnée et les applications à états (stateful) en général dans des conteneurs. De ce fait, il serait judicieux de les faire sortir de l'architecture à base de conteneurs. En effet, deux solutions se portent à nous, les bases de données vont être mis en place suivant l'informatique classique ou elles vont être consommées comme un service à partir d'une partie tierce cloud (Délégation de l'informatique). La dernière solution est coûteuse mais il est plus fiable.
 
 
 
@@ -85,13 +85,13 @@ L'architecture est très simplifiée car on a fait abstraction du comportement i
 
 
 \begin{itemize}
- 	\item Développeur: Il développe, personnalise et adapte l'image Odoo de base aux besoin du client. Une fois le développement est fait, le développeur pousse l'image Odoo vers le registre des images de Docker. Cette image est étiquetée par un nom, une version et un environnement (dévelopement, test, production);
+ 	\item Développeur: Il développe, personnalise et adapte l'image Odoo de base aux besoin du client. Une fois le développement est fait, le développeur pousse l'image Odoo vers le registre des images de Docker. Cette image est étiquetée par un nom, une version et un environnement (développement, test, production);
  	\item Exploitant: Il exploite l'ordonnanceur Fleet pour déployer l'application que le développeur vient de pousser dans le registre. L'exploitant va demander à l'ordonnanceur, par exemple, de lancer le service en mode haute disponibilité. L'ordonnanceur lance plusieurs instances du service dans des serveurs différents. L'exploitant, remarquant un pic de charge sur ce service, va demander de lancer une autre instance qui compense la surcharge;
  	\item Client: C'est l'utilisateur final de l'application. Il va saisir l'\acrshort{url} de son application. Son requête va être intercepté par l'équilibreur de charge qui va faire suivre la demande à un des serveurs du cluster. Quand la requête est arrivée, il tombe sur le proxy de ce serveur qui va faire suivre la requête à l'instance du service la moins chargée, quitte même à la faire suivre vers une instance dans un autre serveur.
  \end{itemize} 
 
 
-L'idée c'est que une application doit être capable d'envoyer les réponses de façon consistente à partir de n'importe instance éxécutant l'application.********
+L'idée c'est que une application doit être capable d'envoyer les réponses de façon consistante à partir de n'importe instance exécutant l'application.********
 
 
 \end{onehalfspace}
