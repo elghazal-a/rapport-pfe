@@ -1,7 +1,7 @@
 \chapter{Orchestration des applications distribuées}
 \begin{onehalfspace}
 
-\initial{D}ocker est un outil qui a révolutionné le monde informatique par l'introduction de la notion de conteneur, donc il est normal de chercher à l'utiliser en production. De nos jours, les développeurs utilisent de plus en plus Docker pour déployer des applications qui s’exécutent sur plusieurs conteneurs et plusieurs hôtes. Orchestrer ces applications distribuées nécessite une approche \textbf{multi-conteneur} et \textbf{multi-hôte} native avec une interface utilisateur et de l'outillage commun qui fonctionnent sur toutes les infrastructures. Plusieurs outils ont été présentés par de grandes entreprises et qui sont toujours en cours de développement. Nous exposerons dans ce chapitre les projets promoteurs dans l'orchestration des applications distribuées.
+\initial{D}ocker est un outil qui a révolutionné le monde informatique par l'introduction de la notion de conteneur, donc il est normal de chercher à l'utiliser en production. De nos jours, les développeurs utilisent de plus en plus Docker pour déployer des applications qui s’exécutent sur plusieurs conteneurs et plusieurs hôtes. Orchestrer ces applications distribuées nécessite une approche \textbf{multi-conteneur} et \textbf{multi-hôte} native avec une interface utilisateur et de l'outillage commun qui fonctionnent sur toutes les infrastructures. Plusieurs outils ont été présentés par de grandes entreprises et qui sont toujours en cours de développement. Dans ce chapitre, les projets promoteurs dans l'orchestration des applications distribuées seront exposés.
 
 \newpage
 
@@ -19,9 +19,9 @@ Nous avons présenté dans le chapitre 2 le Cloud Computing ainsi que ses servic
 \end{figure}
 
 \begin{itemize}
-	\item \index{PaaS} \textbf{Plate-forme}: Un développeur crée une application dans un ensemble particulier de langages de programmation à l'aide des \acrshort{api}s spécifiques et pousse ce code vers la plate-forme. La plate-forme l'exécute et lance une seule copie du service ou éventuellement plusieurs copies dépendamment du trafic. Finalement ce service monte en charge automatiquement. 
-	\item \index{IaaS} \textbf{\acrshort{iaas}}: A l'autre bout du pyramide se trouve l'\acrshort{iaas} composé seulement de machines virtuelles qui résident essentiellement dans l'internet. Quand un utilisateur consulte un fournisseur \acrshort{iaas} et demande  un ordinateur avec des spécifications données (quantité de mémoire et de disque, nombre de \acrshort{cpu}, une version spécifique Linux, etc). En quelques minutes, L'utilisateur pourra  exécuter n'importe quel logiciel sur le serveur mais il est entièrement responsable de la gestion de la machine.
-	\item \textbf{Cluster}: C'est lorsqu'il y a un besoin de gérer un ensemble de machines, un cluster de machines comme une seule entité, pas seulement un ordinateur individuel (\acrshort{iaas}) et non plus toute une plate-forme magique.
+	\item \index{PaaS} \textbf{Plate-forme}: Un développeur crée une application dans un ensemble particulier de langages de programmation à l'aide des \acrshort{api}s spécifiques et pousse ce code vers la plate-forme. La plate-forme l'exécute et lance une seule copie du service ou éventuellement plusieurs copies dépendamment du trafic. En effet, ce service monte en charge automatiquement. 
+	\item \index{IaaS} \textbf{\acrshort{iaas}}: A l'autre bout du pyramide se trouve l'\acrshort{iaas} composé seulement de machines virtuelles qui résident essentiellement dans l'internet. Quand un utilisateur consulte un fournisseur \acrshort{iaas} et demande  un ordinateur avec des spécifications données (quantité de mémoire et de disque, nombre de \acrshort{cpu}, une version spécifique Linux, etc.). En quelques minutes, L'utilisateur pourra  exécuter n'importe quel logiciel sur le serveur mais il est entièrement responsable de la gestion de la machine.
+	\item \textbf{Cluster}: C'est lorsqu'il y a un besoin de gérer un ensemble de machines comme \textbf{une seule entité}, un cluster de machines.
 
 \end{itemize}
 
@@ -41,8 +41,8 @@ Nous avons présenté dans le chapitre 2 le Cloud Computing ainsi que ses servic
 	\hline\hline
 	A quoi sert ? 	& Créer et déployer les images des machines virtuels & Créer et déployer des conteneurs & créer et déployer des applications (services) \\ 
 	Automatise					& - & Ordonnancement & Tout \\ 
-	gére					& Un seul atome & Des serveurs & Des applications \\ 
-	fléxibilité					& ++ 	& + 	& - \\ 
+	gère					& Un seul atome & Des serveurs & Des applications \\ 
+	flexibilité					& ++ 	& + 	& - \\ 
 	Agilité						& - 	& + 	& ++ \\ 
 	\hline
 	\end{tabu}
@@ -84,21 +84,21 @@ Les capacités d'orchestration de Docker sont construites sur les fondations exi
 %\caption{Orchestration Docker}
 %\end{figure}
 \subsection*{Docker Machine}
- Ce service facilite le provisionnement d'un hôte avec Docker installé dans une variété d'environnements. Les développeurs peuvent rapidement lancer les machines hôtes exécutant Docker ; sur un ordinateur portable, un Datacenter de VMs, ou une instance Cloud. Cela évite la tâche de se connecter à un hôte pour installer et configurer le démon Docker et le client. Bien que toujours en version alpha, Docker machine prend en charge le provisionning de Docker localement avec VirtualBox et à distance sur les instances Digital Ocean. Le support pour AWS, Azure, VMware, OpenStack et d'autres infrastructures devrait arriver rapidement.
+ Ce service facilite le provisionnement d'un hôte avec Docker installé dans une variété d'environnements. Les développeurs peuvent rapidement lancer les machines hôtes exécutant Docker; sur un ordinateur portable, un centre de données de VMs, ou une instance Cloud. Cela évite la tâche de se connecter à un hôte pour installer et configurer le démon Docker et le client. Bien que toujours en version alpha, Docker machine prend en charge le rovisionnement de Docker localement avec VirtualBox et à distance sur les instances Digital Ocean. Le support pour AWS, Azure, VMware, OpenStack et d'autres infrastructures devrait arriver rapidement.
  \begin{figure}[H]
 \centering
 \includegraphics [scale=0.6]{chapitre3/assets/dockermachine.png}
 \caption{Docker Machine}
 \end{figure}
 \subsection*{Docker Swarm}
- Docker Swarm est un service de Clustering natif de Docker qui fonctionne avec l'engine Docker standard, et qui crée un pool de ressources sur lesquels les applications distribuées s'exécutent. Cela permet aux développeurs et équipes opérationnelles de considérer un cluster de machines Docker comme un pool de ressources unique. Les administrateurs peuvent planifier des conteneurs qui seront lancés dans l'un des hôtes qui répond aux exigences. Docker Swarm fournit des contraintes standard et personnalisées pour répondre aux besoins et à la planification basée sur des règles, cela permet de déclarer des exigences et contraintes spécifiques à chaque conteneur. Docker Swarm est conçu pour évoluer avec le cycle de vie de l'application. Il peut prendre en charge un hôte dans l'environnement de développement et d'autres s'exécutant dans l'environnement de production.
+ Docker Swarm est un service de Clustering natif de Docker qui fonctionne avec le moteur Docker standard, et qui crée un ensemble de ressources sur lesquels les applications distribuées s'exécutent. Cela permet aux développeurs et équipes opérationnelles de considérer un cluster de machines Docker comme une collection de ressources unique. Les administrateurs peuvent planifier des conteneurs qui seront lancés dans l'un des hôtes qui répond aux exigences. Docker Swarm fournit des contraintes standard et personnalisées pour répondre aux besoins et à la planification basée sur des règles, cela permet de déclarer des exigences et contraintes spécifiques à chaque conteneur. Docker Swarm est conçu pour évoluer avec le cycle de vie de l'application. Il peut prendre en charge un hôte dans l'environnement de développement et d'autres s'exécutant dans l'environnement de production.
 \begin{figure}[H]
 \centering
 \includegraphics [scale=0.6]{chapitre3/assets/dockerswarm.png}
 \caption{Architecture de Docker Swarm}
 \end{figure}
 \subsection*{Docker Compose}
-  Docker Composer permet aux développeurs d'assembler des applications de conteneurs autonomes, interopérables et indépendants de l'infrastructure sous-jacente. Avec cette approche déclarative, il est facile de définir des stacks qui sont portables. Une stack d'applications distribuées est déclarée à travers un simple fichier de configuration \acrshort{yaml} qui contient la définition de chaque conteneur.
+  Docker Composer permet aux développeurs d'assembler un ensemble de conteneurs. Du coup, ils agissent de façon autonomes, interopérables et indépendants des infrastructures. Avec cette approche déclarative, il est facile de définir des piles de conteneurs qui sont portables. Une pile d'applications distribuées est déclarée à travers un simple fichier de configuration \acrshort{yaml} qui contient la définition de chaque conteneur.
 \begin{figure}[H]
 \centering
 \includegraphics [scale=0.5]{chapitre3/assets/dockercompose.jpg}
@@ -186,10 +186,10 @@ Le framework ou l'application Mesos tient une importante place au sein de l'arch
 \subsection{Composants de Coreos}
 \subsubsection*{Le service Systemd}
 \index{Systemd}
-\emph{systemd} est une suite de gestion de système, de bibliothèques et utilitaires conçus comme un système central de management et configuration pour le système d'exploitation Linux. Il est contrôlé dans le système d'exploitation Coreos par le service \emph{Fleet}.
+\emph{systemd} est un service de gestion de système et ses processus. Il a pour but d'offrir un meilleur cadre pour la gestion des dépendances entre services, de permettre le chargement en parallèle des services au démarrage, et de réduire les appels aux scripts shell. Il est contrôlé dans le système d'exploitation CoreOS par le service \emph{Fleet}.
 \subsubsection*{Le service Etcd}
 \index{Etcd}
-Le service \emph{etcd} est une base de données distribuée de clé-valeur qui fournit une configuration partagée et un service de découverte pour les Clusters \emph{Coreos}.Il fonctionne sur chaque machine dans un Cluster et gère l'élection du maître lors des partitionnements réseaux ou la perte du maître.
+Le service \emph{etcd} est une base de données distribuée de clé-valeur qui fournit une configuration partagée et un système de découverte de services pour les Clusters \emph{CoreOS}. Il fonctionne sur chaque machine dans un Cluster et gère l'élection du maître lors de la production du Cluster ou la perte du maître.
 \begin{figure}[H]
 \centering
 \includegraphics [scale=0.4]{chapitre3/assets/etcd-cluster.png}
@@ -199,10 +199,11 @@ Le service \emph{etcd} est une base de données distribuée de clé-valeur qui f
 \index{Fleet}
 \emph{Fleet} permet de traiter le Cluster \emph{Coreos} comme s'il partageait un unique système d'initialisation. Il encourage les utilisateurs à écrire des applications sous forme de petites unités éphémères qui peuvent facilement migrer autour d'un Cluster. En utilisant \emph{Fleet}, les développeurs peuvent se concentrer sur la gestion des conteneurs sans soucier des machines qui tournent les conteneurs. Le service \emph{Fleet} a plusieurs avantages: 
 \begin{itemize}
-\item Déployer conteneurs docker sur des hôtes arbitraires dans un cluster.
-\item Distribuer des services à travers un Cluster à l'aide de niveau machine anti-affinité.
+\item Déployer les conteneurs Docker sur des hôtes arbitraires dans un cluster.
+\item Distribuer des services vers un Cluster depuis une machine locale.
+\item Maintenir un nombre fixe d'instances d'un service, ré-ordonnancer lors d'une panne d'une machine.
 \item Découvrir les machines fonctionnant dans le Cluster.
-\item SSH automatiquement dans la machine exécutant un emploi.
+\item Se connecter automatiquement via \acrshort{ssh} dans la machine exécutant un service.
 \end{itemize}
 \begin{figure}[H]
 \centering
@@ -237,7 +238,7 @@ Le service \emph{etcd} est une base de données distribuée de clé-valeur qui f
 	Axé sur les conteneurs & Il rassemble des années d’expériences de Google avec l'orchestration des conteneurs	& moins axé sur les conteneurs \\ 
 	Destiné pour Docker & Destiné pour Docker	& Utilisé depuis des années pour l'orchestration de Hadoop, il vient de subir un ré-usinage de code pour supporter Docker \\ 
 	Limité & Complet (encore plus dans le futur) & Management générique du cluster, extensibilité par les différents ordonnanceurs \\ 
-	Pas de proxy et d'équilibreur de charge & Dispose de son propre proxy & Des proxy matures e,enfichables \\ 
+	Pas de proxy et d'équilibreur de charge & Dispose de son propre proxy & Des proxy matures enfichables \\ 
 	\hline
 	\end{tabu}
 	\caption{Matrice de décision pour le choix de la solution d'orchestration}
@@ -248,10 +249,10 @@ Le service \emph{etcd} est une base de données distribuée de clé-valeur qui f
 }
 
 
-Mesos, Kubernetes et CoreOS essaient tous de résoudre des problèmes très similaires, chacun agit dans un niveau d'abstraction. L'on peut imaginer faire des combinaisons les trois solutions d'orchestration en cas de nécessité:
+Mesos, Kubernetes et CoreOS essaient tous de résoudre des problèmes très similaires, chacun agit dans un niveau d'abstraction. L'on peut imaginer faire des combinaisons des trois solutions d'orchestration en cas de nécessité:
 
 \begin{itemize}
-	\item \textbf{CoreOS + Kubernetes}: CoreOS est parfait pour créer rapidement un Cluster. Il va ordonnancer les composants de base de Kubernetes dans le Cluster. L'ordonnancement des conteneurs va être délégué à Kubernetes.
+	\item \textbf{CoreOS + Kubernetes}: CoreOS est parfait pour produire rapidement un Cluster. Il va ordonnancer les composants de base de Kubernetes dans le Cluster. L'ordonnancement des conteneurs va être délégué à Kubernetes.
 	\item \textbf{Mesos + Kubernetes}: Mesos n'inclut pas nativement un ordonnanceur. L'extensibilité de Mesos fait qu'il est possible de laisser Kubernetes agir comme l'ordonnanceur de Mesos.
 	\item \textbf{CoreOS + Mesos + Kubernetes}: L'idée est de jouir de tous les points forts des solutions. En contrepartie, on perd en simplicité, il est préférable de l'adopter qu'en cas de nécessité.
 \end{itemize}
