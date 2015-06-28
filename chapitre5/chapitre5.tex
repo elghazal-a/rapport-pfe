@@ -105,7 +105,7 @@ L'installation de Deis sur \acrshort{gce} est détaillé dans la documentation \
 
 \subsubsection*{Déploiement avec une seule commande}
 
-	Quand le développeur finit de développer ou personnaliser une application, il peut la déployer rapidement.
+	Quand le développeur a terminé le développement ou la personnalisation une application, il peut la déployer rapidement.
 
 	\begin{lstlisting}[language=bash,caption=Déploiement avec Deis]
 		$ git push deis master
@@ -113,17 +113,20 @@ L'installation de Deis sur \acrshort{gce} est détaillé dans la documentation \
 
 \subsubsection*{Montée en chargé avec une seule commande}
 
-Après avoir lancé un service, l'exploitant, remarquant un pic de charge, va pouvoir ajouter d'autres instances du service.Les routeurs sont dynamiquement reconfigurés pour diffuser la charge à travers toutes les instances.
+Après avoir lancé un service, l'exploitant, remarquant un pic de charge, va pouvoir ajouter d'autres instances du service. Les routeurs sont dynamiquement reconfigurés pour diffuser la charge à travers toutes les instances.
 
 	\begin{lstlisting}[language=bash,caption=Montée en charge]
 		$ deis scale cmd=3
 	\end{lstlisting}
 
-\subsubsection*{Déploiement avec zero temps d'arrêt}
+\subsubsection*{Déploiement avec zéro temps d'arrêt}
 
 Durant le déploiement d'une nouvelle version d'un service, Deis garantit un zéro temps d'indisponibilité. En effet, les routeurs ne sont reconfigurés que lorsque le déploiement est terminé. Enfin, l'ancienne version est supprimée.
 
 
+\subsubsection*{Des \acrshort{api} \acrshort{http}}
+
+Deis offre des \acrshort{api}s REST pour un interfaçage facile et standard. Du coup, il est possible de développer dans le futur des interfaces web ou mobile qui cache les difficultés de la ligne de commande. D'ailleurs, une interface web est déja crée par la communauté pour la gestion du Cluster.
 
 
 
@@ -158,7 +161,7 @@ L'installation de SSL dans la plate-forme se fait en 2 étapes:
 	\item Attacher la clé privée et la certificat avec la plate-forme. En fait, elles doivent être installées dans l'équilibreur de charge. Il y a deux choix qui se portent à nous, soit les installer dans notre équilibreur de charge de \acrshort{gce} ou dans les proxy de Deis. Nous avons décidé de l'installer dans les équilibreurs de charge propres à Deis vu que c'est une solution portable et ne dépend pas de l'environnement où Deis est installé.
 \end{itemize}
 
-\begin{lstlisting}[language=bash,caption=Génération de la clé privée eet la certificat]
+\begin{lstlisting}[language=bash,caption=Génération de la clé privée et la certificat]
 	$ openssl genrsa -des3 -passout pass:x -out server.pass.key 2048
 	$ openssl rsa -passin pass:x -in server.pass.key -out server.key
 	$ openssl req -new -key server.key -out server.csr
@@ -210,7 +213,7 @@ cAdvisor a un support natif pour les conteneurs Docker et devrait supporter à p
 
 \subsubsection*{Heapster}
 
-Heapster est un projet open source de Google qui comble la limitation de cAdvisor qui supervise un seul serveur. Heapster recueille les données à travers les HTTP API fournit par les cAdvisor installés sur les serveurs, puis les stocker dans la base de donnée InfluxDB. Ainsi, Heapster est considéré comme un superviseur au niveau du cluster.
+Heapster est un projet open source de Google qui comble la limitation de cAdvisor qui supervise un seul serveur. Heapster recueille les données à travers les \acrshort{http} \acrshort{api} fournit par les cAdvisor installés sur les serveurs, puis les stocke dans la base de donnée InfluxDB. Ainsi, Heapster est considéré comme un superviseur au niveau du Cluster.
 
 \subsubsection*{InfluxDB}
 
@@ -218,7 +221,7 @@ Heapster est un projet open source de Google qui comble la limitation de cAdviso
 \centering
 \includegraphics[scale=0.2]{chapitre5/assets/influxdb}
 \end{wrapfigure}
-\noindent Influxdb est une base de donnée distribuée destinée pour le stockage des métriques, des événements et des analyses de performances. Influxdb est simple à installer et à gérer, et rapide car il vise à répondre aux requête en temps-réel. En effet, chaque point de données est indexé et disponible pour des requêtes qui retournent des réponses dans < 100 ms. Enfin, il dispose d'une HTTP API intégré qui va être sollicité par l'interface utilisateur Grafana.
+\noindent Influxdb est une base de donnée distribuée destinée pour le stockage des métriques, des événements et des analyses de performances. Influxdb est simple à installer et à gérer, et rapide car il vise à répondre aux requête en temps-réel. En effet, chaque point de données est indexé et disponible pour des requêtes qui retournent des réponses dans < 100 ms. Enfin, il dispose d'une \acrshort{http} \acrshort{api} intégré qui va être sollicitée par l'interface utilisateur Grafana.
 
 \subsubsection*{Grafana}
 
@@ -231,7 +234,7 @@ Heapster est un projet open source de Google qui comble la limitation de cAdviso
 
 \subsection{Démarche d'installation}
 
-Cette solution de supervision s'installe au-dessus du cluster de CoreOS et cohabite avec la plate-forme Deis. Comme c'est déjà mentionné, tous les services sous CoreOS sont installés en tant que conteneur. De même, cAdvisor, InfluxDB, Heapster et Grafana vont être installés dans des conteneurs.
+Cette solution de supervision s'installe au-dessus du Cluster de CoreOS et cohabite avec la plate-forme Deis. Comme c'est déjà mentionné, tous les services sous CoreOS sont installés en tant que conteneur. De même, cAdvisor, InfluxDB, Heapster et Grafana vont être installés dans des conteneurs.
 Les fichiers d'installation se trouvent dans le guide officielle de Heapster \cite{heapster-coreos}
 
 \begin{itemize}
