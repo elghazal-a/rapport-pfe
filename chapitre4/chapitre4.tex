@@ -1,7 +1,7 @@
 \chapter{Conception}
 \begin{onehalfspace}
 
-\initial{C}e chapitre a pour objectif de présenter la conception du projet. Cette phase est un point de fusion entre l'analyse des besoins et l'étude approfondie de la documentation. Comment un \acrshort{saas} doit être conçu. Enfin, une architecture pour porter les \acrshort{saas} sera présenté.
+\initial{C}e chapitre a pour objectif de présenter la conception du projet. Cette phase est un point de fusion entre l'analyse des besoins et l'étude approfondie de la documentation. Dans un premier temps, une problématique des bases de données sera soulevée. Ensuite, nous allons expliquer comment un \acrshort{saas} doit être conçu. Enfin, une architecture Cloud pour porter les conteneurs sera présentée.
 
 \newpage
 
@@ -32,7 +32,7 @@ Pour y remédier, l'on peut penser à monter le volume des données dans le serv
 \end{figure}
 
 
-Dans un environnement de production, il est encore tôt pour mettre les bases de donnée et les applications à états (stateful) en général dans des conteneurs. De ce fait, il serait judicieux de les faire sortir de l'architecture à base de conteneurs. En effet, deux solutions se portent à nous, les bases de données vont être mis en place suivant l'informatique classique ou elles vont être consommées comme un service à partir d'une partie tierce cloud (Délégation de l'informatique). La dernière solution est coûteuse mais il est plus fiable.
+Dans un environnement de production, il est encore tôt pour mettre les bases de donnée et les applications à états (stateful) en général dans des conteneurs. De ce fait, il serait judicieux de les faire sortir de l'architecture à base de conteneurs. En effet, deux solutions se portent à nous, les bases de données vont être mis en place suivant l'informatique classique ou elles vont être consommées comme un service à partir d'une partie tierce Cloud (Délégation de l'informatique). La dernière solution est coûteuse mais il est plus fiable.
 
 
 
@@ -42,22 +42,19 @@ Dans un environnement de production, il est encore tôt pour mettre les bases de
 Parmi les contraintes qui ont poussé Sayoo à migrer vers le Cloud, c'est de garantir une haute disponibilité et une scalabilité infinie.
 
 <<<<<<< HEAD
-La haute disponibilité fait référence au fait qu'un service est en quelque sorte tolérant à un échec ou à une panne. Nous allons assurer cela en faisant la redondance des services dans différents serveurs du cluser.
-=======
-La haute disponibilité fait référence au fait qu'un service est en quelque sorte tolérant à un échec ou à une panne. Nous allons nous en assurer en redondant des services dans différents serveurs du Cluster.
->>>>>>> d00d7d5a466c900d3cd025ad1e0ddd051b74833a
+La haute disponibilité fait référence au fait qu'un service est en quelque sorte tolérant à un échec ou à une panne. La disponibilité va être assurée en faisant la redondance des services dans différents serveurs du Cluser.
 
-La scalabilité ou l'évolutivité, c'est la capacité d'une application à pouvoir exploiter de nouvelles ressources récemment déployées pour répondre à un pic de charge. En fait, la scalabilité n'est pas apporté par le Cloud (il lui apporte l'élasticité) mais c'est l'application elle-même qui l'apporte. Par conséquent, l'idée que toute application déployée dans un milieu élastique Cloud peut être évolutive est fausse.
+La scalabilité ou l'évolutivité, c'est la capacité d'une application à pouvoir exploiter de nouvelles ressources récemment déployées pour répondre à un pic de charge. En fait, la scalabilité n'est pas apporté par le Cloud, qui apporte l'élasticité, mais c'est l'application elle-même qui l'apporte. Par conséquent, l'idée que toute application déployée dans un milieu élastique Cloud peut être évolutive est fausse.
 
 
 Pour faire une bonne conception d'un \acrshort{saas} scalable, il faut distinguer d'abord deux types d'applications:
 
 \begin{itemize}
-	\item Application \textbf{stateful} ou à états : C'est une application dont les processus ne stockent aucune donnée qui doit persister, même dans un temps aussi petit qu'il soit, dans son espace mémoire ou système de fichiers.
+	\item Application \textbf{stateful} ou à états : C'est une application dont les processus ne stockent aucune donnée qui doit persister, même dans un temps aussi petit qu'il soit, dans l'espace mémoire ou le système de fichiers.
 	\item Application \textbf{stateless} ou sans états : C'est une application qui stocke tous les données persistantes dans un service de support externe (Base de donnée, queue, mémoire cache, etc.).
 \end{itemize}
 
-Une application scalable doit être \textbf{stateless}, plus que cela, il doit respecter les douze-facteurs définies dans l'annexe \ref{annexe:12factors}. Une application scalable suppose qu'aucune donnée mise en cache (mémoire, disque) ne sera disponible dans une requête ultérieure. En effet, les chances sont élevées qu'une future requête sera servi par un processus différent du même service. L'idée c'est que une application doit être capable de renvoyer les réponses de façon consistente à partir de n'importe instance éxécutant l'application.
+Une application scalable doit être \textbf{stateless}, plus que cela, il doit respecter les douze-facteurs définies dans l'annexe \ref{annexe:12factors}. Une application scalable suppose qu'aucune donnée mise en cache (mémoire, disque) ne sera disponible dans une requête ultérieure. En effet, les chances sont élevées qu'une future requête sera servie par un processus différent du même service. L'idée c'est qu'une application doit être capable de renvoyer les réponses de façon consistante à partir de n'importe quelle instance exécutant l'application.
 
 
 
@@ -93,11 +90,12 @@ L'architecture est très simplifiée car nous avons fait une abstraction du comp
 
 \begin{itemize}
  	\item \textbf{Développeur} : Il développe, personnalise et adapte l'image Odoo de base aux besoins du client. Une fois le développement est fait, il pousse l'image Odoo vers le registre des images de Docker. Cette image est étiquetée par un nom, une version et un environnement (développement, test, production).
- 	\item \textbf{Exploitant} : Il exploite l'ordonnanceur Fleet pour déployer l'application que le développeur vient de pousser dans le registre. L'exploitant va demander à l'ordonnanceur, par exemple, de lancer le service en mode haute disponibilité. L'ordonnanceur lance plusieurs instances du service dans des serveurs différents. L'exploitant, remarquant un pic de charge sur ce service, va demander de lancer une autre instance qui compense la surcharge.
- 	\item \textbf{Client} : C'est l'utilisateur final de l'application. Il va saisir l'\acrshort{url} de son application. Son requête va être intercepté par l'équilibreur de charge (Load-Balancer) qui va faire suivre la demande à un des serveurs du Cluster. Quand la requête est arrivée, il tombe sur le proxy de ce serveur qui va faire suivre la requête à l'instance du service la moins chargée, quitte même à la faire suivre vers une instance dans un autre serveur.
+ 	\item \textbf{Exploitant} : Il exploite l'ordonnanceur Fleet pour déployer l'application que le développeur vient de pousser dans le registre. L'exploitant va demander à l'ordonnanceur, par exemple, de lancer le service en mode haute disponibilité. L'ordonnanceur lance plusieurs instances du service dans des serveurs différents. L'exploitant, remarquant un pic de charge sur ce service, va demander à l'ordonnanceur de lancer une autre instance qui compense la surcharge.
+ 	\item \textbf{Client} : C'est l'utilisateur final de l'application. Il va saisir l'\acrshort{url} de son application. Son requête va être interceptée par l'équilibreur de charge (Load-Balancer) qui va faire suivre la demande à un des serveurs du Cluster. Quand la requête est arrivée, elle sera interceptée par le proxy de ce serveur qui va la faire suivre à l'instance du service la moins chargée, quitte même à la faire suivre vers une instance d'un autre serveur.
  \end{itemize} 
 
 
-
+\section*{Conclusion}
+En somme, nous avons prouvé l'incompatibilité des bases de données avec les conteneurs dans une solution fiable. Une architecture qui répond aux exigences su Cloud a été présenté, mais il faut pas la gâcher par une mauvaise conception des applications.
 
 \end{onehalfspace}
