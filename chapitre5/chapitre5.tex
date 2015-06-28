@@ -9,7 +9,7 @@
 
 \subsection{Installation du Cluster}
 
-Nous allons mettre en place l'architecture décrite dans la figure \ref{fig:architecture}). Le Cloud public \acrshort{aws} sera utilisé pour la production d'un Cluster de trois serveurs \cite{coreos-aws}. Il est important de noter que le Cluster peut-être installé en tant qu'une entité privée ou public:
+Nous allons mettre en place l'architecture décrite dans la figure \ref{fig:architecture}. Le Cloud public \acrshort{aws} sera utilisé pour la production d'un Cluster de trois serveurs \cite{coreos-aws}. Il est important de noter que le Cluster peut-être installé en tant qu'une entité privée ou public:
 
 
 \begin{itemize}
@@ -25,6 +25,7 @@ Nous allons mettre en place l'architecture décrite dans la figure \ref{fig:arch
 Quand l'ordonnanceur Fleet crée un service en mode haute disponibilité, Il stocke les donnée (\acrshort{ip} et port) dans Etcd sous forme de clé-valeur. Les proxy Gogeta, étant en écoute en permanence d'Etcd , se reconfigure pour prendre en considération le nouveau service. Ainsi, si une requête arrive sur l'un des proxy Gogeta, il la transmet vers une des instances avec la stratégie \emph{Round-robin} après avoir fait des bilans de santé.
 
 \begin{lstlisting}[language=bash,caption=Contenu de la base de donnée Etcd]
+	/domains/odoo.sayoo.org/type 	= service
 	/domains/odoo.sayoo.org/value 	= odoo
 	/services/odoo/1/location		= {"host":"10.240.210.86", "port": 42654}
 	/services/odoo/2/location		= {"host":"10.240.228.23", "port": 42669}
@@ -32,9 +33,42 @@ Quand l'ordonnanceur Fleet crée un service en mode haute disponibilité, Il sto
 
 \subsection{Utilisation du Cluster}
 
-Autant la mise en place du Cluster et ses composants est simple, autant son utilisation est compliqué. Un exemple sera présenté pour illustré la procédure.
+Autant la mise en place du Cluster et ses composants est simple, autant son utilisation est compliqué. Un exemple sera présenté pour illustrer la procédure d'ordonnancement d'un service Odoo dont l'image est stocké dans le registre public de Docker.
 
-La solution à base d'un Cluster CoreOS motorisé par des équilibreurs de charges élastique est très puissante, mais son utilisation demeure très bas niveau. Le fait d'interagir directement avec le Cluster nécessite des administrateurs systèmes très compétents. C'est la raison pour laquelle une solution à base d'une \acrshort{paas} sera adoptée.
+	\begin{lstlisting}[language=bash,caption=Fichier d'ordonnancement d'un service Odoo]
+[Unit]
+Description=Odoo
+After=docker.service
+Requires=docker.service
+[Service]
+EnvironmentFile=/etc/environment
+ExecStartPre=-/usr/bin/docker kill odoo
+ExecStartPre=-/usr/bin/docker rm odoo
+ExecStartPre=/usr/bin/docker pull sayoo/odoo:latest
+ExecStart=/usr/bin/docker run -p="49069:8069" --name odoo sayoo/odoo:latest
+ExecStartPost=/usr/bin/etcdctl set /domains/odoo.sayoo.org/type service
+ExecStartPost=/usr/bin/etcdctl set /domains/odoo.sayoo.org/value odoo
+ExecStartPost=/usr/bin/etcdctl set /services/odoo/%i/location "{\"host\":\"${COREOS_PRIVATE_IPV4}\", \"port\": 49069}"
+ExecStop=/usr/bin/docker stop odoo
+ExecStopPost=/usr/bin/etcdctl rm --recursive /domains/odoo.sayoo.org
+ExecStopPost=/usr/bin/etcdctl rm --recursive /services/odoo/%i/
+Restart=always
+RestartSec=5s
+[X-Fleet]
+X-Conflicts=odoo@*.service
+	\end{lstlisting}
+
+
+Le fichier décrit le service Odoo. Premièrement, il requiert le service Docker. Ensuite, avant de lancer Odoo, il faut télécharger la dernière image d'Odoo. Puis, l'exécuter et stocker les couples clés-valeurs dans la base de donnée utile pour l'équilibreur de charge Gogeta. Le service est ordonnancé sous la contrainte de lancer une seule instance par serveur (\emph{X-Conflicts=odoo@*.service}).
+
+Le service est ordonnancé en mode haute disponibilité en lançant deux instances du service. L'application sera enfin accessible via le lien \emph{http://www.odoo.sayoo.org}.
+
+	\begin{lstlisting}[language=bash,caption=Ordonnancement de deux instances]
+		$ fleetctl submit odoo@.service
+		$ fleetctl start odoo@{1,2}.service
+	\end{lstlisting}
+
+La solution à base d'un Cluster CoreOS motorisé par des équilibreurs de charges élastiques est très puissante, mais son utilisation demeure très bas niveau. Le fait d'interagir directement avec le Cluster nécessite des administrateurs systèmes très compétents. C'est la raison pour laquelle une solution à base d'une \acrshort{paas} sera adoptée.
 
 
 \section{A base d'une \acrshort{paas}}
