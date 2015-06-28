@@ -79,14 +79,9 @@ La figure \ref{fig:non-scalable} montre un service qui n'est évolutive contrair
 
 \section{Architecture}
 
-\begin{figure}[H]
-\centering
-\includegraphics [scale=0.7]{chapitre4/assets/architecture}
-\caption{Achitecture de la solution}
-\label{fig:architecture}
-\end{figure}
 
-L'architecture est très simplifiée car nous avons fait une abstraction du comportement interne des composants de CoreOS. Elle décrit trois processus et implique trois acteurs:
+
+L'architecture est très simplifiée car nous avons fait une abstraction du comportement interne des composants de CoreOS. Cette architecture est inspiré de la plate-forme de Nuxeo \cite{nuxeo} basée sur Docker et CoreOS et conçu pour la résilience des pannes. Elle décrit trois processus et implique trois acteurs:
 
 
 \begin{itemize}
@@ -95,6 +90,12 @@ L'architecture est très simplifiée car nous avons fait une abstraction du comp
  	\item \textbf{Client} : C'est l'utilisateur final de l'application. Il va saisir l'\acrshort{url} de son application. Son requête va être interceptée par l'équilibreur de charge (Load-Balancer) qui va faire suivre la demande à un des serveurs du Cluster. Quand la requête est arrivée, elle sera interceptée par le proxy de ce serveur qui va la faire suivre à l'instance du service la moins chargée, quitte même à la faire suivre vers une instance d'un autre serveur.
  \end{itemize} 
 
+\begin{figure}[H]
+\centering
+\includegraphics [scale=0.7]{chapitre4/assets/architecture}
+\caption{Achitecture de la solution}
+\label{fig:architecture}
+\end{figure}
 
 \section*{Conclusion}
 En somme, nous avons prouvé l'incompatibilité des bases de données avec les conteneurs dans une solution fiable. Une architecture qui répond aux exigences su Cloud a été présenté, mais il faut pas la gâcher par une mauvaise conception des applications.
