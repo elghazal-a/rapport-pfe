@@ -1,6 +1,8 @@
 \chapter{Conception}
 \begin{onehalfspace}
 
+\initial{C}e chapitre a pour objectif de présenter la conception du projet. Cette phase est un point de fusion entre l'analyse des besoins et l'étude approfondie de la documentation. Comment un \acrshort{saas} doit être conçu. Enfin, une architecture pour porter les \acrshort{saas} sera présenté.
+
 \newpage
 
 \section{Base de donnée}
@@ -39,7 +41,7 @@ Dans un environnement de production, il est encore tôt pour mettre les bases de
 
 Parmi les contraintes qui ont poussé Sayoo à migrer vers le Cloud, c'est de garantir une haute disponibilité et une scalabilité infinie.
 
-La haute disponibilité fait référence au fait qu'un service est en quelque sorte tolérant à une échec ou à une panne. Nous allons assurer cela en faisant la redondance des services dans différents serveurs du cluser.
+La haute disponibilité fait référence au fait qu'un service est en quelque sorte tolérant à un échec ou à une panne. Nous allons assurer cela en faisant la redondance des services dans différents serveurs du cluser.
 
 La scalabilité ou l'évolutivité c'est la capacité d'une application à pouvoir exploiter des nouvelles ressources récemment déployées pour répondre à un pic de charge. En fait, la scalabilité n'est pas apporté par le Cloud, qui lui apporte l'élasticité, mais c'est l'application elle-même qui l'apporte. L'idée que toute application déployée dans un milieu élastique Cloud peut être évolutive est fausse.
 
@@ -51,7 +53,8 @@ Pour faire une bonne conception d'un \acrshort{saas} scalable, il faut distingue
 	\item Application \textbf{stateless} ou sans états: C'est une application qui stocke tous les données persistentes dans un service de support externe (Base de donnée, queue, mémoire cache, etc.).
 \end{itemize}
 
-Une application scalable doit être \textbf{stateless}, plus que cela, il doit respecter les douze-facteurs définies dans l'annexe \ref{annexe:12factors}. Une application scalable suppose qu'aucune donnée mise en cache (mémoire, disque) ne sera disponible dans une requête ultérieure. En effet, les chances sont élevées qu'une future requête sera servi par un processus différent du même service.
+Une application scalable doit être \textbf{stateless}, plus que cela, il doit respecter les douze-facteurs définies dans l'annexe \ref{annexe:12factors}. Une application scalable suppose qu'aucune donnée mise en cache (mémoire, disque) ne sera disponible dans une requête ultérieure. En effet, les chances sont élevées qu'une future requête sera servi par un processus différent du même service. L'idée c'est que une application doit être capable de renvoyer les réponses de façon consistente à partir de n'importe instance éxécutant l'application.
+
 
 
 La figure \ref{fig:non-scalable} montre un service qui n'est évolutive contrairement au service présenté dans la figure \ref{fig:scalable}.
@@ -91,7 +94,8 @@ L'architecture est très simplifiée car on a fait abstraction du comportement i
  \end{itemize} 
 
 
-L'idée c'est que une application doit être capable d'envoyer les réponses de façon consistente à partir de n'importe instance éxécutant l'application.********
+
+
 
 
 \end{onehalfspace}
