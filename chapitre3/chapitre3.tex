@@ -1,7 +1,7 @@
 \chapter{Orchestration des applications distribuées}
 \begin{onehalfspace}
 
-\initial{D}ocker est un outil qui a révolutionné le monde informatique par l'introduction de la notion de conteneur, donc il est normal de chercher à l'utiliser en production. De nos jours, les développeurs utilisent de plus en plus Docker pour déployer des applications qui s’exécutent sur plusieurs conteneurs et plusieurs hôtes. Orchestrer ces applications distribuées nécessite une approche \textbf{multi-conteneur} et \textbf{multi-hôte} native avec une interface utilisateur et de l'outillage commun qui fonctionnent sur toutes les infrastructures. Plusieurs outils ont été présentés par de grandes entreprises et qui sont toujours en cours de développement. Dans ce chapitre, les projets promoteurs dans l'orchestration des applications distribuées seront exposés.
+\initial{D}ocker est un outil qui a révolutionné le monde informatique par l'introduction de la notion de conteneur, donc il est normal de chercher à l'utiliser en production. De nos jours, les développeurs utilisent de plus en plus Docker pour déployer des applications qui s'exécutent sur plusieurs conteneurs et plusieurs hôtes. Orchestrer ces applications distribuées nécessite une approche \textbf{multi-conteneur} et \textbf{multi-hôte} native avec une interface utilisateur et de l'outillage commun qui fonctionnent sur toutes les infrastructures. Plusieurs outils ont été présentés par de grandes entreprises et qui sont toujours en cours de développement. Dans ce chapitre, les projets promoteurs dans l'orchestration des applications distribuées seront exposés.
 
 \newpage
 
@@ -108,7 +108,7 @@ Les capacités d'orchestration de Docker sont construites sur les fondations exi
 
 \index{Kubernetes}
 
-L'entreprise Google est aussi intéressée par l'orchestration des conteneurs docker, elle a d'ailleurs lancée un projet nommée \textbf{Kubernetes}.Ce projet est récent mais promoteur et pourrait révolutionner le domaine du Cloud s'il est suffisamment mature pour la production. Kubernetes a pour objectif de fournir un outil de supervision unique capable de déplacer des conteneurs Docker d'un Cloud à un autre. Autrement dit, de proposer une forme d’interopérabilité dans le nuage, via un framework de gestion de conteneurs solide, ouvert et adapté à toute application sur tous types d’environnements, qu’il s’agisse de Cloud privé, public ou hybride. Ce projet a le soutien et l'attention des géants du Cloud notamment Microsoft, IBM, RedHat qui tiennent à s'assurer que cet outil sera compatible avec leurs Clouds et tentent de l'associer au projet \textbf{Openstack} qui est l'orchestrateur du cloud hybride open source.
+L'entreprise Google est aussi intéressée par l'orchestration des conteneurs docker, elle a d'ailleurs lancée un projet nommée \textbf{Kubernetes}.Ce projet est récent mais promoteur et pourrait révolutionner le domaine du Cloud s'il est suffisamment mature pour la production. Kubernetes a pour objectif de fournir un outil de supervision unique capable de déplacer des conteneurs Docker d'un Cloud à un autre. Autrement dit, de proposer une forme d'interopérabilité dans le nuage, via un framework de gestion de conteneurs solide, ouvert et adapté à toute application sur tous types d'environnements, qu'il s'agisse de Cloud privé, public ou hybride. Ce projet a le soutien et l'attention des géants du Cloud notamment Microsoft, IBM, RedHat qui tiennent à s'assurer que cet outil sera compatible avec leurs Clouds et tentent de l'associer au projet \textbf{Openstack} qui est l'orchestrateur du cloud hybride open source.
 \subsection{Architecture de Kubernetes}
 Kubernetes est un outil open-source pour l'orchestration des conteneurs Docker. Il gère l'ordonnancement des nœuds dans un Cluster et gère les ressources pour mieux correspondre à l'intention de l'utilisateur. En utilisant les concepts de "\emph{labels}" et "\emph{pods}", il permet un regroupement optimal de conteneurs pour une meilleure gestion et une découverte facile.
 \begin{figure}[H]
@@ -139,7 +139,7 @@ Kubernetes est un outil open-source pour l'orchestration des conteneurs Docker. 
 
 \index{Mesos}
 
-L'entreprise Apache a toujours été intéressée par le domaine du Cloud, le lancement de son projet \textbf{Mesos} visait principalement à améliorer l'orchestration des \emph{"datacenters"} ceci bien avant l’émergence des conteneurs et docker. Le projet Mesos est très promoteur pour le futur avec les conteneurs bien qu'il soit déjà mature avec les machines virtuelles. Plusieurs grandes entreprise utilisent Mesos notamment \emph{Twitter}, \emph{Paypal} et \emph{Airbnb}.
+L'entreprise Apache a toujours été intéressée par le domaine du Cloud, le lancement de son projet \textbf{Mesos} visait principalement à améliorer l'orchestration des \emph{"datacenters"} ceci bien avant l'émergence des conteneurs et docker. Le projet Mesos est très promoteur pour le futur avec les conteneurs bien qu'il soit déjà mature avec les machines virtuelles. Plusieurs grandes entreprise utilisent Mesos notamment \emph{Twitter}, \emph{Paypal} et \emph{Airbnb}.
 Mesos agit comme un "Cluster Manager" et offre de nombreuses fonctionnalités telles que :
 \begin{itemize}
 \item Une scalabilité à plus de 10000 nœuds.
@@ -232,10 +232,10 @@ Le service \emph{etcd} est une base de données distribuée de clé-valeur qui f
 	Etcd élit le leader du cluster 	& Un master par cluster & Haute disponibilité des masters \\ 
 	Orchestration bas niveau & Orchestration haut niveau & Orchestration bas niveau \\ 
 	Stable					& Version de pré-production & Stable \\ 
-	Rapidité d’installation du cluster & Moins rapide & Moins rapide \\ 
+	Rapidité de production du cluster & Moins rapide & Moins rapide \\ 
 	Bien documenté & Documentation pauvre & Bien documenté \\ 
 	Inconscience vis-à-vis les ressources du cluster & Inconscience vis-à-vis les ressources du cluster & Ordonnancement conscient des ressources du cluster \\ 
-	Axé sur les conteneurs & Il rassemble des années d’expériences de Google avec l'orchestration des conteneurs	& moins axé sur les conteneurs \\ 
+	Axé sur les conteneurs & Il rassemble des années d'expériences de Google avec l'orchestration des conteneurs	& moins axé sur les conteneurs \\ 
 	Destiné pour Docker & Destiné pour Docker	& Utilisé depuis des années pour l'orchestration de Hadoop, il vient de subir un ré-usinage de code pour supporter Docker \\ 
 	Limité & Complet (encore plus dans le futur) & Management générique du cluster, extensibilité par les différents ordonnanceurs \\ 
 	Pas de proxy et d'équilibreur de charge & Dispose de son propre proxy & Des proxy matures enfichables \\ 

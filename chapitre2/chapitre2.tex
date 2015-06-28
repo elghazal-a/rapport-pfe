@@ -136,7 +136,7 @@ Contrairement à la virtualisation, la liste des solutions de containérisations
 \item \textbf{LXC} : Linux containers,  il combine cgroups et namespace pour fournir un environnement isolé pour les applications;
 \item \textbf{OpenVZ} : il  permet de créer multiples conteneurs pour Linux. Dorénavant, tous les efforts des développeurs vont aller dans le sens de fusionner les fonctionnalités d'\emph{OpenVZ} avec \emph{LXC}.
 \item \textbf{lmctfy} : \emph{Let Me Contain That For You} est une solution open source de containérisation de Google qui est basé sur \emph{cgroups}. Le futur de \emph{lmctfy} est flou vu que Google avait commencé à migrer les concepts de \emph{lmctfy} vers Docker.
-\item \textbf{Docker} : ce n'est pas une autre solution, mais il est basé sur \emph{LXC} et fournit une couche de haut niveau accessible pour l’utilisateur.
+\item \textbf{Docker} : ce n'est pas une autre solution, mais il est basé sur \emph{LXC} et fournit une couche de haut niveau accessible pour l'utilisateur.
 
 \end{itemize}
 
@@ -238,24 +238,24 @@ En somme, il va s'en dire que Docker l'emporte largement par rapport à \emph{KV
 \centering
 \includegraphics[scale=0.15]{chapitre2/assets/docker}
 \end{wrapfigure}
-\noindent \textbf{Docker} est un logiciel open source qui automatise le déploiement d'applications dans des conteneurs logiciels. C'est un outil qui peut empaqueter une application et ses dépendances dans un conteneur virtuel, qui pourra être exécuté sur n'importe quel serveur Linux ou Windows (\emph{Boot2Docker}). En fait, il a pour objectif de \textbf{faciliter le déploiement d’applications}, d’avoir plusieurs versions d’une même application sur un son serveur (phase de développement, tests), mais aussi d’\textbf{automatiser le packaging d’applications}. Avec Docker, on s’oriente vers de l’intégration et du déploiement en continu grâce au système de container. De plus, Docker permet de garder son système de base propre, tout en installant de nouvelles fonctionnalités au sein de containers, on part d’une base qui est le système d’exploitation et on ajoute différentes briques conteneurisées. Docker a été distribué en tant que projet open source à partir de mars 2013.
+\noindent \textbf{Docker} est un logiciel open source qui automatise le déploiement d'applications dans des conteneurs logiciels. C'est un outil qui peut empaqueter une application et ses dépendances dans un conteneur virtuel, qui pourra être exécuté sur n'importe quel serveur Linux ou Windows (\emph{Boot2Docker}). En fait, il a pour objectif de \textbf{faciliter le déploiement d'applications}, d'avoir plusieurs versions d'une même application sur un son serveur (phase de développement, tests), mais aussi d'\textbf{automatiser le packaging d'applications}. Avec Docker, on s'oriente vers de l'intégration et du déploiement en continu grâce au système de container. De plus, Docker permet de garder son système de base propre, tout en installant de nouvelles fonctionnalités au sein de containers, on part d'une base qui est le système d'exploitation et on ajoute différentes briques conteneurisées. Docker a été distribué en tant que projet open source à partir de mars 2013.
 
 \subsection{Utilisation de Docker}
 Docker propose de nombreux templates qui permettent de déployer des applications en container, très rapidement. La communauté est très active, ce qui permet aux utilisateurs de disposer de nombreux conteneurs applicatifs pré-faits.
-Docker est basé sur LXC (\emph{Linux Containers}) qui est une référence sous Linux quant à l’utilisation des containers. Par ailleurs, il intègre les éléments suivants :
+Docker est basé sur LXC (\emph{Linux Containers}) qui est une référence sous Linux quant à l'utilisation des containers. Par ailleurs, il intègre les éléments suivants :
 \begin{itemize}
 \item \textbf{Control Groups} : Fonctionnalité du noyau Linux pour limiter, compter et isoler les ressources (CPU, RAM, etc.) utilisées par un groupe de processus.
-\item \textbf{AppArmor et SElinux} : Gestion avancée des permissions aussi bien au niveau des applications qu’au niveau du système de fichiers.
-\item \textbf{Kernel namespace} : Fonctionnalité du noyau Linux qui permet l’isolation, afin de s’assurer qu’un container ne puisse pas en affecter un autre.
-\item \textbf{chroot} : Fonctionnalité qui permet de changer la racine d’un processus, afin de l’isoler sur un système par mesure de sécurité.
+\item \textbf{AppArmor et SElinux} : Gestion avancée des permissions aussi bien au niveau des applications qu'au niveau du système de fichiers.
+\item \textbf{Kernel namespace} : Fonctionnalité du noyau Linux qui permet l'isolation, afin de s'assurer qu'un container ne puisse pas en affecter un autre.
+\item \textbf{chroot} : Fonctionnalité qui permet de changer la racine d'un processus, afin de l'isoler sur un système par mesure de sécurité.
 \end{itemize}
 
 Docker propose des services pour effectuer facilement différentes actions : créer, éditer, publier et exécuter des conteneurs. On parlera souvent des notions de dockerfiles, conteneurs et  images.
 
 \begin{itemize}
-\item \textbf{DockerFile} : Fichier source qui contient les instructions, éléments à installer, c’est un fichier de configuration.
-\item \textbf{Image} : Compilation d’un fichier DockerFile pour former une image portable, prête à être déployée.
-\item \textbf{Conteneur} : Exécution d’une image, mise en container d’une image.
+\item \textbf{DockerFile} : Fichier source qui contient les instructions, éléments à installer, c'est un fichier de configuration.
+\item \textbf{Image} : Compilation d'un fichier DockerFile pour former une image portable, prête à être déployée.
+\item \textbf{Conteneur} : Exécution d'une image, mise en container d'une image.
 \end{itemize}
 
 

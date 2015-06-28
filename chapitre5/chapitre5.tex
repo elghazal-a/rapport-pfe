@@ -31,7 +31,7 @@ Quand l'ordonnanceur Fleet crée un service en mode haute disponibilité, Il sto
 \end{lstlisting}
 
 
-La solution à base d'un cluster CoreOS motorisé par des équilibreurs de charges élastique est très puissante, mais son utilisation demeure très bas niveau. Le fait d’interagir directement avec le cluster nécessite des administrateurs systèmes très compétents. C'est la raison pour laquelle nous allons essayer d'adopter une solution à base d'une \acrshort{paas}.
+La solution à base d'un cluster CoreOS motorisé par des équilibreurs de charges élastique est très puissante, mais son utilisation demeure très bas niveau. Le fait d'interagir directement avec le cluster nécessite des administrateurs systèmes très compétents. C'est la raison pour laquelle nous allons essayer d'adopter une solution à base d'une \acrshort{paas}.
 
 
 \section{A base d'une \acrshort{paas}}
@@ -84,7 +84,7 @@ Un développeur, voulant déployer une application, va pousser son code vers le 
 \subsection{Installation}
 
 
-Deis nécessite un Cluster de CoreOS pour s'installer dessus. Nous aurions pu installer Deis au-dessus du Cluster que nous avons déjà réalisé, mais Deis nécessite des ressources (au moins 4GB de RAM) que la version d’essai de \acrshort{aws} n'offre pas. Nous avons opté pour \acrshort{gce}.
+Deis nécessite un Cluster de CoreOS pour s'installer dessus. Nous aurions pu installer Deis au-dessus du Cluster que nous avons déjà réalisé, mais Deis nécessite des ressources (au moins 4GB de RAM) que la version d'essai de \acrshort{aws} n'offre pas. Nous avons opté pour \acrshort{gce}.
 
 L'installation de Deis sur \acrshort{gce} est détaillé dans la documentation \cite{deis-gce}. Les grandes étapes d'installation:
 \begin{itemize}
