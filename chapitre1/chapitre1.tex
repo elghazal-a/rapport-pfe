@@ -8,7 +8,7 @@
 
 \section{Présentation de l'organisme d'accueil}
 
-\textbf{Sayoo} est une Start-up qui agit dans le domaine des technologies de l'information. Lancée en décembre 2013, elle vise à fournir aux clients les solutions adéquates à leurs besoins en utilisant les dernières technologies. \emph{Sayoo} repose principalement sur l’open-source afin de fournir leurs services à prix abordable et bénéficier des communautés actives. 
+\textbf{Sayoo} est une Start-up qui agit dans le domaine des technologies de l'information. Lancée en décembre 2013, elle vise à fournir aux clients les solutions adéquates à leurs besoins en utilisant les dernières technologies. \emph{Sayoo} repose principalement sur l'open-source afin de fournir leurs services à prix abordable et bénéficier des communautés actives. 
 
 
 %\subsection{Organisation}
@@ -38,18 +38,10 @@ la Société \emph{Sayoo} tient à fournir des services de qualité à ses clien
 
 Le service \emph{\acrshort{erp}} tient une importance capitale au sein de la société parce qu'il déploie des ressources importantes. Par ailleurs, toute relation avec une entreprise nécessite une rigueur et une grande attention.
 
-Un client qui désire gérer les ressources de son entreprise  doit rencontrer un responsable de la clientèle de \emph{Sayoo} pour spécifier ses besoins. Le responsable propose une version personnalisée de la suite \emph{Odoo} (anciennement \emph{Open \acrshort{erp}}) au client pour une gestion efficace. Par la suite, la société qui s'est déjà procurée  3 différents serveurs (Développement, Évaluation, Production) doit déployer une version de \emph{Odoo} sur le serveur de développement pour que les développeurs effectuent les premières personnalisations. Le client doit avoir accès au serveur Développement pour confirmer ou refuser. En cas de confirmation, l'administration doit déployer la version souhaitée sur le serveur production et conserver la version d'évaluation au cas d'une nouvelle mise à jour ou maintenance.Le serveur Évaluation a pour but de faire découvrir le client une version standard ou améliorée de la suite \emph{Odoo}.  
+Un client qui désire gérer les ressources de son entreprise doit rencontrer un responsable de la clientèle de \emph{Sayoo} pour spécifier ses besoins. Le responsable propose une version personnalisée de la suite \emph{Odoo} (anciennement \emph{Open \acrshort{erp}}) au client pour une gestion efficace. Par la suite, la société qui s'est déjà procurée  3 différents serveurs (Développement, Évaluation, Production) doit déployer une version d'\emph{Odoo} sur le serveur de développement pour que les développeurs effectuent les premières personnalisations. Le client doit avoir accès au serveur Développement pour confirmer ou refuser. En cas de confirmation, l'administration doit déployer la version souhaitée sur le serveur production et conserver la version d'évaluation au cas d'une nouvelle mise à jour ou maintenance.Le serveur Évaluation a pour but de faire découvrir le client une version standard ou améliorée de la suite \emph{Odoo}.  
 
-Pour une meilleure fiabilité, la société se procure 2 serveurs ( Développement, Production) par client. elle doit périodiquement effectuer des maintenances pour assurer la disponibilité de son service. Chaque client de la société se différencie seulement par sa personnalisation de la suite \emph{Odoo} donc les étapes de configuration sont redondantes pour tous les clients. Le temps de configuration et de déploiement reste important donc le client doit attendre pour accéder à son service après chaque maintenance. Les pré-requis de ce service sont relativement coûteux et affecte par conséquent le prix final du client.
+Pour une meilleure fiabilité, la société se procure 2 serveurs ( Développement, Production) par client. elle doit périodiquement effectuer des maintenances pour assurer la disponibilité de son service. Chaque client de la société se différencie seulement par sa personnalisation de la suite \emph{Odoo} donc les étapes de configuration sont redondantes pour tous les clients. Le temps de configuration et de déploiement reste trop important donc le client doit attendre pour accéder à son service après chaque maintenance. Les pré-requis de ce service sont relativement coûteux et affecte par conséquent le prix final du client.
   
-
-
-
-
-
-
-
-
 
 
 
@@ -64,15 +56,15 @@ Le processus de la provision des applications \acrshort{erp} pour les clients n'
 
 \begin{itemize}
 
-\item La provision des instances \emph{Odoo} est complètement manuelle. Quand un client demande une version de test d'\emph{Odoo} par exemple, l'équipe de \emph{Sayoo} est contrainte d'exécuter une série d'étapes répétitives à partir de la commande, l'installation et la configuration du serveur jusqu'à la mise en place de l'application \emph{Odoo}, configuration DNS, etc...
+\item La provision des instances \emph{Odoo} est complètement manuelle. Quand un client demande une version de test d'\emph{Odoo} par exemple, l'équipe de \emph{Sayoo} est contrainte d'exécuter une longue série d'étapes répétitives: la commande, l'installation et la configuration du serveur, la mise en place de l'application \emph{Odoo}, la configuration \acrshort{dns}, etc...
 
-\item Le besoin récurrent des administrateurs qui doivent garder en permanence l’œil sur les applications des clients.
+\item Le besoin récurrent des administrateurs qui doivent garder en permanence l'œil sur les applications des clients.
 
-\item La supervision est manuelle. En effet, au fur et à mesure que le nombre de clients augmente, l'administrateur doit ajouter les applications au système de supervision. Ce processus devient faible et non évolutif. Par conséquent, le suivi est pénible en terme de ressources et temps.
+\item La supervision est manuelle. En effet, au fur et à mesure que le nombre de clients augmente, l'administrateur doit ajouter les applications au système de supervision. Ce processus devient faible et non évolutif. Par conséquent, le suivi est pénible en terme de ressources et de temps.
 
-\item L’absence d'automatisme fait que l'équipe \emph{Sayoo} consacre la plupart du temps aux tâches répétitives au lieu de se consacrer au développement et la personnalisation des applications \emph{Odoo}. 
+\item L'absence d'automatisme fait que l'équipe \emph{Sayoo} consacre la plupart du temps aux tâches répétitives au lieu de se consacrer au développement et la personnalisation des applications \emph{Odoo}. 
 
-\item La nécessité d'acheter un serveur pour chaque client pour y installer son application, ceci est un "\emph{overkill}" pour atteindre le but. De plus, cela affecte le coût de la solution.
+\item La nécessité d'acheter un serveur pour chaque client pour y installer son application, ceci est un "\emph{overkill}" pour atteindre le but. En conséquence, cela affecte le coût final de la solution.
 
 \item L'absence d'une architecture robuste qui peut garantir des exigences non fonctionnelles énormes, à savoir la configuration automatique, la haute disponibilité, la sécurité et la scalabilité. Ainsi, Sayoo ne garantie pas un \acrshort{sla} à ses clients.
 
@@ -82,12 +74,12 @@ Le processus de la provision des applications \acrshort{erp} pour les clients n'
 
 
 \section{Objectifs du projet}
-Ce projet vise principalement à améliorer le service \emph{\acrshort{erp}} au sein de \emph{Sayoo} par l'automatisation de certaines tâches, notamment la configuration et le déploiement. L'objectif de ce projet est de déployer une architecture qui se caractérise par une haute disponibilité, une scalabilité et une sécurité sans faille. Par conséquent, cela revient à déployer une architecture \emph{Cloud} qui répond aux exigences suivantes.
+Ce projet vise principalement à améliorer le service \emph{\acrshort{erp}} au sein de \emph{Sayoo} par l'automatisation de certaines tâches, notamment la configuration et le déploiement. L'objectif de ce projet est de déployer une architecture qui se caractérise par une haute disponibilité, une scalabilité et une sécurité. Par conséquent, cela revient à déployer une architecture \emph{Cloud} qui répond aux exigences suivantes.
 \begin{itemize}
 
 \item Faciliter la configuration et le déploiement des instances \emph{Odoo} pour les clients.
 
-\item Éviter les tâches répétitives et faciliter la personnalisation de \emph{Odoo}.
+\item Éviter les tâches répétitives et faciliter la personnalisation d'\emph{Odoo}.
 
 \item Réduire le coût en terme de temps et d'argent pour \emph{Sayoo}.
 
