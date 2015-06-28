@@ -1,6 +1,8 @@
 \chapter{Réalisation}
 \begin{onehalfspace}
 
+\initial{C}e chapitre est consacré à la description de la phase de la réalisation. La démarche globale de deux solutions sera décrite, puis les avantages de l'une par rapport à l'autre seront illustrés. Enfin, La sécurisation et l'installation d'un système de supervision scalable cloturera le chapitre.
+
 \newpage
 
 \section{A base d'un Cluster}
@@ -274,15 +276,18 @@ Notre cluster se compose de trois serveurs. Les figures suivantes présentes la 
 
 \subsection{Supervision et scalabilité}
 
-La scalabilité était toujours parmi nos aspirations tout au long de ce projet. Le système de supervision réalisé est conçu pour fonctionner de façon indépendante, complètement automatisée et hautement scalable. Nous allons prouver cela à travers ces deux scénarios:
+La scalabilité était toujours parmi nos aspirations tout au long de ce projet. Le système de supervision réalisé est conçu pour fonctionner de façon indépendante, complètement automatisée et hautement scalable. Cela va être prouvé à travers ces deux scénarios:
 
 \begin{itemize}
 	\item Quand un nouveau service est lancé sur un des serveurs du cluster, cAdvisor se rendra compte de ce nouveau conteneur et va mettra à la disposition de Heapster les données qui va les stocker dans la base de données pour des consultations via l'interface graphique;
 	\item Lors d'un pic de charge, on a intérêt à lancer les nouveaux conteneurs dans un nouveau serveur. On va tout d'abord lancer avec le fichier d'initialisation du cluster. Désormais, de façon automatique, le serveur appartient au cluster. Ainsi, les conteneurs lancés sur ce nouveau serveur sont supervisés automatiquement comme le décrit le scénario 1.
 \end{itemize}
 
-Grafana, l'interface utilisateur, sera disponible dans la machine dans laquelle \emph{Fleet} décide d'installer le trio Heapster, InfluxDB et Grafana. Cela signifie que Grafana peut changer de position dans le cluster à l'improviste et n'aura donc pas une adresse IP pour y accéder. Comme perspective, il serait préférable de mettre en place une sorte de proxy par lequel on accède à Grafana partout où il soit.
+D'autre part, Grafana, l'interface utilisateur, sera disponible dans la machine dans laquelle \emph{Fleet} décide d'installer le trio Heapster, InfluxDB et Grafana. Cela signifie que Grafana peut changer de position dans le cluster à l'improviste et n'aura donc pas une adresse \acrshort{ip} fixe pour y accéder. Comme perspective, il serait préférable de mettre en place une sorte de proxy dont l'\acrshort{ip} est fixe par lequel on accède à Grafana partout où il soit.
 
 
+\section*{Conclusion}
+
+Nous avons décrit l'installation et l'utilisation d'une plate-forme en tant que service au-dessus d'un Cluster de CoreOS. La \acrshort{paas}, couplée avec son interface utilisateur et un système de supervision, devient plus complète et favorise le déploiement continue dans un monde containérisé.
 
 \end{onehalfspace}
