@@ -1,7 +1,7 @@
 \chapter{Réalisation}
 \begin{onehalfspace}
 
-\initial{C}e chapitre est consacré à la description de la phase de la réalisation. La démarche globale de deux solutions sera décrite, puis les avantages de l'une par rapport à l'autre seront illustrés. Enfin, La sécurisation et l'installation d'un système de supervision scalable cloturera le chapitre.
+\initial{C}e chapitre est consacré à la description de la phase de la réalisation. La démarche globale de deux solutions sera décrite, puis les avantages de l'une par rapport à l'autre seront illustrés. Enfin, La sécurisation et l'installation d'un système de supervision scalable clôturera le chapitre.
 
 \newpage
 
@@ -9,7 +9,7 @@
 
 \subsection{Installation du Cluster}
 
-Nous allons mettre en place l'architecture décrite dans la figure \ref{fig:architecture}). 
+Nous allons mettre en place l'architecture décrite dans la figure \ref{fig:architecture}). Le Cloud public \acrshort{aws} sera utilisé pour la production d'un Cluster de trois serveurs \cite{coreos-aws}. Il est important de noter que le Cluster peut-être installé en tant qu'une entité privée ou public:
 
 
 \begin{itemize}
@@ -20,7 +20,7 @@ Nous allons mettre en place l'architecture décrite dans la figure \ref{fig:arch
 \subsection{Installation des proxy}
 \index{Gogeta}
 
-\textbf{Gogeta} est un proxy dynamique dont la configuration est basée sur la base de donnée Etcd. En effet, Gogeta écoute en permanence Etcd pour assurer une reconfiguration dynamique en temps réel des routes sans redémarrage.
+\textbf{Gogeta} est un proxy dynamique dont la configuration est basée sur la base de donnée Etcd. En effet, Gogeta écoute en permanence Etcd pour assurer une reconfiguration dynamique en temps réel des routes sans redémarrage. L'installation de Gogeta sur tous les serveurs est très simple. En effet, il est installé dans un conteneur et ordonnancé par Fleet \cite{gogeta}.
 
 Quand l'ordonnanceur Fleet crée un service en mode haute disponibilité, Il stocke les donnée (\acrshort{ip} et port) dans Etcd sous forme de clé-valeur. Les proxy Gogeta, étant en écoute en permanence d'Etcd , se reconfigure pour prendre en considération le nouveau service. Ainsi, si une requête arrive sur l'un des proxy Gogeta, il la transmet vers une des instances avec la stratégie \emph{Round-robin} après avoir fait des bilans de santé.
 
@@ -30,8 +30,11 @@ Quand l'ordonnanceur Fleet crée un service en mode haute disponibilité, Il sto
 	/services/odoo/2/location		= {"host":"10.240.228.23", "port": 42669}
 \end{lstlisting}
 
+\subsection{Utilisation du Cluster}
 
-La solution à base d'un cluster CoreOS motorisé par des équilibreurs de charges élastique est très puissante, mais son utilisation demeure très bas niveau. Le fait d'interagir directement avec le cluster nécessite des administrateurs systèmes très compétents. C'est la raison pour laquelle nous allons essayer d'adopter une solution à base d'une \acrshort{paas}.
+Autant la mise en place du Cluster et ses composants est simple, autant son utilisation est compliqué. Un exemple sera présenté pour illustré la procédure.
+
+La solution à base d'un Cluster CoreOS motorisé par des équilibreurs de charges élastique est très puissante, mais son utilisation demeure très bas niveau. Le fait d'interagir directement avec le Cluster nécessite des administrateurs systèmes très compétents. C'est la raison pour laquelle une solution à base d'une \acrshort{paas} sera adoptée.
 
 
 \section{A base d'une \acrshort{paas}}
