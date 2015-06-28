@@ -11,14 +11,14 @@ Nous allons mettre en place l'architecture décrite dans la figure \ref{fig:arch
 
 
 \begin{itemize}
-	\item Réseau privé: Les serveurs du Cluster communiquent entre eux avec des adresses \acrshort{ip} privées. Cette solution est contraignante. En effet, les serveurs doivent être installés dans la même zone. De plus les fournisseurs chargent des coûts supplémentaires pour l'installation d'une interface réseau privée. En contrepartie, on gagne en termes de sécurité;
-	\item Réseau public: Les serveurs du Cluster peuvent se communiquer mutuellement via une interface réseau public et donc une adresse \acrshort{ip} public. De ce fait, beaucoup d'avantages se dégagent. D'une part, les serveurs peuvent être distribués dans le monde entier et ainsi garantir une disponibilité maximale. D'autre part, une migration à chaud de toute la plate-forme peut être faite. Cette migration est silencieuse et transparente pour tous les clients.
+	\item \textbf{Réseau privé} : Les serveurs du Cluster communiquent entre eux avec des adresses \acrshort{ip} privées. Cette solution est contraignante. En effet, les serveurs doivent être installés dans la même zone. De plus les fournisseurs chargent des coûts supplémentaires pour l'installation d'une interface réseau privée. En contrepartie, on gagne en termes de sécurité;
+	\item \textbf{Réseau public} : Les serveurs du Cluster peuvent se communiquer mutuellement via une interface réseau public et donc une adresse \acrshort{ip} public. De ce fait, beaucoup d'avantages se dégagent. D'une part, les serveurs peuvent être distribués dans le monde entier et ainsi garantir une disponibilité maximale. D'autre part, une migration à chaud de toute la plate-forme peut être faite. Cette migration est silencieuse et transparente pour tous les clients.
 \end{itemize}
 
 \subsection{Installation des proxy}
 \index{Gogeta}
 
-Gogeta est un proxy dynamique dont la configuration est basée sur la base de donnée Etcd. En effet, Gogeta écoute en permanence Etcd pour assurer une reconfiguration dynamique en temps réel des routes sans redémarrage.
+\textbf{Gogeta} est un proxy dynamique dont la configuration est basée sur la base de donnée Etcd. En effet, Gogeta écoute en permanence Etcd pour assurer une reconfiguration dynamique en temps réel des routes sans redémarrage.
 
 Quand l'ordonnanceur Fleet crée un service en mode haute disponibilité, Il stocke les donnée (\acrshort{ip} et port) dans Etcd sous forme de clé-valeur. Les proxy Gogeta, étant en écoute en permanence d'Etcd , se reconfigure pour prendre en considération le nouveau service. Ainsi, si une requête arrive sur l'un des proxy Gogeta, il la transmet vers une des instances avec la stratégie \emph{Round-robin} après avoir fait des bilans de santé.
 
@@ -65,7 +65,7 @@ Deis peut être déployée sur un n'importe quelle système qui supporte CoreOS 
 
 \subsection{Architecture}
 
-l'architecture de Deisprésentée dans la figure \ref{fig:deis-architecture} a tellement de points de commun avec celle que nous avons proposé. Néanmoins, elle cache beaucoup de détails, notamment à l'intérieur du contrôleur où beaucoup de magie se fait. Par ailleurs, Deis intègre ses propres routeurs (équilibreurs de charges) et un registre privé des images Docker. Les services de support, la supervision, la gestion des messages logs et l'équilibreur de charge ne sont pas intégrés par la plate-forme Deis.
+l'architecture de Deis présentée dans la figure \ref{fig:deis-architecture} a tellement de points de commun avec celle que nous avons proposé. Néanmoins, elle cache beaucoup de détails, notamment à l'intérieur du contrôleur où beaucoup de magie se fait. Par ailleurs, Deis intègre ses propres routeurs (équilibreurs de charges) et un registre privé des images Docker. Les services de support, la supervision, la gestion des messages logs et l'équilibreur de charge ne sont pas intégrés par la plate-forme Deis.
 
 Un développeur, voulant déployer une application, va pousser son code vers le contrôleur. Ce dernier construit l'image et la stocke dans le registre des images. Ensuite, le contrôleur passe le relais à l'ordonnanceur qui se débrouille pour lancer le service à l'intérieur d'un conteneur. Le conteneur est crée à base de l'image Docker.
 
