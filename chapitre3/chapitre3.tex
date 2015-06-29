@@ -9,7 +9,7 @@
 
 \index{Cluster}
 
-Nous avons présenté dans le chapitre 2 le Cloud Computing ainsi que ses services classiques. Dans cette section, nous allons parler du cluster comme un service et le situer dans le pyramide des services du Cloud (Figure ~\ref{fig:pyramide-cluster}).
+Nous avons présenté dans le chapitre 2 le Cloud Computing ainsi que ses services classiques. Dans cette section, nous allons parler du Cluster comme un service et le situer dans le pyramide des services du Cloud (Figure ~\ref{fig:pyramide-cluster}) \cite{cluster}.
 
 \begin{figure}[H]
 \centering
@@ -54,7 +54,7 @@ Nous avons présenté dans le chapitre 2 le Cloud Computing ainsi que ses servic
 }
 
 
-En général, un cluster comporte plusieurs éléments qu'on définit ci-dessous :
+En général, un cluster comporte plusieurs éléments qu'on définit ci-dessous \cite{cluster-scheduling}:
 
 \begin{itemize}
 	\item \textbf{Master} : C'est la machine qui est responsable du Cluster. Il veille sur son bon fonctionnement grâce au système de découverte des services et l'ordonnanceur
@@ -177,12 +177,8 @@ Le framework ou l'application Mesos tient une importante place au sein de l'arch
 \emph{Chronos} est complémentaire à \emph{Marathon} car il fournit une autre façon d'exécuter des applications selon un calendrier ou d'autres conditions telles que la réalisationn d'un autre emploi. Il est également capable de la planification de tâches sur plusieurs nœuds esclaves \emph{Mesos}, et fournit des statistiques sur les échecs et les réussites d'emploi.
 \section{Coreos}
 \index{CoreOS}
-\textbf{Coreos} est un système d'exploitation open-source basé sur le noyau \emph{Linux} et construit pour fournir des infrastructures aux déploiements en Cluster. En effet, il est un système minimaliste, sur lequel est greffé des conteneurs applicatifs indépendants et sécurisés. Coreos est conçu pour être léger et performant afin de gérer les datacenters. Coreos consomme 40\% moins de mémoire au démarrage en moyenne par rapport à un serveur \emph{Linux}. Coreos est disponible sur plusieurs plates-formes comme Amazon Compute Cloud, Google Compute Engine et plusieurs autres.
-%\begin{figure}[H]
-%\centering
-%\includegraphics [scale=0.4]{chapitre3/assets/logocoreos.png}
-%\caption{Logo de Coreos}
-%\end{figure}
+\textbf{Coreos} est un système d'exploitation open-source basé sur le noyau \emph{Linux} et construit pour fournir des infrastructures aux déploiements en Cluster. En effet, il est un système minimaliste, sur lequel est greffé des conteneurs applicatifs indépendants et sécurisés. Coreos est conçu pour être léger et performant afin de gérer les datacenters. Coreos consomme 40\% moins de mémoire au démarrage en moyenne par rapport à un serveur \emph{Linux}. Coreos est disponible sur plusieurs plates-formes comme Amazon Compute Cloud, Google Compute Engine et plusieurs autres \cite{coreos-cluster}.
+
 \subsection{Composants de Coreos}
 \subsubsection*{Le service Systemd}
 \index{Systemd}
