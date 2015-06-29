@@ -267,5 +267,6 @@ Le schéma suivant décrit le fonctionnement de l'outil Docker:
 \caption{Fonctionnement de Docker}
 \end{figure}
 
+Le principe de fonctionnement de Docker est simple et efficace. L'utilisation de Docker dépend de l'hôte ; s'il souhaite construire son image Docker en local ou tirer une image construite par une autre personne depuis le registre Docker ( Docker Registry).Quand l'hôte désire construite sa propre image , il doit s'équiper d'un ficher \emph{dockerfile} comportant les informations nécessaires pour la construction de l'image , cette dernière est sauvegarder localement. Si l'utilisateur désire conserver et partager son image docker , il peut la pousser dans le registre docker pour la partager avec la communauté Docker qui peuvent l'améliorer par des mises à jour régulières. Les principaux opérations  utilisées dans ce fonctionnement sont : \emph{build}, \emph{push}, \emph{pull}, \emph{search}, \emph{save} et \emph{commit}.
 \end{onehalfspace}
 \label{table:} % is used to refer this table in the text
