@@ -13,7 +13,7 @@ Nous allons mettre en place l'architecture décrite dans la figure \ref{fig:arch
 
 
 \begin{itemize}
-	\item \textbf{Réseau privé} : Les serveurs du Cluster communiquent entre eux avec des adresses \acrshort{ip} privées. Cette solution est contraignante. En effet, les serveurs doivent être installés dans la même zone. De plus les fournisseurs chargent des coûts supplémentaires pour l'installation d'une interface réseau privée. En contrepartie, on gagne en termes de sécurité;
+	\item \textbf{Réseau privé} : Les serveurs du Cluster communiquent entre eux avec des adresses \acrshort{ip} privées. Cette solution est contraignante. En effet, les serveurs doivent être installés dans la même zone. De plus les fournisseurs chargent des coûts supplémentaires pour l'installation d'une interface réseau privée. En contrepartie, on gagne en termes de sécurité.
 	\item \textbf{Réseau public} : Les serveurs du Cluster peuvent se communiquer mutuellement via une interface réseau public et donc une adresse \acrshort{ip} public. De ce fait, beaucoup d'avantages se dégagent. D'une part, les serveurs peuvent être distribués dans le monde entier et ainsi garantir une disponibilité maximale. D'autre part, une migration à chaud de toute la plate-forme peut être faite. Cette migration est silencieuse et transparente pour tous les clients.
 \end{itemize}
 
@@ -95,16 +95,16 @@ Deis peut être déployée sur un n'importe quelle système qui supporte CoreOS 
 \subsubsection*{Pourquoi Deis?}
 
 \begin{itemize}
-	\item Langage-agnostique: Deis déploie des services écrites dans n'importe quels langages avec une simple commande "git push";
-	\item Extensibilité: Deis est extensible, les outils de supervisions et de la gestions des messages logs peuvent être intégrés facilement;
-	\item Scalabilité: Une application est montée en charge avec une seule commande. Par ailleurs, La capacité de la plate-forme Deis peut être montée en charge en ajoutant simplement des hôtes au cluster;
-	\item 100\% Open Source: Deis est un logiciel libre, open-source publié sous la licence Apache 2.0.
+	\item \textbf{Langage-agnostique} : Deis déploie des services écrites dans n'importe quels langages avec une simple commande "git push";
+	\item \textbf{Extensibilité} : Deis est extensible, les outils de supervisions et de la gestions des messages logs peuvent être intégrés facilement;
+	\item \textbf{Scalabilité} : Une application est montée en charge avec une seule commande. Par ailleurs, La capacité de la plate-forme Deis peut être montée en charge en ajoutant simplement des hôtes au cluster;
+	\item \textbf{100\% Open Source} : Deis est un logiciel libre, open-source publié sous la licence Apache 2.0.
 \end{itemize}
 
 
 \subsection{Architecture}
 
-l'architecture de Deis présentée dans la figure \ref{fig:deis-architecture} a tellement de points de commun avec celle que nous avons proposé. Néanmoins, elle cache beaucoup de détails, notamment à l'intérieur du contrôleur où beaucoup de magie se fait. Par ailleurs, Deis intègre ses propres routeurs (équilibreurs de charges) et un registre privé des images Docker. Les services de support, la supervision, la gestion des messages logs et l'équilibreur de charge ne sont pas intégrés par la plate-forme Deis.
+l'architecture de Deis présentée dans la figure \ref{fig:deis-architecture} a tellement de points de commun avec celle que nous avons proposé. Néanmoins, elle cache beaucoup de détails, notamment à l'intérieur du contrôleur. Par ailleurs, Deis intègre ses propres routeurs (\emph{Load Balancer}) et un registre privé des images Docker. Les services de support, la supervision, la gestion des messages logs et l'équilibreur de charge ne sont pas intégrés par la plate-forme Deis.
 
 Un développeur, voulant déployer une application, va pousser son code vers le contrôleur. Ce dernier construit l'image et la stocke dans le registre des images. Ensuite, le contrôleur passe le relais à l'ordonnanceur qui se débrouille pour lancer le service à l'intérieur d'un conteneur. Le conteneur est crée à base de l'image Docker.
 
@@ -125,8 +125,8 @@ Deis nécessite un Cluster de CoreOS pour s'installer dessus. Nous aurions pu in
 
 L'installation de Deis sur \acrshort{gce} est détaillé dans la documentation \cite{deis-gce}. Les grandes étapes d'installation:
 \begin{itemize}
-	\item Lancer des serveurs CoreOS avec le fichier d'initialisation de Deis fournit par la documentation;
-	\item Faire pointer l'équilibreur de charge de Google vers nos serveurs. Cette équilibreur de charge est élastique et donc reconnaît dynamiquement des nouveaux serveurs;
+	\item Lancer des serveurs CoreOS avec le fichier d'initialisation de Deis fournit par la documentation.
+	\item Faire pointer l'équilibreur de charge de Google vers nos serveurs. Cette équilibreur de charge est élastique et donc reconnaît dynamiquement des nouveaux serveurs.
 	\item Configurer le \acrshort{dns} pour faire pointer le nom de domaine et tous les sous-domaines vers l'équilibreur de charge de Google (Figure \ref{fig:dns}).
 \end{itemize}
 
@@ -158,7 +158,7 @@ Après avoir lancé un service, l'exploitant, remarquant un pic de charge, va po
 
 \subsubsection*{Déploiement avec zéro temps d'arrêt}
 
-Durant le déploiement d'une nouvelle version d'un service, Deis garantit un zéro temps d'indisponibilité. En effet, les routeurs ne sont reconfigurés que lorsque le déploiement est terminé. Enfin, l'ancienne version est supprimée.
+Durant le déploiement d'une nouvelle version d'un service, Deis garantit un temps quasi nul d'indisponibilité. En effet, les routeurs ne sont reconfigurés que lorsque le déploiement est terminé. Enfin, l'ancienne version est supprimée.
 
 
 \subsubsection*{Des \acrshort{api} \acrshort{http}}
