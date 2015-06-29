@@ -238,11 +238,11 @@ En somme, il va s'en dire que Docker l'emporte largement par rapport à \emph{KV
 \centering
 \includegraphics[scale=0.15]{chapitre2/assets/docker}
 \end{wrapfigure}
-\noindent \textbf{Docker} est un logiciel open source qui automatise le déploiement d'applications dans des conteneurs logiciels. C'est un outil qui peut empaqueter une application et ses dépendances dans un conteneur virtuel, qui pourra être exécuté sur n'importe quel serveur Linux ou Windows (\emph{Boot2Docker}). En fait, il a pour objectif de \textbf{faciliter le déploiement d'applications}, d'avoir plusieurs versions d'une même application sur un son serveur (phase de développement, tests), mais aussi d'\textbf{automatiser le packaging d'applications}. Avec Docker, on s'oriente vers de l'intégration et du déploiement en continu grâce au système de container. De plus, Docker permet de garder son système de base propre, tout en installant de nouvelles fonctionnalités au sein de containers, on part d'une base qui est le système d'exploitation et on ajoute différentes briques conteneurisées. Docker a été distribué en tant que projet open source à partir de mars 2013.
+\noindent \textbf{Docker} est un logiciel open source qui automatise le déploiement d'applications dans des conteneurs logiciels. C'est un outil qui peut empaqueter une application et ses dépendances dans un conteneur virtuel, qui pourra être exécuté sur n'importe quel serveur Linux ou Windows (\emph{Boot2Docker}). En fait, il a pour objectif de \textbf{faciliter le déploiement d'applications}, d'avoir plusieurs versions d'une même application sur un son serveur (phase de développement, tests), mais aussi d'\textbf{automatiser le packaging d'applications}. Avec Docker, on s'oriente vers de l'intégration et du déploiement en continu grâce au système de container. De plus, Docker permet de garder son système de base propre, tout en installant de nouvelles fonctionnalités au sein de conteneurs, on part d'une base qui est le système d'exploitation et on ajoute différentes briques conteneurisées. Docker a été distribué en tant que projet open source à partir de mars 2013.
 
 \subsection{Utilisation de Docker}
-Docker propose de nombreux templates qui permettent de déployer des applications en container, très rapidement. La communauté est très active, ce qui permet aux utilisateurs de disposer de nombreux conteneurs applicatifs pré-faits.
-Docker est basé sur LXC (\emph{Linux Containers}) qui est une référence sous Linux quant à l'utilisation des containers. Par ailleurs, il intègre les éléments suivants :
+Docker propose de nombreux templates qui permettent de déployer des applications en conteneur, très rapidement. La communauté est très active, ce qui permet aux utilisateurs de disposer de nombreux conteneurs applicatifs pré-faits.
+Docker est basé sur \acrshort{lxc} qui est une référence sous Linux quant à l'utilisation des conteneurs. Par ailleurs, il intègre les éléments suivants :
 \begin{itemize}
 \item \textbf{Control Groups} : Fonctionnalité du noyau Linux pour limiter, compter et isoler les ressources (CPU, RAM, etc.) utilisées par un groupe de processus.
 \item \textbf{AppArmor et SElinux} : Gestion avancée des permissions aussi bien au niveau des applications qu'au niveau du système de fichiers.
@@ -264,7 +264,10 @@ Le schéma suivant décrit le fonctionnement de l'outil Docker:
 \centering
 \includegraphics [scale=0.6]{chapitre2/assets/utilisation.png}
 \caption{Fonctionnement de Docker}
+\label{fig:fonctionnement-docker}
 \end{figure}
 
 \end{onehalfspace}
-\label{table:} % is used to refer this table in the text
+
+
+La figure \ref{fig:fonctionnement-docker} cache derrière elle toute la philosophie de Docker. Cette philosophie assume que toute application qui marche dans l'ordinateur du développeur doit marcher aussi dans les serveurs de productions. En effet, le développeur, quand il aura finit de développer son application, va faire un \emph{build} pour construire une image de son application. Enfin, il va faire un \emph{push} pour pousser l'image vers un registre des images centralisé. Dans un environnement de production, une copie de l'application peut-être lancée en faisant un simple \emph{pull} et \emph{run}.
