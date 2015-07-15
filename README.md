@@ -2,7 +2,7 @@
 
 Report of our graduation project titled "Design and implementation of a container-based cloud architecture"
 
-Rapport de mon projet de fin d'études intitulé "Conception et implémentation d'une architecture Cloud à base de conteneurs"
+Rapport de notre projet de fin d'études intitulé "Conception et implémentation d'une architecture Cloud à base de conteneurs"
 
 # Abstract
 
