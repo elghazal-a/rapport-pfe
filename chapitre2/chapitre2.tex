@@ -1,7 +1,7 @@
 \chapter{Le cloud computing}
 \begin{onehalfspace}
 
-\initial{L} e but de ce chapitre est d'exposer le travail fait au niveau de la documentation. Ce chapitre est très riche en concepts incontournables et nécessaires à la suite de ce rapport. En effet, nous allons commencé par expliquer concrètement la signification du Cloud. Ensuite, nous présenterons les types de Cloud les plus classiques, à savoir IaaS, PaaS et SaaS. Enfin, nous verrons les notions de virtualisation et containérisation ainsi que la différence entre les deux.
+\initial{L} e but de ce chapitre est d'exposer le travail fait au niveau de la documentation. Ce chapitre est très riche en concepts incontournables et nécessaires à la suite de ce rapport. En effet, nous allons commencer par expliquer concrètement la signification du Cloud. Ensuite, nous présenterons les types de Cloud les plus classiques, à savoir \acrshort{iaas}, PaaS et SaaS. Enfin, nous verrons les notions de virtualisation et containérisation ainsi que la différence entre les deux.
 
 
 \newpage
@@ -25,8 +25,7 @@ Le Cloud donne la capacité aux utilisateurs finaux d'utiliser des pièces de re
 \item \textbf{Service à la demande} : La capacité pour un utilisateur final de s'inscrire et recevoir des services sans les longs délais qui ont caractérisé l'informatique traditionnelle.
 
 \item \textbf{Accessible au réseau large} : La capacité d'accéder au service via les plates-formes standard (bureau, ordinateur portable, mobiles, etc.).
-s
-\item \textbf{La mise en commun des ressources} : Les fournisseurs servent plusieurs clients ou «locataires» avec des services provisoires et scalables. Ces services peuvent être ajustés pour répondre aux besoins de chaque client, sans aucune modification apparente pour l'utilisateur.
+\item \textbf{La mise en commun des ressources} : Les fournisseurs servent plusieurs clients ou «locataires» avec des services provisoires et évolutifs. Ces services peuvent être ajustés pour répondre aux besoins de chaque client, sans aucune modification apparente pour l'utilisateur.
 
 \item \textbf{Rapide élasticité} : La capacité des ressources doit évoluer pour faire face aux pics de la demande.
 
@@ -39,7 +38,7 @@ Sans ces caractéristiques, l'informatique en nuage n'apporte rien par rapport �
 
 \subsection{Les types de Cloud}
 
-Le Cloud Computing est un concept qui décrit une large collection de services. Dans ce rapport, nous allons exposé les différents types de services de Cloud communément appelé \emph{Software as a Service} (SaaS),  \emph{Platform as a Service} (PaaS) et \emph{Infrastructure as a Service} (IaaS) et décrire plus en détails ceux qui touchent à notre sujet.
+Le Cloud Computing est un concept qui décrit une large collection de services. Dans ce rapport, nous allons exposer les différents types de services de Cloud communément appelé \emph{Software as a Service} (\acrshort{saas}),  \emph{Platform as a Service} (PaaS) et \emph{Infrastructure as a Service} (\acrshort{iaas}) et décrire plus en détails ceux qui touchent à notre sujet.
 
 \begin{figure}[H]
 \centering
@@ -50,29 +49,29 @@ Le Cloud Computing est un concept qui décrit une large collection de services. 
 \subsubsection*{Software as a Service}
 \index{SaaS}
 
-La meilleure façon de comprendre ces services est de commencer avec le SaaS, la couche la plus abstraite et celle qu'on utilise peut-être déjà aujourd'hui, même à un niveau personnel. Un exemple simple de SaaS est un service de messagerie en ligne, comme Gmail. Lorsque l'on utilise Gmail, vous n'hébergez votre propre serveur de messagerie. C'est Google qui l'héberge, et l'accès est simplement via un navigateur comme un client.
+La meilleure façon de comprendre ces services est de commencer avec le \acrshort{saas}, la couche la plus abstraite et celle qu'on utilise peut-être déjà aujourd'hui, même à un niveau personnel. Un exemple simple de \acrshort{saas} est un service de messagerie en ligne, comme Gmail. Lorsqu'un client utilise Gmail, il n'héberge pas son propre serveur de messagerie. C'est Google qui l'héberge, et l'accès est simplement via un navigateur comme un client.
 
-SaaS est orienté vers les utilisateurs finaux de l'entreprise et ne nécessite pas beaucoup de compétences pour l'utiliser. Le fournisseur décide sur le nombre de ressources à consacrer pour l'utilisation de l'application, les serveurs, les machines virtuelles, et les équipements réseaux. Enfin, il suffit de pointer le navigateur à l'application.
+\acrshort{saas} est orienté vers les utilisateurs finaux de l'entreprise et ne nécessite pas beaucoup de compétences pour l'utiliser. Le fournisseur décide sur le nombre de ressources à consacrer pour l'utilisation de l'application, les serveurs, les machines virtuelles, et les équipements réseaux. Enfin, il suffit de pointer le navigateur à l'application.
 
 \subsubsection*{Infrastructure as a Service}
 \index{IaaS}
 
-IaaS est à l'autre bout du pyramide du Cloud. Lorsque l'on souhaite garder le contrôle de l'environnement logiciel, mais on ne veut pas maintenir aucun équipement ni acheter des serveurs et les mettre dans une pièce à température contrôlée. On consulte une offre Iaas d'un fournisseur IaaS pour commander et acheter tout simplement une machine virtuelle.
+\acrshort{iaas} est à l'autre bout du pyramide du Cloud. Lorsque l'on souhaite garder le contrôle de l'environnement logiciel, mais on ne veut pas maintenir aucun équipement ni acheter des serveurs et les mettre dans une pièce à température contrôlée. On consulte une offre \acrshort{iaas} d'un fournisseur \acrshort{iaas} pour commander et acheter tout simplement une machine virtuelle.
 
-On peut mettre n'importe quel logiciel que l'on souhaite au-dessus d'IaaS. En arrière plan, le fournisseur fournit les ressources nécessaires pour satisfaire le besoin. Ceci est rendu plus facile avec les technologies de virtualisation, qui séparent les ressources physiques de la machine virtuelle qui exécute le logiciel. IaaS est disponible sur Amazon EC2, GCE de Google et bien d'autres.
+On peut mettre n'importe quel logiciel que l'on souhaite au-dessus d'\acrshort{iaas}. En arrière plan, le fournisseur fournit les ressources nécessaires pour satisfaire le besoin. Ceci est rendu plus facile avec les technologies de virtualisation, qui séparent les ressources physiques de la machine virtuelle qui exécute le logiciel. \acrshort{iaas} est disponible sur Amazon EC2, GCE de Google et bien d'autres.
 
-L'infrastructure en tant que service ou l'IaaS ne touche pas directement à notre sujet. Du coup, il ne sera mentionné que rarement par la suite.
+L'infrastructure en tant que service ou l'\acrshort{iaas} ne touche pas directement à notre sujet. Du coup, il ne sera mentionné que rarement par la suite.
 
 \subsubsection*{Platform as a Service}
 \index{PaaS}
 
-PaaS se situe entre IaaS et SaaS. Il n'est pas un produit fini comme SaaS, encore moins une simple ressource virtuelle vierge comme IaaS. PaaS est destiné pour les développeurs, il leur donne des outils et des interfaces de haut niveau pour mieux développer. Par exemple, Windows Azure de Microsoft vous donne des outils pour développer des applications mobiles, des applications sociales, sites Web, jeux et plus encore. Vous construisez ces choses, mais vous utilisez les API et les outils pour les accrocher et exécuter dans l'environnement Azure.
+\acrshort{paas} se situe entre \acrshort{iaas} et \acrshort{saas}. Il n'est pas un produit fini comme \acrshort{saas}, encore moins une simple ressource virtuelle vierge comme \acrshort{iaas}. \acrshort{paas} est destiné pour les développeurs, il leur donne des outils et des interfaces de haut niveau pour mieux développer. Par exemple, Windows Azure de Microsoft vous donne des outils pour développer des applications mobiles, des applications sociales, sites Web, jeux et plus encore. Vous construisez ces choses, mais vous utilisez les API et les outils pour les accrocher et exécuter dans l'environnement Azure.
 
 
 \begin{figure}[H]
 \centering
 \includegraphics [scale=0.5]{chapitre2/assets/cloud-vs.png}
-\caption{L'éxternalisation de l'informatique en Cloud}
+\caption{L'éxternalisation de l'informatique en Cloud \cite{cloud-wiki}}
 \end{figure}
 
 
@@ -95,7 +94,7 @@ Il existe plusieurs solutions de virtualisation, l'on peut citer à titre inform
 \subsection{Containérisation}
 \index{Containérisation}
 
-Noyau Linux permet de lancer plusieurs instances isolées de l'espace utilisateur. Un conteneur est un environnement isolé où un ou plusieurs processus peuvent être exécutés. Les conteneurs se concentrent sur l'isolation des processus au lieu d'émuler une machine physique complète.
+Le noyau Linux permet de lancer plusieurs instances isolées de l'espace utilisateur. Un conteneur est un environnement isolé où un ou plusieurs processus peuvent être exécutés. Les conteneurs se concentrent sur l'isolation des processus au lieu d'émuler une machine physique complète.
 
 Historiquement, \emph{chroot} dans le noyau Linux a fourni un certain niveau d'isolation en fournissant un environnement pour créer et héberger une copie virtualisée d'un logiciel, et ceci depuis le début des années 80. Mais le terme «conteneurs» n'est apparu que vers la fin de l'année 2006. Il a été renommé «\emph{Control Groups}» (cgroups) pour éviter toute confusion causée par de multiples significations du terme «conteneurs» dans le noyau Linux. «\emph{Control Groups}» est une fonctionnalité du noyau Linux qui est disponible depuis la version v2.6.24, elle limite et isole l'utilisation des ressources d'un ensemble de processus. Par la suite, l'isolation de l'espace de noms a été ajoutée.
 
@@ -148,16 +147,16 @@ Le choix de la solution a été proposé fortement par la société. On a opté 
 \begin{figure}[H]
 \centering
 \includegraphics [scale=0.5]{chapitre2/assets/vm-container.png}
-\caption{Virtualisation VS Containérisation}
+\caption{Virtualisation VS Containérisation \cite{dockervsvm}}
 \end{figure}
 
 
-Dans la containérisation, ou la virtualisation au niveau du système d'exploitation, l'hôte et les invités partagent le même noyau. Cette approche réduit le gaspillage de ressources puisque chaque conteneur contient uniquement l'application, les bibliothèques et les binaires nécessaires. Le rôle de l'hyperviseur est assurée par un moteur léger de la containérisation comme Docker, qui est installé au-dessus du système d'exploitation hôte.
+Dans la containérisation, ou la virtualisation au niveau du système d'exploitation, l'hôte et les invités partagent le même noyau. Cette approche réduit le gaspillage de ressources puisque chaque conteneur contient uniquement l'application, les bibliothèques et les binaires nécessaires. Le rôle de l'hyperviseur est assuré par un moteur léger de la containérisation comme Docker, qui est installé au-dessus du système d'exploitation hôte.
 
 Le principal avantage des conteneurs c'est qu'ils sont libres de l'overhead du système d'exploitation contrairement aux machines virtuelles, ce qui leur rend considérablement plus légers, plus faciles à télécharger ainsi que plus rapides à lancer. Cet avantage permet également au serveur d'héberger potentiellement beaucoup plus de conteneurs que de machines virtuelles. Scalabilité, portabilité et facilité de déploiement sont quelques avantages.
 
 
-Lors de cette étude, nous allons se baser sur un travail réalisé par IBM\cite{ibm-benchmark-docker}, où nous allons mettre l'accent sur les performances de Docker et \emph{KVM}. Le \emph{Benchmark} concerne 15 machines virtuelles simultanément en marche sous \emph{OpenStack}.
+Lors de cette étude, nous allons se baser sur un travail réalisé par IBM \cite{ibm-benchmark-docker}, où nous allons mettre l'accent sur les performances de Docker et \emph{KVM}. Le \emph{Benchmark} concerne 15 machines virtuelles simultanément en marche sous \emph{OpenStack}.
 
 
 \def\arraystretch{1.4}%  1 is the default, change whatever you need
@@ -209,19 +208,19 @@ Lors de cette étude, nous allons se baser sur un travail réalisé par IBM\cite
 \begin{figure}[H]
 \centering
 \includegraphics [width=160mm]{chapitre2/assets/file-io-read.png}
-\caption{Lecture du disque dur}
+\caption{Lecture du disque dur \cite{ibm-benchmark-docker}}
 \label{fig:}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics [width=160mm]{chapitre2/assets/file-io-write.png}
-\caption{Ecriture dans le disque dur}
+\caption{Ecriture dans le disque dur \cite{ibm-benchmark-docker}}
 \label{fig:}
 \end{figure}
 
 
-En somme, il va s'en dire que Docker l'emporte largement par rapport à \emph{KVM}, tant qu'en termes de la gestion des ressources (CPU, RAM) qu'en termes du temps consommé pour le démarrage, le redémarrage et la suppression. Par ailleurs, Docker est le meilleur dans lecture/écriture dans le disque dur et s'approche à des performances natives. Ainsi, Il serait donc judicieux de virtualiser les bases de données dans des conteneurs que dans des machines virtuelles. 
+En somme, il va s'en dire que Docker l'emporte largement par rapport à \emph{KVM}, tant qu'en termes de la gestion des ressources (CPU, RAM) qu'en termes du temps consommé pour le démarrage, le redémarrage et la suppression. Par ailleurs, Docker est le meilleur dans la lecture/écriture dans le disque dur et s'approche à des performances natives. Ainsi, Il serait donc judicieux de virtualiser les bases de données dans des conteneurs que dans des machines virtuelles. 
 
 
 
@@ -238,15 +237,15 @@ En somme, il va s'en dire que Docker l'emporte largement par rapport à \emph{KV
 \centering
 \includegraphics[scale=0.15]{chapitre2/assets/docker}
 \end{wrapfigure}
-\noindent \textbf{Docker} est un logiciel open source qui automatise le déploiement d'applications dans des conteneurs logiciels. C'est un outil qui peut empaqueter une application et ses dépendances dans un conteneur virtuel, qui pourra être exécuté sur n'importe quel serveur Linux ou Windows (\emph{Boot2Docker}). En fait, il a pour objectif de \textbf{faciliter le déploiement d'applications}, d'avoir plusieurs versions d'une même application sur un son serveur (phase de développement, tests), mais aussi d'\textbf{automatiser le packaging d'applications}. Avec Docker, on s'oriente vers de l'intégration et du déploiement en continu grâce au système de container. De plus, Docker permet de garder son système de base propre, tout en installant de nouvelles fonctionnalités au sein de conteneurs, on part d'une base qui est le système d'exploitation et on ajoute différentes briques conteneurisées. Docker a été distribué en tant que projet open source à partir de mars 2013.
+\noindent \textbf{Docker} est un logiciel open source qui automatise le déploiement d'applications dans des conteneurs logiciels. C'est un outil qui peut empaqueter une application et ses dépendances dans un conteneur virtuel, qui pourra être exécuté sur n'importe quel serveur Linux ou Windows (\emph{Boot2Docker}). En fait, il a pour objectif de \textbf{faciliter le déploiement d'applications}, d'avoir plusieurs versions d'une même application sur les serveurs (phase de développement, tests), mais aussi d'\textbf{automatiser le packaging d'applications}. Avec Docker, on s'oriente vers de l'intégration et du déploiement en continu grâce au système de conteneur. De plus, Docker permet de garder son système de base propre, tout en installant de nouvelles fonctionnalités au sein de conteneurs, on part d'une base qui est le système d'exploitation et on ajoute différentes briques conteneurisées. Docker a été distribué en tant que projet open source à partir de mars 2013.
 
 \subsection{Utilisation de Docker}
-Docker propose de nombreux templates qui permettent de déployer des applications en conteneur, très rapidement. La communauté est très active, ce qui permet aux utilisateurs de disposer de nombreux conteneurs applicatifs pré-faits.
+Docker propose de nombreux templates qui permettent de déployer des applications très rapidement en conteneur. La communauté est très active, ce qui permet aux utilisateurs de disposer de nombreux conteneurs applicatifs pré-faits.
 Docker est basé sur \acrshort{lxc} qui est une référence sous Linux quant à l'utilisation des conteneurs. Par ailleurs, il intègre les éléments suivants :
 \begin{itemize}
 \item \textbf{Control Groups} : Fonctionnalité du noyau Linux pour limiter, compter et isoler les ressources (CPU, RAM, etc.) utilisées par un groupe de processus.
 \item \textbf{AppArmor et SElinux} : Gestion avancée des permissions aussi bien au niveau des applications qu'au niveau du système de fichiers.
-\item \textbf{Kernel namespace} : Fonctionnalité du noyau Linux qui permet l'isolation, afin de s'assurer qu'un container ne puisse pas en affecter un autre.
+\item \textbf{Kernel namespace} : Fonctionnalité du noyau Linux qui permet l'isolation, afin de s'assurer qu'un conteneur ne puisse pas en affecter un autre.
 \item \textbf{chroot} : Fonctionnalité qui permet de changer la racine d'un processus, afin de l'isoler sur un système par mesure de sécurité.
 \end{itemize}
 
@@ -255,7 +254,7 @@ Docker propose des services pour effectuer facilement différentes actions : cr�
 \begin{itemize}
 \item \textbf{DockerFile} : Fichier source qui contient les instructions, éléments à installer, c'est un fichier de configuration.
 \item \textbf{Image} : Compilation d'un fichier DockerFile pour former une image portable, prête à être déployée.
-\item \textbf{Conteneur} : Exécution d'une image, mise en container d'une image.
+\item \textbf{Conteneur} : Exécution d'une image, mise en conteneur d'une image.
 \end{itemize}
 
 
@@ -263,9 +262,9 @@ Le schéma suivant décrit le fonctionnement de l'outil Docker:
 \begin{figure}[H]
 \centering
 \includegraphics [scale=0.6]{chapitre2/assets/utilisation.png}
-\caption{Fonctionnement de Docker}
+\caption{Fonctionnement de Docker \cite{docker-presentation}}
 \label{fig:fonctionnement-docker}
 \end{figure}
 
-La figure \ref{fig:fonctionnement-docker} cache derrière elle toute la philosophie de Docker. Cette philosophie assume que toute application qui marche dans l'ordinateur du développeur doit marcher aussi dans les serveurs de productions. En effet, le développeur, quand il aura finit de développer son application, va faire un \emph{build} pour construire une image de son application. Enfin, il va faire un \emph{push} pour pousser l'image vers un registre des images centralisé. Dans un environnement de production, une copie de l'application peut-être lancée en faisant un simple \emph{pull} et \emph{run}.
+La figure \ref{fig:fonctionnement-docker} cache derrière elle toute la philosophie de Docker. Cette philosophie assume que toute application qui marche dans l'ordinateur du développeur doit marcher aussi dans les serveurs de production. En effet, le développeur, quand il aura fini de développer son application, va faire un \emph{build} pour construire une image de son application. Enfin, il va faire un \emph{push} pour pousser l'image vers un registre des images centralisé. Dans un environnement de production, une copie de l'application peut-être lancée en faisant un simple \emph{pull} et \emph{run}.
 \end{onehalfspace}

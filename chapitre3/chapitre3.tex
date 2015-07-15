@@ -1,7 +1,7 @@
 \chapter{Orchestration des applications distribuées}
 \begin{onehalfspace}
 
-\initial{D}ocker est un outil qui a révolutionné le monde informatique par l'introduction de la notion de conteneur, donc il est normal de chercher à l'utiliser en production. De nos jours, les développeurs utilisent de plus en plus Docker pour déployer des applications qui s'exécutent sur plusieurs conteneurs et plusieurs hôtes. Orchestrer ces applications distribuées nécessite une approche \textbf{multi-conteneur} et \textbf{multi-hôte} native avec une interface utilisateur et de l'outillage commun qui fonctionnent sur toutes les infrastructures. Plusieurs outils ont été présentés par de grandes entreprises et qui sont toujours en cours de développement. Dans ce chapitre, les projets promoteurs dans l'orchestration des applications distribuées seront exposés.
+\initial{D}ocker est un outil qui a révolutionné le monde informatique par l'introduction de la notion de conteneur, donc il est normal de chercher à l'utiliser en production. De nos jours, les développeurs utilisent de plus en plus Docker pour déployer des applications qui s'exécutent sur plusieurs conteneurs et plusieurs hôtes. Orchestrer ces applications distribuées nécessite une approche \textbf{multi-conteneur} et \textbf{multi-hôte} native avec une interface utilisateur et de l'outillage commun qui fonctionnent sur toutes les infrastructures. Plusieurs outils ont été présentés par de grandes entreprises et qui sont toujours en cours de développement. Dans ce chapitre, les projets prometteurs dans l'orchestration des applications distribuées seront exposés.
 
 \newpage
 
@@ -21,7 +21,7 @@ Nous avons présenté dans le chapitre 2 le Cloud Computing ainsi que ses servic
 \begin{itemize}
 	\item \index{PaaS} \textbf{Plate-forme}: Un développeur crée une application dans un ensemble particulier de langages de programmation à l'aide des \acrshort{api}s spécifiques et pousse ce code vers la plate-forme. La plate-forme l'exécute et lance une seule copie du service ou éventuellement plusieurs copies dépendamment du trafic. En effet, ce service monte en charge automatiquement. 
 	\item \index{IaaS} \textbf{\acrshort{iaas}}: A l'autre bout du pyramide se trouve l'\acrshort{iaas} composé seulement de machines virtuelles qui résident essentiellement dans l'internet. Quand un utilisateur consulte un fournisseur \acrshort{iaas} et demande  un ordinateur avec des spécifications données (quantité de mémoire et de disque, nombre de \acrshort{cpu}, une version spécifique Linux, etc.). En quelques minutes, L'utilisateur pourra  exécuter n'importe quel logiciel sur le serveur mais il est entièrement responsable de la gestion de la machine.
-	\item \textbf{Cluster}: C'est lorsqu'il y a un besoin de gérer un ensemble de machines comme \textbf{une seule entité}, un cluster de machines.
+	\item \textbf{Cluster}: C'est lorsqu'il y a un besoin de gérer un ensemble de machines comme \textbf{une seule entité}, un Cluster de machines.
 
 \end{itemize}
 
@@ -57,11 +57,11 @@ Nous avons présenté dans le chapitre 2 le Cloud Computing ainsi que ses servic
 En général, un cluster comporte plusieurs éléments qu'on définit ci-dessous \cite{cluster-scheduling}:
 
 \begin{itemize}
-	\item \textbf{Master} : C'est la machine qui est responsable du Cluster. Il veille sur son bon fonctionnement grâce au système de découverte des services et l'ordonnanceur
-	\item \textbf{Ordonnanceur} : Dans un ordinateur ordinaire, pour démarrer un processus, on a besoin d'un gestionnaire des processus pour les faire fonctionner et les garder en cours d'exécution. L'ordonnanceur le fera sur l'ensemble des machines (Cluster)
+	\item \textbf{Master} : C'est la machine qui est responsable du Cluster. Il veille sur son bon fonctionnement grâce au système de découverte des services et l'ordonnanceur.
+	\item \textbf{Ordonnanceur} : Dans un ordinateur ordinaire, pour démarrer un processus, on a besoin d'un gestionnaire des processus pour les faire fonctionner et les garder en cours d'exécution. L'ordonnanceur le fera sur l'ensemble des machines (Cluster).
 	\item \textbf{Nœud} : Une machine qui appartient au Cluster, elle peut être réelle ou virtuelle.
-	\item \textbf{Gestionnaire des conteneurs} : C'est la partie de logiciel qui est distribuée dans chaque machine du cluster. Il supervise les conteneurs ordonnancés, les redémarrent en cas de nécessité.
-	\item \textbf{Conteneurs ordonnancés} : Un service fonctionne à l'intérieur d'un conteneur ordonnancé. En effet, ce conteneur se trouve dans une telle machine  parce que le développeur a déclaré à l'ordonnanceur du Cluster (maître) les besoins du service en terme de ressources (nombre de CPU, RAM, etc...). L'ordonnanceur fournit pour le service un endroit où il peut vivre en paix.
+	\item \textbf{Gestionnaire des conteneurs} : C'est la partie de logiciel qui est distribuée dans chaque machine du cluster. Il supervise les conteneurs ordonnancés, les redémarre en cas de nécessité.
+	\item \textbf{Conteneur ordonnancé} : Un service fonctionne à l'intérieur d'un conteneur ordonnancé. En effet, ce conteneur se trouve dans une telle machine  parce que le développeur a déclaré à l'ordonnanceur du Cluster (maître) les besoins du service en termes de ressources (nombre de CPU, RAM, etc...). L'ordonnanceur fournit pour le service un endroit où il peut vivre en paix.
 \end{itemize}
 
 
@@ -72,10 +72,10 @@ En général, un cluster comporte plusieurs éléments qu'on définit ci-dessous
 \label{fig:}
 \end{figure}
 
-Nous avons vu la notion de cluster et les processus d'automatisation et coordination. De ce fait, la gestion des services informatiques distribués se trouve incontournable au fonctionnement du cluster, elle est appelé \textbf{l'orchestration}. Dans la section suivante, nous allons détailler les différents solutions d'orchestration qui existent dans le monde de la containérisation.
+Nous avons vu la notion de Cluster et les processus d'automatisation et de coordination. De ce fait, la gestion des services informatiques distribués se trouve incontournable au fonctionnement du cluster, elle est appelé \textbf{l'orchestration}. Dans la section suivante, nous allons détailler les différents solutions d'orchestration qui existent dans le monde de la containérisation.
 
 \section{Orchestration Docker}
-Les capacités d'orchestration de Docker sont construites sur les fondations existante de Docker. Ces capacités sont assurées par trois nouveaux services de la plate-forme qui sont conçus pour couvrir tous les aspects du cycle de vie dynamique des applications distribuées. Selon l'entreprise Docker, toutes ces caractéristiques sont conçues avec la philosophie de conception "\emph{Batteries Included, but Removable}" qui indique qu'ils peuvent fonctionner avec des services tierces. Ceci offre le choix aux clients de choisir entre les différents outils d'orchestration de Docker et les alternatives communautaires.
+Les capacités d'orchestration de Docker sont construites sur les fondations existantes de Docker. Ces capacités sont assurées par trois nouveaux services de la plate-forme qui sont conçus pour couvrir tous les aspects du cycle de vie dynamique des applications distribuées. Selon l'entreprise Docker, toutes ces caractéristiques sont conçues avec la philosophie de conception "\emph{Batteries Included, but Removable}" qui indique qu'ils peuvent fonctionner avec des services tierces. Ceci offre le choix aux clients de choisir entre les différents outils d'orchestration de Docker et les alternatives communautaires.
 
 
 %\begin{figure}[H]
@@ -84,37 +84,37 @@ Les capacités d'orchestration de Docker sont construites sur les fondations exi
 %\caption{Orchestration Docker}
 %\end{figure}
 \subsection*{Docker Machine}
- Ce service facilite le provisionnement d'un hôte avec Docker installé dans une variété d'environnements. Les développeurs peuvent rapidement lancer les machines hôtes exécutant Docker; sur un ordinateur portable, un centre de données de VMs, ou une instance Cloud. Cela évite la tâche de se connecter à un hôte pour installer et configurer le démon Docker et le client. Bien que toujours en version alpha, Docker machine prend en charge le rovisionnement de Docker localement avec VirtualBox et à distance sur les instances Digital Ocean. Le support pour AWS, Azure, VMware, OpenStack et d'autres infrastructures devrait arriver rapidement.
+ Ce service facilite l'approvisionnement d'un hôte avec Docker installé dans une variété d'environnements. Les développeurs peuvent rapidement lancer les machines hôtes exécutant Docker; sur un ordinateur portable, un centre de données de VMs, ou une instance Cloud. Cela évite la tâche de se connecter à un hôte pour installer et configurer le démon Docker et le client. Bien que toujours en version alpha, Docker machine prend en charge l'approvisionnement de Docker localement avec VirtualBox et à distance sur les instances Digital Ocean. Le support pour AWS, Azure, VMware, OpenStack et d'autres infrastructures devrait arriver rapidement.
  \begin{figure}[H]
 \centering
 \includegraphics [scale=0.6]{chapitre3/assets/dockermachine.png}
-\caption{Docker Machine}
+\caption{Docker Machine \cite{docker-machine}}
 \end{figure}
 \subsection*{Docker Swarm}
- Docker Swarm est un service de Clustering natif de Docker qui fonctionne avec le moteur Docker standard, et qui crée un ensemble de ressources sur lesquels les applications distribuées s'exécutent. Cela permet aux développeurs et équipes opérationnelles de considérer un cluster de machines Docker comme une collection de ressources unique. Les administrateurs peuvent planifier des conteneurs qui seront lancés dans l'un des hôtes qui répond aux exigences. Docker Swarm fournit des contraintes standard et personnalisées pour répondre aux besoins et à la planification basée sur des règles, cela permet de déclarer des exigences et contraintes spécifiques à chaque conteneur. Docker Swarm est conçu pour évoluer avec le cycle de vie de l'application. Il peut prendre en charge un hôte dans l'environnement de développement et d'autres s'exécutant dans l'environnement de production.
+ Docker Swarm est un service de Clustering natif de Docker qui fonctionne avec le moteur Docker standard, et qui crée un ensemble de ressources sur lesquels les applications distribuées s'exécutent. Cela permet aux développeurs et aux équipes opérationnelles de considérer un cluster de machines Docker comme une collection de ressources unique. Les administrateurs peuvent planifier des conteneurs qui seront lancés dans l'un des hôtes qui répond aux exigences. Docker Swarm fournit des contraintes standard et personnalisées pour répondre aux besoins et à la planification basée sur des règles, cela permet de déclarer des exigences et contraintes spécifiques à chaque conteneur. Docker Swarm est conçu pour évoluer avec le cycle de vie de l'application. Il peut prendre en charge un hôte dans l'environnement de développement et d'autres s'exécutant dans l'environnement de production.
 \begin{figure}[H]
 \centering
 \includegraphics [scale=0.6]{chapitre3/assets/dockerswarm.png}
-\caption{Architecture de Docker Swarm}
+\caption{Architecture de Docker Swarm \cite{docker}}
 \end{figure}
 \subsection*{Docker Compose}
-  Docker Composer permet aux développeurs d'assembler un ensemble de conteneurs. Du coup, ils agissent de façon autonomes, interopérables et indépendants des infrastructures. Avec cette approche déclarative, il est facile de définir des piles de conteneurs qui sont portables. Une pile d'applications distribuées est déclarée à travers un simple fichier de configuration \acrshort{yaml} qui contient la définition de chaque conteneur.
+  Docker Composer permet aux développeurs d'assembler un ensemble de conteneurs. Du coup, ils agissent de façon autonomes, interopérables et indépendantes des infrastructures. Avec cette approche déclarative, il est facile de définir des piles de conteneurs qui sont portables. Une pile d'applications distribuées est déclarée dans un simple fichier de configuration \acrshort{yaml} qui contient la définition de chaque conteneur.
 \begin{figure}[H]
 \centering
 \includegraphics [scale=0.5]{chapitre3/assets/dockercompose.jpg}
-\caption{Docker Compose}
+\caption{Docker Compose \cite{docker-compose}}
 \end{figure}
 \section{Orchestration Google}
 
 \index{Kubernetes}
 
-L'entreprise Google est aussi intéressée par l'orchestration des conteneurs docker, elle a d'ailleurs lancée un projet nommée \textbf{Kubernetes}.Ce projet est récent mais promoteur et pourrait révolutionner le domaine du Cloud s'il est suffisamment mature pour la production. Kubernetes a pour objectif de fournir un outil de supervision unique capable de déplacer des conteneurs Docker d'un Cloud à un autre. Autrement dit, de proposer une forme d'interopérabilité dans le nuage, via un framework de gestion de conteneurs solide, ouvert et adapté à toute application sur tous types d'environnements, qu'il s'agisse de Cloud privé, public ou hybride. Ce projet a le soutien et l'attention des géants du Cloud notamment Microsoft, IBM, RedHat qui tiennent à s'assurer que cet outil sera compatible avec leurs Clouds et tentent de l'associer au projet \textbf{Openstack} qui est l'orchestrateur du cloud hybride open source.
+L'entreprise Google est aussi intéressée par l'orchestration des conteneurs Docker, elle a d'ailleurs lancé un projet nommé \textbf{Kubernetes}. Ce projet est récent mais prometteur et pourrait révolutionner le domaine du Cloud s'il est suffisamment mature pour la production. Kubernetes a pour objectif de fournir un outil de supervision unique capable de déplacer des conteneurs Docker d'un Cloud à un autre. Autrement dit, de proposer une forme d'interopérabilité dans le nuage, via un framework de gestion de conteneurs solide, ouvert et adapté à toute application sur tous types d'environnements, qu'il s'agisse de Cloud privé, public ou hybride. Ce projet a le soutien et l'attention des géants du Cloud notamment Microsoft, IBM, RedHat qui tiennent à s'assurer que cet outil sera compatible avec leurs Clouds et tentent de l'associer au projet \textbf{Openstack} qui est l'orchestrateur du Cloud hybride open source.
 \subsection{Architecture de Kubernetes}
 Kubernetes est un outil open-source pour l'orchestration des conteneurs Docker. Il gère l'ordonnancement des nœuds dans un Cluster et gère les ressources pour mieux correspondre à l'intention de l'utilisateur. En utilisant les concepts de "\emph{labels}" et "\emph{pods}", il permet un regroupement optimal de conteneurs pour une meilleure gestion et une découverte facile.
 \begin{figure}[H]
 \centering
 \includegraphics [scale=0.4]{chapitre3/assets/archkuber.png}
-\caption{Architecture de Kubernetes}
+\caption{Architecture de Kubernetes \cite{kubernetes}}
 \end{figure}
 
 \begin{itemize}
@@ -122,24 +122,19 @@ Kubernetes est un outil open-source pour l'orchestration des conteneurs Docker. 
 
 \item \textbf{Nodes} : un nœud est un serveur physique (ou une machine virtuelle) à l'intérieur du cluster. Il communique avec les maîtres et contient des conteneurs, on peut ajouter ou supprimer des nœuds à volonté.
 
-\item \textbf{Pods} : un "\emph{Pod}" est le bloque basique de construction dans \emph{Kubernetes}.Dans un pod, il est possible de lancer plusieurs conteneurs. L'allocation des CPU, mémoire et des autres ressources est gérée dans un pod. Chaque pod possède sa propre adresse ip et son nom d'hôte pour éviter d'éventuels conflits de ports.
+\item \textbf{Pods} : un "\emph{Pod}" est le bloque basique de construction dans \emph{Kubernetes}.Dans un pod, il est possible de lancer plusieurs conteneurs. L'allocation des CPU, mémoire et des autres ressources est gérée dans un pod. Chaque pod possède sa propre adresse \acrshort{ip} et son nom d'hôte pour éviter d'éventuels conflits de ports.
 
 \item \textbf{Replication Controller} : Il est vrai que le Pod est un composant puissant au sein de \emph{Kubernetes} mais il ne permet pas la gestion des échecs. Les échecs sont des événements inévitables bien qu'il faudrait que le service soit toujours disponible. C'est de ce fait qu'intervient \emph{Replication Controller}. Ce dernier s'assure qu'un nombre donné de pods sont exécutés au sein du Cluster, il peut enlever et ajouter des pod du Cluster donc il faudra définir un pod template pour assurer sa fonction.
 
 \item \textbf{Services} : les Pods sont ajoutés ou supprimés donc il faudrait permettre un \textbf{load-balancing} du trafic dans ses pods. "\emph{Service}" agit comme un \emph{load-balancer} dynamique pour un ensemble de pods, il est très efficace et utilise différentes techniques ( IP Tables, ...) pour éviter la surcharge.
 
 \end{itemize}
-%\begin{figure}[H]
-%\centering
-%\includegraphics [scale=0.5]{chapitre3/assets/kuber.png}
-%\caption{Résumé de Kubernetes}
-%\end{figure}
 
 \section{Orchestration Apache}
 
 \index{Mesos}
 
-L'entreprise Apache a toujours été intéressée par le domaine du Cloud, le lancement de son projet \textbf{Mesos} visait principalement à améliorer l'orchestration des \emph{"datacenters"} ceci bien avant l'émergence des conteneurs et docker. Le projet Mesos est très promoteur pour le futur avec les conteneurs bien qu'il soit déjà mature avec les machines virtuelles. Plusieurs grandes entreprise utilisent Mesos notamment \emph{Twitter}, \emph{Paypal} et \emph{Airbnb}.
+L'entreprise Apache a toujours été intéressée par le domaine du Cloud, le lancement de son projet \textbf{Mesos} visait principalement à améliorer l'orchestration des \emph{"datacenters"} ceci bien avant l'émergence des conteneurs et Docker. Le projet Mesos est très prometteur pour le futur avec les conteneurs bien qu'il soit déjà mature avec les machines virtuelles. Plusieurs grandes entreprise utilisent Mesos notamment \emph{Twitter}, \emph{Paypal} et \emph{Airbnb}.
 Mesos agit comme un "Cluster Manager" et offre de nombreuses fonctionnalités telles que :
 \begin{itemize}
 \item Une scalabilité à plus de 10000 nœuds.
@@ -153,14 +148,14 @@ Mesos agit comme un "Cluster Manager" et offre de nombreuses fonctionnalités te
 \begin{figure}[H]
 \centering
 \includegraphics [scale=0.65]{chapitre3/assets/mesosarch.png}
-\caption{Architecture de Mesos}
+\caption{Architecture de Mesos \cite{mesos1}}
 \end{figure}
 \begin{itemize}
 \item \textbf{Master daemon} : il tourne dans noeud "master" et gère les esclaves.
 \item \textbf{Slave daemon} : il tourne aussi dans un noeud "master" et exécute les tâches des frameworks.
 \item \textbf{Framework} : connu aussi par l'application Mesos, il est composé d'un ordonnaceur qui gère les offres d'allocation de ressources, et d'un ou plusieurs exécuteurs qui lancent les tâches sur les esclaves.
 \item \textbf{Offer} : c'est une liste des ressources disponibles de la mémoire et du CPU propre à un nœud esclave. Tous les nœuds esclaves envoient des offres pour le maître  et ce dernier les transmet aux frameworks disponibles.
-\item  \textbf{Task} : c'est un tâche qui est ordonnancée par un framework et qui est exécutée dans un nœud esclave. Cette tâche peut être de n'importe quel type (commande, script bash ,requête SQL, Hadoop Job, ...)
+\item  \textbf{Task} : c'est une tâche qui est ordonnancée par un framework et qui est exécutée dans un nœud esclave. Cette tâche peut être de n'importe quel type (commande, script bash ,requête SQL, Hadoop Job, ...)
 \item \textbf{Apache ZooKeeper }: C'est un logiciel qui coordonne les nœuds maîtres.
 \end{itemize}
 \subsection{Frameworks Mesos}
@@ -168,18 +163,18 @@ Le framework ou l'application Mesos tient une importante place au sein de l'arch
 \begin{figure}[H]
 \centering
 \includegraphics [scale=0.65]{chapitre3/assets/framework.png}
-\caption{Composants de l'architecture Mesos}
+\caption{Composants de l'architecture Mesos \cite{mesos2}}
 \end{figure}
 \subsubsection*{Marathon}
 \emph{Marathon} est un framework Mesos développé pour exécuter les applications "\emph{long-running}". Il sert de remplacement pour le système \emph{init}. Il possède de nombreuses fonctionnalités qui simplifient les applications en cours d'exécution dans un environnement en Cluster telles que la haute disponibilité, les contraintes de nœuds, les contrôles de santé de l'application, une API pour scriptabilité et la découverte de service ainsi qu'un outil facile à utiliser l'interface utilisateur Web UI. Il ajoute ses capacités de mise à l'échelle et d'auto-guérison à l'ensemble des fonctionnalités de Mesos. 
 \subsubsection*{Chronos}
-\emph{Chronos} est une application Mesos qui a été initialement développé par Airbnb comme remplacement pour le système \emph{cron}.Il est un ordonnanceur pleinement fonctionnel , distribué et tolérant aux pannes pour \emph{Mesos}, ce qui facilite l'orchestration des "\emph{jobs}" qui sont des collections de tâches . Il comprend une API qui permet d'exécuter les scripts de la planification de tâches et une interface web pour la facilité d'utilisation.
-\emph{Chronos} est complémentaire à \emph{Marathon} car il fournit une autre façon d'exécuter des applications selon un calendrier ou d'autres conditions telles que la réalisationn d'un autre emploi. Il est également capable de la planification de tâches sur plusieurs nœuds esclaves \emph{Mesos}, et fournit des statistiques sur les échecs et les réussites d'emploi.
-\section{Coreos}
+\emph{Chronos} est une application Mesos qui a été initialement développée par Airbnb comme remplacement pour le système \emph{cron}. Il est un ordonnanceur pleinement fonctionnel, distribué et tolérant aux pannes pour \emph{Mesos}, ce qui facilite l'orchestration des "\emph{jobs}" qui sont des collections de tâches. Il comprend une \acrshort{api} qui permet d'exécuter les scripts de la planification de tâches et une interface web pour la facilité d'utilisation.
+\emph{Chronos} est complémentaire à \emph{Marathon} car il fournit une autre façon d'exécuter des applications selon un calendrier ou d'autres conditions telles que la réalisation d'un autre emploi. Il est également capable de la planification des tâches sur plusieurs nœuds esclaves \emph{Mesos}, et fournit des statistiques sur les échecs et les réussites d'emploi.
+\section{coreOS}
 \index{CoreOS}
-\textbf{Coreos} est un système d'exploitation open-source basé sur le noyau \emph{Linux} et construit pour fournir des infrastructures aux déploiements en Cluster. En effet, il est un système minimaliste, sur lequel est greffé des conteneurs applicatifs indépendants et sécurisés. Coreos est conçu pour être léger et performant afin de gérer les datacenters. Coreos consomme 40\% moins de mémoire au démarrage en moyenne par rapport à un serveur \emph{Linux}. Coreos est disponible sur plusieurs plates-formes comme Amazon Compute Cloud, Google Compute Engine et plusieurs autres \cite{coreos-cluster}.
+\textbf{coreOS} est un système d'exploitation open-source basé sur le noyau \emph{Linux} et construit pour fournir des infrastructures aux déploiements en Cluster. En effet, il est un système minimaliste, sur lequel est greffé des conteneurs applicatifs indépendants et sécurisés. coreOS est conçu pour être léger et performant afin de gérer les datacenters. coreOS consomme 40\% moins de mémoire au démarrage en moyenne par rapport à un serveur \emph{Linux}. coreOS est disponible sur plusieurs plates-formes comme Amazon Compute Cloud, Google Compute Engine et plusieurs autres \cite{coreos-cluster}.
 
-\subsection{Composants de Coreos}
+\subsection{Composants de coreOS}
 \subsubsection*{Le service Systemd}
 \index{Systemd}
 \emph{systemd} est un service de gestion de système et ses processus. Il a pour but d'offrir un meilleur cadre pour la gestion des dépendances entre services, de permettre le chargement en parallèle des services au démarrage, et de réduire les appels aux scripts shell. Il est contrôlé dans le système d'exploitation CoreOS par le service \emph{Fleet}.
@@ -189,7 +184,7 @@ Le service \emph{etcd} est une base de données distribuée de clé-valeur qui f
 \begin{figure}[H]
 \centering
 \includegraphics [scale=0.4]{chapitre3/assets/etcd-cluster.png}
-\caption{Service etcd.}
+\caption{Service etcd \cite{coreos}}
 \end{figure}
 \subsubsection*{Le service Fleet}
 \index{Fleet}
@@ -204,7 +199,7 @@ Le service \emph{etcd} est une base de données distribuée de clé-valeur qui f
 \begin{figure}[H]
 \centering
 \includegraphics [scale=0.5]{chapitre3/assets/fleet.png}
-\caption{Service management Fleet.}
+\caption{Service management Fleet \cite{coreos}.}
 \end{figure}
 \end{onehalfspace}
 
@@ -250,7 +245,7 @@ Mesos, Kubernetes et CoreOS essaient tous de résoudre des problèmes très simi
 \begin{itemize}
 	\item \textbf{CoreOS + Kubernetes}: CoreOS est parfait pour produire rapidement un Cluster. Il va ordonnancer les composants de base de Kubernetes dans le Cluster. L'ordonnancement des conteneurs va être délégué à Kubernetes.
 	\item \textbf{Mesos + Kubernetes}: Mesos n'inclut pas nativement un ordonnanceur. L'extensibilité de Mesos fait qu'il est possible de laisser Kubernetes agir comme l'ordonnanceur de Mesos.
-	\item \textbf{CoreOS + Mesos + Kubernetes}: L'idée est de jouir de tous les points forts des solutions. En contrepartie, on perd en simplicité, il est préférable de l'adopter qu'en cas de nécessité.
+	\item \textbf{CoreOS + Mesos + Kubernetes}: L'idée est de jouir de tous les points forts des solutions. En contrepartie, on perd en simplicité, il est préférable de ne l'adopter qu'en cas de nécessité.
 \end{itemize}
 
 Faute de maturité, nous allons adopter CoreOS pour sa stabilité, sa simplicité et sa documentation disponible en dépit qu'il est bas niveau.

@@ -1,7 +1,7 @@
 \chapter{Réalisation}
 \begin{onehalfspace}
 
-\initial{C}e chapitre est consacré à la description de la phase de la réalisation. La démarche globale de deux solutions sera décrite, puis les avantages de l'une par rapport à l'autre seront illustrés. Enfin, La sécurisation et l'installation d'un système de supervision scalable clôturera le chapitre.
+\initial{C}e chapitre est consacré à la description de la phase de la réalisation. La démarche globale de deux solutions sera décrite, puis les avantages de l'une par rapport à l'autre seront illustrés. Enfin, La sécurisation et l'installation d'un système de supervision évolutif clôturera le chapitre.
 
 \newpage
 
@@ -9,12 +9,12 @@
 
 \subsection{Installation du Cluster}
 
-Nous allons mettre en place l'architecture décrite dans la figure \ref{fig:architecture}. Le Cloud public \acrshort{aws} sera utilisé pour la production d'un Cluster de trois serveurs \cite{coreos-aws}. Il est important de noter que le Cluster peut-être installé en tant qu'une entité privée ou public:
+Nous allons mettre en place l'architecture décrite dans la figure \ref{fig:architecture}. Le Cloud public \acrshort{aws} sera utilisé pour la production d'un Cluster de trois serveurs \cite{coreos-aws}. Il est important de noter que le Cluster peut-être installé en tant qu'une entité privée ou publique:
 
 
 \begin{itemize}
 	\item \textbf{Réseau privé} : Les serveurs du Cluster communiquent entre eux avec des adresses \acrshort{ip} privées. Cette solution est contraignante. En effet, les serveurs doivent être installés dans la même zone. De plus les fournisseurs chargent des coûts supplémentaires pour l'installation d'une interface réseau privée. En contrepartie, on gagne en termes de sécurité.
-	\item \textbf{Réseau public} : Les serveurs du Cluster peuvent se communiquer mutuellement via une interface réseau public et donc une adresse \acrshort{ip} public. De ce fait, beaucoup d'avantages se dégagent. D'une part, les serveurs peuvent être distribués dans le monde entier et ainsi garantir une disponibilité maximale. D'autre part, une migration à chaud de toute la plate-forme peut être faite. Cette migration est silencieuse et transparente pour tous les clients.
+	\item \textbf{Réseau public} : Les serveurs du Cluster peuvent se communiquer mutuellement via une interface réseau publique et donc une adresse \acrshort{ip} publique. De ce fait, beaucoup d'avantages se dégagent. D'une part, les serveurs peuvent être distribués dans le monde entier et ainsi garantir une disponibilité maximale. D'autre part, une migration à chaud de toute la plate-forme peut être faite. Cette migration est silencieuse et transparente pour tous les clients.
 \end{itemize}
 
 \subsection{Installation des proxy}
@@ -22,7 +22,7 @@ Nous allons mettre en place l'architecture décrite dans la figure \ref{fig:arch
 
 \textbf{Gogeta} est un proxy dynamique dont la configuration est basée sur la base de donnée Etcd. En effet, Gogeta écoute en permanence Etcd pour assurer une reconfiguration dynamique en temps réel des routes sans redémarrage. L'installation de Gogeta sur tous les serveurs est très simple. En effet, il est installé dans un conteneur et ordonnancé par Fleet \cite{gogeta}.
 
-Quand l'ordonnanceur Fleet crée un service en mode haute disponibilité, Il stocke les donnée (\acrshort{ip} et port) dans Etcd sous forme de clé-valeur. Les proxy Gogeta, étant en écoute en permanence d'Etcd , se reconfigure pour prendre en considération le nouveau service. Ainsi, si une requête arrive sur l'un des proxy Gogeta, il la transmet vers une des instances avec la stratégie \emph{Round-robin} après avoir fait des bilans de santé.
+Quand l'ordonnanceur Fleet crée un service en mode haute disponibilité, Il stocke les données (\acrshort{ip} et port) dans Etcd sous forme de clé-valeur. Les proxy Gogeta, étant en écoute permanente d'Etcd , se reconfigure pour prendre en considération le nouveau service. Ainsi, si une requête arrive sur l'un des proxy Gogeta, il la transmet vers une des instances avec la stratégie \emph{Round-robin} après avoir fait des bilans de santé.
 
 \begin{lstlisting}[language=bash,caption=Contenu de la base de donnée Etcd]
 	/domains/odoo.sayoo.org/type 	= service
@@ -33,7 +33,7 @@ Quand l'ordonnanceur Fleet crée un service en mode haute disponibilité, Il sto
 
 \subsection{Utilisation du Cluster}
 
-Autant la mise en place du Cluster et ses composants est simple, autant son utilisation est compliqué. Un exemple sera présenté pour illustrer la procédure d'ordonnancement d'un service Odoo dont l'image est stocké dans le registre public de Docker.
+Autant la mise en place du Cluster et ses composants est simple, autant son utilisation est compliqué. Un exemple sera présenté pour illustrer la procédure d'ordonnancement d'un service Odoo dont l'image est stockée dans le registre public de Docker.
 
 	\begin{lstlisting}[language=bash,caption=Fichier d'ordonnancement d'un service Odoo]
 [Unit]
@@ -59,7 +59,7 @@ X-Conflicts=odoo@*.service
 	\end{lstlisting}
 
 
-Le fichier décrit le service Odoo. Premièrement, il requiert le service Docker. Ensuite, avant de lancer Odoo, il faut télécharger la dernière image d'Odoo. Puis, l'exécuter et stocker les couples clés-valeurs dans la base de donnée utile pour l'équilibreur de charge Gogeta. Le service est ordonnancé sous la contrainte de lancer une seule instance par serveur (\emph{X-Conflicts=odoo@*.service}).
+Le fichier décrit le service Odoo. Premièrement, il requiert le service Docker. Ensuite, avant de lancer Odoo, il faut télécharger la dernière image d'Odoo. Puis, l'exécuter et stocker des couples clés-valeurs dans la base de données qui sont utiles pour l'équilibreur de charge Gogeta. Le service est ordonnancé sous la contrainte de lancer une seule instance par serveur (\emph{X-Conflicts=odoo@*.service}).
 
 Le service est ordonnancé en mode haute disponibilité en lançant deux instances du service. L'application sera enfin accessible via le lien \emph{http://www.odoo.sayoo.org}.
 
@@ -68,7 +68,7 @@ Le service est ordonnancé en mode haute disponibilité en lançant deux instanc
 		$ fleetctl start odoo@{1,2}.service
 	\end{lstlisting}
 
-La solution à base d'un Cluster CoreOS motorisé par des équilibreurs de charges élastiques est très puissante, mais son utilisation demeure très bas niveau. Le fait d'interagir directement avec le Cluster nécessite des administrateurs systèmes très compétents. C'est la raison pour laquelle une solution à base d'une \acrshort{paas} sera adoptée.
+La solution à base d'un Cluster CoreOS motorisé par des équilibreurs de charges élastiques est très puissante, mais son utilisation demeure très difficile. En effet, interagir directement avec le Cluster nécessite des administrateurs systèmes très compétents. C'est la raison pour laquelle une solution à base d'une \acrshort{paas} sera adoptée.
 
 
 \section{A base d'une \acrshort{paas}}
@@ -86,25 +86,25 @@ La solution à base d'un Cluster CoreOS motorisé par des équilibreurs de charg
 
 \subsubsection*{Applications supportées}
 
-Deis peut déployer n'importe quelle application ou service qui peut fonctionner à l'intérieur d'un conteneur Docker. Pour que l'application soit évolutive horizontalement, elles doivent suivre la méthodologie de 12-facteur de Heroku (Voir Annexe \ref{annexe:12factors}, page \pageref{annexe:12factors}).
+Deis peut déployer n'importe quelle application ou service qui peut fonctionner à l'intérieur d'un conteneur Docker. Pour que l'application soit évolutive horizontalement, elles doivent suivre la méthodologie de douze-facteurs de Heroku (Voir Annexe \ref{annexe:12factors}, page \pageref{annexe:12factors}).
 
 \subsubsection*{Plates-formes supportées}
-Deis peut être déployée sur un n'importe quelle système qui supporte CoreOS : poste de travail, ainsi que la plupart des Clouds publics, privés et les centres de données.
+Deis peut être déployée sur n'importe quelle système qui supporte CoreOS : poste de travail, ainsi que la plupart des Clouds publics, privés et les centres de données.
 
 
 \subsubsection*{Pourquoi Deis?}
 
 \begin{itemize}
-	\item \textbf{Langage-agnostique} : Deis déploie des services écrites dans n'importe quels langages avec une simple commande "git push";
-	\item \textbf{Extensibilité} : Deis est extensible, les outils de supervisions et de la gestions des messages logs peuvent être intégrés facilement;
-	\item \textbf{Scalabilité} : Une application est montée en charge avec une seule commande. Par ailleurs, La capacité de la plate-forme Deis peut être montée en charge en ajoutant simplement des hôtes au cluster;
+	\item \textbf{Langage-agnostique} : Deis déploie des services écrites dans n'importe quels langages de programmation;
+	\item \textbf{Extensibilité} : Deis est extensible, les outils de supervisions et de la gestions des message logs peuvent être intégrés facilement;
+	\item \textbf{Scalabilité} : Une application est montée en charge avec une seule commande. Par ailleurs, La capacité de la plate-forme Deis peut être montée en charge en ajoutant simplement des hôtes au Cluster;
 	\item \textbf{100\% Open Source} : Deis est un logiciel libre, open-source publié sous la licence Apache 2.0.
 \end{itemize}
 
 
 \subsection{Architecture}
 
-l'architecture de Deis présentée dans la figure \ref{fig:deis-architecture} a tellement de points de commun avec celle que nous avons proposé. Néanmoins, elle cache beaucoup de détails, notamment à l'intérieur du contrôleur. Par ailleurs, Deis intègre ses propres routeurs (\emph{Load Balancer}) et un registre privé des images Docker. Les services de support, la supervision, la gestion des messages logs et l'équilibreur de charge ne sont pas intégrés par la plate-forme Deis.
+l'architecture de Deis présentée dans la figure \ref{fig:deis-architecture} a tellement de points de commun avec celle que nous avons proposé. Néanmoins, elle cache beaucoup de détails, notamment à l'intérieur du contrôleur. Par ailleurs, Deis intègre ses propres routeurs (\emph{Load Balancer}) et un registre privé des images Docker. Les services de support, la supervision, la gestion des messages logs et l'équilibreur de charge principal ne sont pas intégrés par la plate-forme Deis.
 
 Un développeur, voulant déployer une application, va pousser son code vers le contrôleur. Ce dernier construit l'image et la stocke dans le registre des images. Ensuite, le contrôleur passe le relais à l'ordonnanceur qui se débrouille pour lancer le service à l'intérieur d'un conteneur. Le conteneur est crée à base de l'image Docker.
 
@@ -113,7 +113,7 @@ Un développeur, voulant déployer une application, va pousser son code vers le 
 \begin{figure}[H]
 \centering
 \includegraphics [scale=0.6]{chapitre5/assets/deis-architecture}
-\caption{Architecture de la PaaS Deis}
+\caption{Architecture de la PaaS Deis \cite{deis-archi}}
 \label{fig:deis-architecture}
 \end{figure}
 
@@ -121,11 +121,11 @@ Un développeur, voulant déployer une application, va pousser son code vers le 
 \subsection{Installation}
 
 
-Deis nécessite un Cluster de CoreOS pour s'installer dessus. Nous aurions pu installer Deis au-dessus du Cluster que nous avons déjà réalisé, mais Deis nécessite des ressources (au moins 4GB de RAM) que la version d'essai de \acrshort{aws} n'offre pas. Nous avons opté pour \acrshort{gce}.
+Deis nécessite un Cluster de CoreOS pour s'installer dessus. Nous aurions pu installer Deis au-dessus du Cluster que nous avons déjà réalisé, mais Deis nécessite des ressources (au moins 4GB de RAM) que la version d'essai d'\acrshort{aws} n'offre pas. Nous avons opté pour \acrshort{gce}.
 
-L'installation de Deis sur \acrshort{gce} est détaillé dans la documentation \cite{deis-gce}. Les grandes étapes d'installation:
+L'installation de Deis sur \acrshort{gce} est détaillée dans la documentation \cite{deis-gce}. Les grandes étapes d'installation:
 \begin{itemize}
-	\item Lancer des serveurs CoreOS avec le fichier d'initialisation de Deis fournit par la documentation.
+	\item Lancer des serveurs CoreOS avec le fichier d'initialisation de Deis fourni par la documentation.
 	\item Faire pointer l'équilibreur de charge de Google vers nos serveurs. Cette équilibreur de charge est élastique et donc reconnaît dynamiquement des nouveaux serveurs.
 	\item Configurer le \acrshort{dns} pour faire pointer le nom de domaine et tous les sous-domaines vers l'équilibreur de charge de Google (Figure \ref{fig:dns}).
 \end{itemize}
@@ -142,7 +142,7 @@ L'installation de Deis sur \acrshort{gce} est détaillé dans la documentation \
 
 \subsubsection*{Déploiement avec une seule commande}
 
-	Quand le développeur a terminé le développement ou la personnalisation une application, il peut la déployer rapidement.
+	Quand le développeur a terminé le développement ou la personnalisation d'une application, il peut la déployer rapidement.
 
 	\begin{lstlisting}[language=bash,caption=Déploiement avec Deis]
 		$ git push deis master
@@ -176,7 +176,7 @@ Deis offre des \acrshort{api}s REST pour un interfaçage facile et standard. Du 
 \index{SSL}
 \index{TLS}
 
-\acrshort{ssl} est un protocole qui permet d'échanger des informations entre 2 ordinateurs de façon sûre. \acrshort{ssl} assure 3 choses:
+\acrshort{ssl} est un protocole qui permet d'échanger des informations entre deux ordinateurs de façon sûre. \acrshort{ssl} assure trois choses:
 
 \begin{itemize}
 	\item \textbf{Confidentialité}: Il est impossible d'espionner les informations échangées;
@@ -186,19 +186,19 @@ Deis offre des \acrshort{api}s REST pour un interfaçage facile et standard. Du 
 
 
 
-Nous allons installer \acrshort{ssl} dans la plate-forme pour établir un lien crypté entre le navigateur et serveur (\acrshort{https}). Ce qui est intéressant, c'est que lorsque \acrshort{ssl} est activé pour le cluster, il le sera pour toute les services qui s'exécute sur le cluster.
+Nous allons installer \acrshort{ssl} dans la plate-forme pour établir un lien crypté entre le navigateur et le serveur (\acrshort{https}). Ce qui est intéressant, c'est que lorsque \acrshort{ssl} est activé, il le sera pour tous les services qui s'exécutent sur le Cluster.
 
 
 
 \subsubsection{Installation}
 
-L'installation de SSL dans la plate-forme se fait en 2 étapes:
+L'installation de SSL dans la plate-forme se fait en deux étapes:
 \begin{itemize}
-	\item Générer d'une clé privée et une certificat signée. Normalement, la certificat doit être signé par les PKI, des parties tierces aux-quelles l'on fait confiance, qui chargent une somme d'argent annuelle. Dans un environnement de test, on peut se contenter par une certificat que nous allons signer nous même;
-	\item Attacher la clé privée et la certificat avec la plate-forme. En fait, elles doivent être installées dans l'équilibreur de charge. Il y a deux choix qui se portent à nous, soit les installer dans notre équilibreur de charge de \acrshort{gce} ou dans les proxy de Deis. Nous avons décidé de l'installer dans les équilibreurs de charge propres à Deis vu que c'est une solution portable et ne dépend pas de l'environnement où Deis est installé.
+	\item Générer une clé privée et un certificat signé. Normalement, le certificat doit être signé par les PKI, des parties tierces aux-quelles l'on fait confiance, qui chargent une somme d'argent annuelle. Dans un environnement de test, on peut se contenter d'un certificat signé par nous-même;
+	\item Attacher la clé privée et le certificat avec la plate-forme. En fait, ils doivent être installés dans l'équilibreur de charge. Il y a deux choix qui se portent à nous, soit les installer dans l'équilibreur de charge principal de \acrshort{gce} ou dans les routeurs de Deis. Nous avons décidé de l'installer dans les équilibreurs de charge propres à Deis vu que c'est une solution portable et ne dépend pas de l'environnement où Deis est installé.
 \end{itemize}
 
-\begin{lstlisting}[language=bash,caption=Génération de la clé privée et la certificat]
+\begin{lstlisting}[language=bash,caption=Génération de la clé privée et le certificat]
 	$ openssl genrsa -des3 -passout pass:x -out server.pass.key 2048
 	$ openssl rsa -passin pass:x -in server.pass.key -out server.key
 	$ openssl req -new -key server.key -out server.csr
@@ -217,7 +217,7 @@ L'installation de SSL dans la plate-forme se fait en 2 étapes:
 \label{fig:certificat}
 \end{figure}
 
-Après avoir activé le protocole \acrshort{https}, le navigateur envoie un avertissement (Figure ~\ref{fig:certificat}, page~\pageref{fig:certificat}). En effet, nous avons signé la certificat nous-même au lieu de la déléguer à une partie tierce de confiance (\acrshort{pki}), ce qui devrait être fait en production. En dépit de cela, nous avons bel et bien sécurisé la communication (Figure ~\ref{fig:https}, page~\pageref{fig:https}).
+Après avoir activé le protocole \acrshort{https}, le navigateur envoie un avertissement (Figure ~\ref{fig:certificat}, page~\pageref{fig:certificat}). En effet, nous avons signé le certificat nous-même au lieu de la déléguer à une partie tierce de confiance (\acrshort{pki}), ce qui devrait être fait en production. En dépit de cela, nous avons bel et bien sécurisé la communication (Figure ~\ref{fig:https}, page~\pageref{fig:https}).
 
 \begin{figure}[H]
 \centering
@@ -229,7 +229,7 @@ Après avoir activé le protocole \acrshort{https}, le navigateur envoie un aver
 
 \section{Supervision}
 
-La \acrshort{paas} \emph{Deis} ne dispose pas d'un système de supervision intégré. Puisque les services déployés dans Deis fonctionnant entièrement à l'intérieur des conteneurs Docker, cela signifie que les outils de supervision des conteneurs Docker devraient fonctionner avec Deis. L'on va utiliser les plus matures d'entre eux.
+La \acrshort{paas} \emph{Deis} ne dispose pas d'un système de supervision intégré. Puisque les services déployés dans Deis fonctionnent entièrement à l'intérieur des conteneurs Docker, cela signifie que les outils de supervision des conteneurs Docker devraient fonctionner avec Deis. Les plus matures d'entre eux seront utilisés.
 
 
 \subsection{Outils de supervision utilisés}
@@ -243,14 +243,14 @@ La \acrshort{paas} \emph{Deis} ne dispose pas d'un système de supervision inté
 \centering
 \includegraphics[scale=0.2]{chapitre5/assets/cadvisor}
 \end{wrapfigure}
-\noindent \emph{cAdvisor} (Container Advisor) fournit aux utilisateurs de conteneurs une vue de l'utilisation des ressources et des caractéristiques de performance de leurs conteneurs en cours d'exécution. C'est un démon, toujours en exécution, qui recueille, agrège, analyse, et exporte informations sur l'exécution des conteneurs. Plus précisément, pour chaque conteneur, il conserve l'historique de l'utilisation des ressources, les histogrammes des historiques complets d'utilisation des ressources et des statistiques du réseau. Ces données peuvent être exportées pour chaque conteneur ou pour toute la machine.
+\noindent \emph{cAdvisor} (Container Advisor) fournit aux utilisateurs de conteneurs une vue de l'utilisation des ressources et des caractéristiques de performance de leurs conteneurs en cours d'exécution. C'est un démon, toujours en exécution, qui recueille, agrège, analyse, et exporte les informations sur l'exécution des conteneurs. Plus précisément, pour chaque conteneur, il conserve l'historique de l'utilisation des ressources, les histogrammes des historiques complets d'utilisation des ressources et des statistiques du réseau. Ces données peuvent être exportées pour chaque conteneur ou pour toute la machine.
 
 cAdvisor a un support natif pour les conteneurs Docker et devrait supporter à peu près tout autre solution de containérisation. Par ailleurs, cAdvisor fournit une interface utilisateur ainsi qu'une REST API.
 
 
 \subsubsection*{Heapster}
 
-Heapster est un projet open source de Google qui comble la limitation de cAdvisor qui supervise un seul serveur. Heapster recueille les données à travers les \acrshort{http} \acrshort{api} fournit par les cAdvisor installés sur les serveurs, puis les stocke dans la base de donnée InfluxDB. Ainsi, Heapster est considéré comme un superviseur au niveau du Cluster.
+Heapster est un projet open source de Google qui comble la limitation de cAdvisor qui supervise un seul serveur. Heapster recueille les données à travers les \acrshort{http} \acrshort{api} fourni par les cAdvisor installés sur les serveurs, puis les stocke dans la base de données InfluxDB. Ainsi, Heapster est considéré comme un superviseur au niveau du Cluster.
 
 \subsubsection*{InfluxDB}
 
@@ -258,7 +258,7 @@ Heapster est un projet open source de Google qui comble la limitation de cAdviso
 \centering
 \includegraphics[scale=0.2]{chapitre5/assets/influxdb}
 \end{wrapfigure}
-\noindent Influxdb est une base de donnée distribuée destinée pour le stockage des métriques, des événements et des analyses de performances. Influxdb est simple à installer et à gérer, et rapide car il vise à répondre aux requête en temps-réel. En effet, chaque point de données est indexé et disponible pour des requêtes qui retournent des réponses dans < 100 ms. Enfin, il dispose d'une \acrshort{http} \acrshort{api} intégré qui va être sollicitée par l'interface utilisateur Grafana.
+\noindent Influxdb est une base de données distribuée destinée pour le stockage des métriques, des événements et des analyses de performances. Influxdb est simple à installer et à gérer, et rapide car elle vise à répondre aux requête en temps-réel. En effet, chaque point de données est indexé et disponible pour des requêtes qui retournent des réponses dans < 100 ms. Enfin, elle dispose d'une \acrshort{http} \acrshort{api} intégrée qui va être sollicitée par l'interface utilisateur Grafana.
 
 \subsubsection*{Grafana}
 
@@ -271,12 +271,12 @@ Heapster est un projet open source de Google qui comble la limitation de cAdviso
 
 \subsection{Démarche d'installation}
 
-Cette solution de supervision s'installe au-dessus du Cluster de CoreOS et cohabite avec la plate-forme Deis. Comme c'est déjà mentionné, tous les services sous CoreOS sont installés en tant que conteneur. De même, cAdvisor, InfluxDB, Heapster et Grafana vont être installés dans des conteneurs.
-Les fichiers d'installation se trouvent dans le guide officielle de Heapster \cite{heapster-coreos}
+Cette solution de supervision s'installe au-dessus du Cluster de CoreOS et cohabite avec la plate-forme Deis. Comme c'est déjà mentionné, tous les services sous CoreOS sont installés en tant que conteneurs. De même, cAdvisor, InfluxDB, Heapster et Grafana vont être installés dans des conteneurs.
+Les fichiers d'installation se trouvent dans le guide officiel de Heapster \cite{heapster-coreos}
 
 \begin{itemize}
-	\item cAdvisor doit être installé sur tous les serveurs du cluster. Heureusement, l'ordonnanceur Fleet effectue cette opération de façon automatique et scalable. En effet, il suffit de mentionner \emph{Global=true} dans le fichier d'installation;
-	\item InfluxDB, Heapster et Grafana doivent être installé dans le même serveur. L'on exprime cette contrainte par \emph{X-ConditionMachineOf=influxdb.service}. Ainsi, Fleet va s'en sortir pour faire coexister les trois services.
+	\item cAdvisor doit être installé sur tous les serveurs du Cluster. Heureusement, l'ordonnanceur Fleet effectue cette opération de façon automatique et évolutif. En effet, il suffit de mentionner \emph{Global=true} dans le fichier d'installation;
+	\item InfluxDB, Heapster et Grafana doivent être installés dans le même serveur. Cette contrainte est exprimée par \emph{X-ConditionMachineOf=influxdb.service}. Ainsi, Fleet va s'en sortir pour faire coexister les trois services.
 \end{itemize}
 
 \begin{figure}[H]
@@ -297,33 +297,33 @@ Le code suivant montre comment charger et installer cAdvisor dans le cluster. C'
 
 \subsection{Interfaces graphique}
 
-Notre cluster se compose de trois serveurs. Les figures suivantes présentes la quantité totale de \acrshort{cpu} et de la mémoire consommée par le cluster ainsi que les quantités consommées par chaque serveur.
+Notre Cluster se compose de trois serveurs. Les figures suivantes présentent la quantité totale de \acrshort{cpu} et de la mémoire consommée par le cluster ainsi que les quantités consommées par chaque serveur.
 
 \begin{figure}[H]
 \centering
 \includegraphics [scale=0.6]{chapitre5/assets/cluster-cpu}
-\caption{Quantité de CPU consommées par le cluster}
+\caption{Quantité de CPU consommée par le cluster}
 \label{fig:}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics [scale=0.6]{chapitre5/assets/cluster-memory}
-\caption{Quantité de mémoire consommées par le cluster}
+\caption{Quantité de mémoire consommée par le cluster}
 \label{fig:}
 \end{figure}
 
 
 \subsection{Supervision et scalabilité}
 
-La scalabilité était toujours parmi nos aspirations tout au long de ce projet. Le système de supervision réalisé est conçu pour fonctionner de façon indépendante, complètement automatisée et hautement scalable. Cela va être prouvé à travers ces deux scénarios:
+La scalabilité était toujours parmi nos aspirations tout au long de ce projet. Le système de supervision réalisé est conçu pour fonctionner de façon indépendante, complètement automatisée et hautement évolutive. Cela va être prouvé à travers ces deux scénarios:
 
 \begin{itemize}
-	\item Quand un nouveau service est lancé sur un des serveurs du cluster, cAdvisor se rendra compte de ce nouveau conteneur et va mettra à la disposition de Heapster les données qui va les stocker dans la base de données pour des consultations via l'interface graphique;
-	\item Lors d'un pic de charge, on a intérêt à lancer les nouveaux conteneurs dans un nouveau serveur. On va tout d'abord lancer avec le fichier d'initialisation du cluster. Désormais, de façon automatique, le serveur appartient au cluster. Ainsi, les conteneurs lancés sur ce nouveau serveur sont supervisés automatiquement comme le décrit le scénario 1.
+	\item Quand un nouveau service est lancé sur un des serveurs du Cluster, cAdvisor se rendra compte de ce nouveau conteneur et mettra à la disposition de Heapster les données qui va les stocker dans la base de données pour des consultations via l'interface graphique. Ainsi, l'auto-découverte des services est assurée.
+	\item Lors d'un pic de charge, on a intérêt à lancer les nouveaux conteneurs dans une nouvelle machine. On va tout d'abord lancer un nouveau serveur avec le fichier d'initialisation du Cluster. Désormais, le serveur appartient au Cluster et, de façon automatique, le superviseur le reconnaît parfaitement. Ainsi, les conteneurs lancés sur ce nouveau serveur sont supervisés automatiquement comme le décrit le scénario 1.
 \end{itemize}
 
-D'autre part, Grafana, l'interface utilisateur, sera disponible dans la machine dans laquelle \emph{Fleet} décide d'installer le trio Heapster, InfluxDB et Grafana. Cela signifie que Grafana peut changer de position dans le cluster à l'improviste et n'aura donc pas une adresse \acrshort{ip} fixe pour y accéder. Comme perspective, il serait préférable de mettre en place une sorte de proxy dont l'\acrshort{ip} est fixe par lequel on accède à Grafana partout où il soit.
+D'autre part, Grafana, l'interface utilisateur, sera disponible dans la machine dans laquelle \emph{Fleet} décide d'installer le trio Heapster, InfluxDB et Grafana. Cela signifie que Grafana peut changer de position dans le Cluster à l'improviste et n'aura donc pas une adresse \acrshort{ip} fixe pour y accéder. Comme perspective, il serait préférable de mettre en place une sorte de proxy dont l'\acrshort{ip} est fixe par lequel on accède à Grafana partout où il soit.
 
 
 \section*{Conclusion}

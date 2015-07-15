@@ -5,11 +5,11 @@
 
 \newpage
 
-\section{Base de donnée}
+\section{Base de données}
 
 
 
-Odoo, comme toute autre application, a besoin d'une base de donnée \emph{PostgreSQL} pour persister des informations. Malheureusement, la communauté de Docker n'est pas si satisfaite vis-à-vis l'idée de containériser les bases de données. Nous allons prouver à travers deux scénarios qu'il serait une imprudence de tourner les bases de données dans des conteneurs.
+Odoo, comme toute autre application, a besoin d'une base de données \emph{PostgreSQL} pour persister des informations. Malheureusement, la communauté de Docker n'est pas si convaincue vis-à-vis l'idée de containériser les bases de données. Nous allons prouver à travers deux scénarios qu'il serait une imprudence de tourner les bases de données dans des conteneurs.
 
 Le fait de la rapidité et la légèreté de Docker et des conteneurs en général a poussé CoreOS d'adopter une certaine philosophie à l'égard de la gestion et l'ordonnancement des conteneurs. En effet, lorsqu'un conteneur s'est arrêté pour une raison quelconque, il va être automatiquement écrasé et remplacé par un nouveau qui va tourner le même service. Une philosophie, certes, moins prudente et naïve, mais sa simplicité épargne beaucoup de problèmes à tout le monde.
 
@@ -32,7 +32,7 @@ Pour y remédier, l'on peut penser à monter le volume des données dans le serv
 \end{figure}
 
 
-Dans un environnement de production, il est encore tôt pour mettre les bases de donnée et les applications à états (stateful) en général dans des conteneurs. De ce fait, il serait judicieux de les faire sortir de l'architecture à base de conteneurs. En effet, deux solutions se portent à nous, les bases de données vont être mis en place suivant l'informatique classique ou elles vont être consommées comme un service à partir d'une partie tierce Cloud (Délégation de l'informatique). La dernière solution est coûteuse mais il est plus fiable.
+Dans un environnement de production, il est encore tôt pour mettre les bases de données et les applications à états (stateful) en général dans des conteneurs. De ce fait, il serait judicieux de les faire sortir de l'architecture à base de conteneurs. Par conséquent, deux solutions se portent à nous, les bases de données vont être mis en place suivant l'informatique classique ou elles vont être consommées comme un service à partir d'une partie tierce Cloud (Délégation de l'informatique). La dernière solution est coûteuse mais il est plus fiable.
 
 
 
@@ -48,24 +48,24 @@ La haute disponibilité fait référence au fait qu'un service est en quelque so
 La scalabilité ou l'évolutivité, c'est la capacité d'une application à pouvoir exploiter de nouvelles ressources récemment déployées pour répondre à un pic de charge. En fait, la scalabilité n'est pas apporté par le Cloud, qui apporte l'élasticité, mais c'est l'application elle-même qui l'apporte. Par conséquent, l'idée que toute application déployée dans un milieu élastique Cloud peut être évolutive est fausse.
 
 
-Pour faire une bonne conception d'un \acrshort{saas} scalable, il faut distinguer d'abord deux types d'applications:
+Pour faire une bonne conception d'un \acrshort{saas} évolutif, il faut distinguer d'abord deux types d'applications:
 
 \begin{itemize}
 	\item Application \textbf{stateful} ou à états : C'est une application dont les processus ne stockent aucune donnée qui doit persister, même dans un temps aussi petit qu'il soit, dans l'espace mémoire ou le système de fichiers.
-	\item Application \textbf{stateless} ou sans états : C'est une application qui stocke tous les données persistantes dans un service de support externe (Base de donnée, queue, mémoire cache, etc.).
+	\item Application \textbf{stateless} ou sans états : C'est une application qui stocke tous les données persistantes dans un service de support externe (Base de données, queue, mémoire cache, etc.).
 \end{itemize}
 
-Une application scalable doit être \textbf{stateless}, plus que cela, il doit respecter les douze-facteurs définies dans l'annexe \ref{annexe:12factors}. Une application scalable suppose qu'aucune donnée mise en cache (mémoire, disque) ne sera disponible dans une requête ultérieure. En effet, les chances sont élevées qu'une future requête sera servie par un processus différent du même service. L'idée c'est qu'une application doit être capable de renvoyer les réponses de façon consistante à partir de n'importe quelle instance exécutant l'application.
+Une application évolutive doit être \textbf{stateless}, plus que cela, il doit respecter les douze-facteurs définies dans l'annexe \ref{annexe:12factors}. Une application évolutive suppose qu'aucune donnée mise en cache (mémoire, disque) ne sera disponible dans une requête ultérieure. En effet, les chances sont élevées qu'une future requête sera servie par un processus différent du même service. L'idée c'est qu'une application doit être capable de renvoyer les réponses de façon consistante à partir de n'importe quelle instance exécutant l'application.
 
 
 
-La figure \ref{fig:non-scalable} montre un service qui n'est évolutive contrairement au service présenté dans la figure \ref{fig:scalable}.
+La figure \ref{fig:non-scalable} montre un service qui n'est pas évolutif contrairement au service présenté dans la figure \ref{fig:scalable}.
 
 
 \begin{figure}[H]
 \centering
 \includegraphics [scale=0.5]{chapitre4/assets/stateful}
-\caption{Service non scalable}
+\caption{Service non évolutif}
 \label{fig:non-scalable}
 \end{figure}
 
@@ -81,7 +81,7 @@ La figure \ref{fig:non-scalable} montre un service qui n'est évolutive contrair
 
 
 
-L'architecture est très simplifiée car nous avons fait une abstraction du comportement interne des composants de CoreOS. Cette architecture est inspiré de la plate-forme de Nuxeo \cite{nuxeo} basée sur Docker et CoreOS et conçu pour la résilience des pannes. Elle décrit trois processus et implique trois acteurs:
+L'architecture est très simplifiée car nous avons fait une abstraction du comportement interne des composants de CoreOS. Cette architecture est inspirée de la plate-forme de Nuxeo \cite{nuxeo} basée sur Docker et CoreOS et conçue pour la résilience des pannes. Elle décrit trois processus et implique trois acteurs:
 
 
 \begin{itemize}
@@ -93,11 +93,11 @@ L'architecture est très simplifiée car nous avons fait une abstraction du comp
 \begin{figure}[H]
 \centering
 \includegraphics [scale=0.7]{chapitre4/assets/architecture}
-\caption{Achitecture de la solution}
+\caption{Architecture de la solution}
 \label{fig:architecture}
 \end{figure}
 
 \section*{Conclusion}
-En somme, nous avons prouvé l'incompatibilité des bases de données avec les conteneurs dans une solution fiable. Une architecture qui répond aux exigences su Cloud a été présenté, mais il faut pas la gâcher par une mauvaise conception des applications.
+En somme, nous avons prouvé l'incompatibilité des bases de données avec les conteneurs dans une solution fiable. Une architecture qui répond aux exigences du Cloud a été présentée, mais il ne faut pas la gâcher par une mauvaise conception des applications.
 
 \end{onehalfspace}
