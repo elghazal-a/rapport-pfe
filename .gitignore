@@ -6,7 +6,6 @@
 *.log
 *.out
 *.synctex.gz
-*.pdf
 *.swp
 Output/*
 */Output/*
